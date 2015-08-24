@@ -10,6 +10,10 @@ function Start () {
 function Update () {
 	Rotate(rotateSpeed);
 	Move(moveSpeed);
+	
+	if (transform.position.x < -scrGame.screenWidth*1.05) {
+		BlowUp();
+	}
 }
 
 function Rotate (speed : float) {
