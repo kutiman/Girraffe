@@ -12,6 +12,9 @@ function Start () {
 
 function Update () {
 	bombMachine(bombGenSpeed);
+	if (Input.GetMouseButtonDown(0)) {
+		CreateGrenade();
+	}
 }
 
 
@@ -19,6 +22,11 @@ function CreateBomb () {
 
 	var obj : GameObject = GameObject.Instantiate(Resources.Load("Prefabs/objBomb"));
 	obj.transform.position = Vector2(screenWidth * 1.1, Random.Range(-screenHeight,screenHeight));
+}
+
+function CreateGrenade () {
+
+	var obj : GameObject = GameObject.Instantiate(Resources.Load("Prefabs/objGrenade"));
 }
 
 function bombMachine (speed : float) {
