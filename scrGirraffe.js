@@ -29,7 +29,6 @@ function Move () {
 
 function OnCollisionEnter(coll : Collision) {
 	if (coll.gameObject.tag == "tagBomb") {
-		Debug.Log ("I've collided with a bomb");
 		coll.gameObject.GetComponent(scrBomb).BlowUp();
 	}
 }

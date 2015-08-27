@@ -35,5 +35,13 @@ function Rotate (speed : float) {
 }
 
 function BlowUp () {
+	CreateExplosion();
 	Destroy(gameObject);
 }
+
+function CreateExplosion () {
+	var obj : GameObject = GameObject.Instantiate(Resources.Load("Prefabs/objExplosion"));
+	obj.transform.position = gameObject.transform.position;
+}
+
+
