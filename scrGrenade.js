@@ -2,7 +2,7 @@
 
 private var endPoint : Vector2;
 private var awakeTime : float;
-private var timeToHit : float = 3.0;
+private var timeToHit : float = 2.0;
 private var throwingHeight : float;
 private var throwingDistance : float;
 
