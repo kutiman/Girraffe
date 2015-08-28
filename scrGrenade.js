@@ -40,7 +40,7 @@ function BlowUp () {
 }
 
 function CreateExplosion () {
-	var obj : GameObject = GameObject.Instantiate(Resources.Load("Prefabs/objExplosion"));
+	var obj = GameObject.Instantiate(Resources.Load("Prefabs/objExplosion")) as GameObject;
 	obj.transform.position = gameObject.transform.position;
 }
 

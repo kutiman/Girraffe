@@ -28,8 +28,12 @@ function Move () {
 }
 
 function OnCollisionEnter(coll : Collision) {
+Debug.Log("Kaboom!!!");
 	if (coll.gameObject.tag == "tagBomb") {
 		coll.gameObject.GetComponent(scrBomb).BlowUp();
+	}
+	if (coll.gameObject.tag == "tagExplosive") {
+		Debug.Log("Kaboom!!!");
 	}
 }
 

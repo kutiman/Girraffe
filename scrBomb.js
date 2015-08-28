@@ -5,6 +5,7 @@ private var moveSpeed = 1.0;
 
 function Start () {
 	RandomSpeeds();
+	transform.position = Vector2(scrGame.screenWidth * 1.05, Random.Range(-scrGame.screenHeight * 0.9, scrGame.screenHeight * 0.9));
 }
 
 function Update () {
