@@ -24,5 +24,6 @@ function Move () {
 function Die() {
 	scrGame.weightCounter++;
 	gameObject.GetComponent(AudioSource).Stop();
+	Destroy(gameObject);
 }
 
