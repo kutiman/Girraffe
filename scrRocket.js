@@ -19,3 +19,14 @@ function Update () {
 function Move (speed : float) {
 	transform.position.x -= speed * Time.deltaTime;
 }
+
+function CreateExplosion () {
+	var obj = GameObject.Instantiate(Resources.Load("Prefabs/objExplosion")) as GameObject;
+	obj.transform.position = gameObject.transform.position;
+}
+
+function BlowUp () {
+	scrGame.rocketCounter++;
+	CreateExplosion();
+	Destroy(gameObject);
+}

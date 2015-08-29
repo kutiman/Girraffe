@@ -12,7 +12,9 @@ function Update () {
 	Rotate(rotateSpeed);
 	Move(moveSpeed);
 	
+	// going out of frame
 	if (transform.position.x < -scrGame.screenWidth*1.05) {
+		scrGame.bombCounter++;
 		BlowUp();
 	}
 }
@@ -31,5 +33,6 @@ function RandomSpeeds () { //random movement speed and rotation speed
 }
 
 function BlowUp () {
+
 	Destroy(gameObject);
 }

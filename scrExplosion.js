@@ -6,6 +6,8 @@
 // perhaps finding the length of the clip at START and then yield waitForTime in the destruction function
 //#################################################################
 
+
+
 function Start () {
 	Destroy (gameObject, 0.3);
 }
