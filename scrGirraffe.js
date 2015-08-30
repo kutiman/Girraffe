@@ -47,6 +47,10 @@ function OnCollisionStay(coll : Collision) {
 		else if (coll.gameObject.tag == "tagWeight") {
 			GetHurt(hurtDuration);
 		}
+		else if (coll.gameObject.tag == "tagBullet") {
+			coll.gameObject.GetComponent(scrBullet).Die();
+			GetHurt(hurtDuration);
+		}
 	}
 }
 

@@ -9,11 +9,17 @@ static var rocketGenSpeed : float = 0.0;
 static var weightGenSpeed : float = 0.0;
 static var ufoGenSpeed : float = 0.0;
 
-static var bombCounter : float = 0.0;
-static var grenadeCounter : float = 0.0;
-static var rocketCounter : float = 0.0;
-static var weightCounter : float = 0.0;
-static var ufoCounter : float = 0.0;
+static var bombGenMaxSpeed : float = 0.08;
+static var grenadeMaxGenSpeed : float = 0.04;
+static var rocketMaxGenSpeed : float = 0.04;
+static var weightMaxGenSpeed : float = 0.04;
+static var ufoGenMaxSpeed : float = 0.04;
+
+static var bombCounter : int = 0;
+static var grenadeCounter : int = 0;
+static var rocketCounter : int = 0;
+static var weightCounter : int = 0;
+static var ufoCounter : int = 0;
 
 static var score : int = 0;
 static var lives : int = 0;
@@ -30,10 +36,11 @@ function Start () {
 function Update () {
 
 	CalculateScore();
-	CreateWeapon("objBomb", bombGenSpeed * Time.time / 120);
-	CreateWeapon("objGrenade", grenadeGenSpeed * Time.time / 120);
-	CreateWeapon("objRocket", rocketGenSpeed * Time.time / 120);
-	CreateWeapon("objWeight", weightGenSpeed * Time.time / 120);
+	CreateWeapon("objBomb", CheckMaxGenSpeed(bombGenSpeed, bombGenMaxSpeed) * Time.time / 120);
+	CreateWeapon("objGrenade", CheckMaxGenSpeed(grenadeGenSpeed, grenadeMaxGenSpeed) * Time.time / 120);
+	CreateWeapon("objRocket", CheckMaxGenSpeed(rocketGenSpeed, rocketMaxGenSpeed) * Time.time / 120);
+	CreateWeapon("objWeight", CheckMaxGenSpeed(weightGenSpeed, weightMaxGenSpeed) * Time.time / 120);
+	CreateWeapon("objUfo", CheckMaxGenSpeed(ufoGenSpeed, ufoGenMaxSpeed) * Time.time / 120);
 	
 	if (Input.GetKeyDown(KeyCode.Alpha1)) {
 		GameObject.Instantiate(Resources.Load("Prefabs/" + "objBomb"));
@@ -46,6 +53,9 @@ function Update () {
 	}
 	if (Input.GetKeyDown(KeyCode.Alpha4)) {
 		GameObject.Instantiate(Resources.Load("Prefabs/" + "objWeight"));
+	}
+	if (Input.GetKeyDown(KeyCode.Alpha5)) {
+		GameObject.Instantiate(Resources.Load("Prefabs/" + "objUfo"));
 	}
 }
 
@@ -75,8 +85,14 @@ function ResetLevelParam () {
 }
 
 function CalculateScore () {
-	score = (bombCounter * 100) + (grenadeCounter * 200) + (rocketCounter * 400);
+	score = (bombCounter * 100) + (grenadeCounter * 200) + (rocketCounter * 400) + (weightCounter * 400) + (ufoCounter * 500);
 }
 
+function CheckMaxGenSpeed (speed : float, maxSpeed : float) {
+	if (speed > maxSpeed) {
+		speed = maxSpeed;
+	}
+	return speed;
+}
 
 
