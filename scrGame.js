@@ -9,11 +9,11 @@ static var rocketGenSpeed : float = 0.0;
 static var weightGenSpeed : float = 0.0;
 static var ufoGenSpeed : float = 0.0;
 
-static var bombGenMaxSpeed : float = 0.08;
-static var grenadeMaxGenSpeed : float = 0.04;
-static var rocketMaxGenSpeed : float = 0.04;
-static var weightMaxGenSpeed : float = 0.04;
-static var ufoGenMaxSpeed : float = 0.04;
+static var bombGenMaxSpeed : float = 0.02;
+static var grenadeMaxGenSpeed : float = 0.002;
+static var rocketMaxGenSpeed : float = 0.002;
+static var weightMaxGenSpeed : float = 0.002;
+static var ufoGenMaxSpeed : float = 0.002;
 
 static var bombCounter : int = 0;
 static var grenadeCounter : int = 0;
@@ -36,11 +36,19 @@ function Start () {
 function Update () {
 
 	CalculateScore();
+	/*
 	CreateWeapon("objBomb", CheckMaxGenSpeed(bombGenSpeed, bombGenMaxSpeed) * Time.time / 120);
 	CreateWeapon("objGrenade", CheckMaxGenSpeed(grenadeGenSpeed, grenadeMaxGenSpeed) * Time.time / 120);
 	CreateWeapon("objRocket", CheckMaxGenSpeed(rocketGenSpeed, rocketMaxGenSpeed) * Time.time / 120);
 	CreateWeapon("objWeight", CheckMaxGenSpeed(weightGenSpeed, weightMaxGenSpeed) * Time.time / 120);
 	CreateWeapon("objUfo", CheckMaxGenSpeed(ufoGenSpeed, ufoGenMaxSpeed) * Time.time / 120);
+	
+	CreateWeapon("objBomb", bombGenMaxSpeed);
+	CreateWeapon("objGrenade", grenadeMaxGenSpeed);
+	CreateWeapon("objRocket", rocketMaxGenSpeed);
+	CreateWeapon("objWeight", weightMaxGenSpeed);
+	CreateWeapon("objUfo", ufoGenMaxSpeed);
+	*/
 	
 	if (Input.GetKeyDown(KeyCode.Alpha1)) {
 		GameObject.Instantiate(Resources.Load("Prefabs/" + "objBomb"));
@@ -56,6 +64,9 @@ function Update () {
 	}
 	if (Input.GetKeyDown(KeyCode.Alpha5)) {
 		GameObject.Instantiate(Resources.Load("Prefabs/" + "objUfo"));
+	}
+	if (Input.GetKeyDown(KeyCode.Alpha6)) {
+		CreateCoin(1);
 	}
 }
 
@@ -94,5 +105,13 @@ function CheckMaxGenSpeed (speed : float, maxSpeed : float) {
 	}
 	return speed;
 }
+
+static function CreateCoin (amount : int) {
+	for (var i = 0; i < amount; i++) {
+		GameObject.Instantiate(Resources.Load("Prefabs/" + "objCoin"));
+	}
+}
+
+
 
 

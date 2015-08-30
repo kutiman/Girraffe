@@ -23,6 +23,7 @@ function Move () {
 
 function Die() {
 	scrGame.weightCounter++;
+	scrGame.CreateCoin(3);
 	gameObject.GetComponent(AudioSource).Stop();
 	Destroy(gameObject);
 }

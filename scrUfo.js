@@ -62,6 +62,7 @@ function MoveOut () {
 
 function Die () {
 	scrGame.ufoCounter++;
+	scrGame.CreateCoin(5);
 	Destroy(gameObject);
 }
 

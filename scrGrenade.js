@@ -37,6 +37,7 @@ function Rotate (speed : float) {
 function BlowUp () {
 	CreateExplosion();
 	scrGame.grenadeCounter++;
+	scrGame.CreateCoin(2);
 	Destroy(gameObject);
 }
 

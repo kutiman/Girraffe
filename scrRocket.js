@@ -12,6 +12,8 @@ function Start () {
 function Update () {
 	Move(moveSpeed);
 	if (transform.position.x < -scrGame.screenWidth*1.2) {
+		scrGame.rocketCounter++;
+		scrGame.CreateCoin(3);
 		Destroy(gameObject);
 	}
 }
@@ -26,7 +28,6 @@ function CreateExplosion () {
 }
 
 function BlowUp () {
-	scrGame.rocketCounter++;
 	CreateExplosion();
 	Destroy(gameObject);
 }
