@@ -9,9 +9,10 @@ private var screenHeight = 3.2;
 var hurt = false;
 private var hurtDuration : float = 2.0;
 
+private var collSize : float;
+
 function Start () {
-	//screenWidth = 4.8 - (collider.bounds.size.y / 2);
-	//screenHeight = 3.2 - (collider.bounds.size.y / 2);;
+	collSize = gameObject.GetComponent(BoxCollider).size.y;
 }
 
 function Update () {
@@ -24,13 +25,13 @@ function Spin (speed : float) {
 }
 
 function Move () {
-	if (Input.GetKey (KeyCode.UpArrow) && transform.position.y < screenHeight) {transform.position.y += moveSpeed * Time.deltaTime;}
-	else if (Input.GetKey (KeyCode.DownArrow) && transform.position.y > -screenHeight) {transform.position.y -= moveSpeed * Time.deltaTime;}
-	if (Input.GetKey (KeyCode.RightArrow) && transform.position.x < screenWidth) {transform.position.x += moveSpeed * Time.deltaTime;}
-	else if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x > -screenWidth) {transform.position.x -= moveSpeed * Time.deltaTime;}
+	if (Input.GetKey (KeyCode.UpArrow) && transform.position.y < screenHeight - collSize/2) {transform.position.y += moveSpeed * Time.deltaTime;}
+	else if (Input.GetKey (KeyCode.DownArrow) && transform.position.y > -screenHeight + collSize/2) {transform.position.y -= moveSpeed * Time.deltaTime;}
+	if (Input.GetKey (KeyCode.RightArrow) && transform.position.x < screenWidth - collSize/2) {transform.position.x += moveSpeed * Time.deltaTime;}
+	else if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x > -screenWidth + collSize/2) {transform.position.x -= moveSpeed * Time.deltaTime;}
 }
 
-function OnCollisionStay(coll : Collision) {
+function OnTriggerStay(coll : Collider) {
 
 	if (!hurt) {
 		if (coll.gameObject.tag == "tagBomb") {

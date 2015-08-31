@@ -68,6 +68,9 @@ function Update () {
 	if (Input.GetKeyDown(KeyCode.Alpha6)) {
 		CreateCoin(1);
 	}
+	if (Input.GetKeyDown(KeyCode.Alpha7)) {
+		GameObject.Instantiate(Resources.Load("Prefabs/" + "objSmokeGrenade"));
+	}
 }
 
 function CreateWeapon (name : String, speed : float) {
