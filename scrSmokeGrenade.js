@@ -15,6 +15,8 @@ function Start () {
 	rb.velocity = Vector3(startVelocity * Mathf.Sign(startPos), -startVelocity/2, 0);
 	
 	StartSmoke();
+	
+	Destroy(gameObject, 15.0);
 }
 
 function Update () {
