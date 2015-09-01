@@ -6,8 +6,12 @@ var roundOneHazards = new ArrayList();
 
 function Start () {
 	roundOneHazards.Add(function () { TenBombs(); });
-	var obj : Function = roundOneHazards[0]();
-	
+	TenBombs ();
+	yield WaitForSeconds(13);
+	TwentyBombs ();
+	yield WaitForSeconds(11);
+	TwentyBombs ();
+	TenBombs();
 }
 
 function Update () {
@@ -39,6 +43,14 @@ function TenBombs () {
 	}
 }
 
+function TwentyBombs () {
+	StartRound();
+	var n : int = 20;
+	for (var i = 0; i < n; i++) {
+		CreateHazard("objBomb", 1);
+		yield WaitForSeconds(0.5);
+	}
+}
 
 
 
