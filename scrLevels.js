@@ -1,55 +1,36 @@
 ﻿#pragma strict
 
-var roundActive : boolean = false;
-var round : int = 0;
-var roundOneHazards = new ArrayList();
-
 function Start () {
-	roundOneHazards.Add(function () { TenBombs(); });
-	TenBombs ();
-	yield WaitForSeconds(13);
-	TwentyBombs ();
-	yield WaitForSeconds(11);
-	TwentyBombs ();
-	TenBombs();
+	Level1();
 }
 
 function Update () {
 
 }
 
-function CreateHazard (name : String, amount : int) {
+function CreateHazard (name : String, amount : int, duration : float) {
 	for (var i = 0; i < amount; i++) {
 		var obj = GameObject.Instantiate(Resources.Load("Prefabs/" + name)) as GameObject;
+		yield WaitForSeconds(duration / amount);
 	}
 }
 
-function StartRound () {
-	roundActive = true;
-}
-
-function EndRound () {
-	round++;
-	roundActive = false;
-}
-
-// 10 bombs in 10 seconds
-function TenBombs () {
-	StartRound();
-	var n : int = 10;
-	for (var i = 0; i < n; i++) {
-		CreateHazard("objBomb", 1);
-		yield WaitForSeconds(1.0);
-	}
-}
-
-function TwentyBombs () {
-	StartRound();
-	var n : int = 20;
-	for (var i = 0; i < n; i++) {
-		CreateHazard("objBomb", 1);
-		yield WaitForSeconds(0.5);
-	}
+function Level1 () {
+	CreateHazard("objBomb", 10, 10);
+	yield WaitForSeconds(15);
+	CreateHazard("objBomb", 15, 10);
+	yield WaitForSeconds(15);
+	CreateHazard("objBomb", 20, 10);
+	yield WaitForSeconds(15);
+	CreateHazard("objGrenade", 10, 10);
+	yield WaitForSeconds(15);
+	CreateHazard("objRocket", 5, 10);
+	yield WaitForSeconds(15);
+	CreateHazard("objRocket", 10, 10);
+	yield WaitForSeconds(15);
+	CreateHazard("objSmokeGrenade", 2, 1);
+	yield WaitForSeconds(2);
+	CreateHazard("objBomb", 10, 10);
 }
 
 
