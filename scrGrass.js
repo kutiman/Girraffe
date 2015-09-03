@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-private var moveSpeed : float = -0.3;
+private var moveSpeed : float = -1.5;
 
 function Start () {
 

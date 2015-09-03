@@ -18,19 +18,72 @@ function CreateHazard (name : String, amount : int, duration : float) {
 function Level1 () {
 	CreateHazard("objBomb", 10, 10);
 	yield WaitForSeconds(15);
+	
 	CreateHazard("objBomb", 15, 10);
 	yield WaitForSeconds(15);
+	
 	CreateHazard("objBomb", 20, 10);
 	yield WaitForSeconds(15);
+	
 	CreateHazard("objGrenade", 10, 10);
 	yield WaitForSeconds(15);
+	
+	CreateHazard("objGrenade", 15, 10);
+	yield WaitForSeconds(15);
+	
+	CreateHazard("objGrenade", 20, 10);
+	yield WaitForSeconds(15);
+	
 	CreateHazard("objRocket", 5, 10);
 	yield WaitForSeconds(15);
+	
 	CreateHazard("objRocket", 10, 10);
 	yield WaitForSeconds(15);
+	
+	CreateHazard("objRocket", 15, 10);
+	yield WaitForSeconds(15);
+	
 	CreateHazard("objSmokeGrenade", 2, 1);
 	yield WaitForSeconds(2);
 	CreateHazard("objBomb", 10, 10);
+	yield WaitForSeconds(15);
+	
+	CreateHazard("objBomb", 10, 10);
+	CreateHazard("objRocket", 5, 10);
+	yield WaitForSeconds(13);
+	
+	CreateHazard("objBomb", 15, 10);
+	CreateHazard("objGrenade", 5, 10);
+	yield WaitForSeconds(18);
+	
+	CreateHazard("objBomb", 15, 10);
+	CreateHazard("objGrenade", 5, 10);
+	yield WaitForSeconds(15);
+	
+	CreateHazard("objWeight", 10, 10);
+	yield WaitForSeconds(15);
+	
+	CreateHazard("objWeight", 15, 10);
+	yield WaitForSeconds(15);
+	
+	CreateHazard("objWeight", 20, 10);
+	yield WaitForSeconds(15);
+	
+	CreateHazard("objWeight", 10, 10);
+	CreateHazard("objRocket", 10, 10);
+	yield WaitForSeconds(15);
+	
+	CreateHazard("objWeight", 5, 10);
+	CreateHazard("objRocket", 5, 10);
+	CreateHazard("objGrenade", 5, 10);
+	CreateHazard("objBomb", 5, 10);
+	yield WaitForSeconds(15);
+	
+	CreateHazard("objWeight", 10, 10);
+	CreateHazard("objRocket", 10, 10);
+	CreateHazard("objGrenade", 10, 10);
+	CreateHazard("objBomb", 10, 10);
+	yield WaitForSeconds(15);
 }
 
 
