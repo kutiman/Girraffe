@@ -52,6 +52,10 @@ function OnTriggerStay(coll : Collider) {
 			coll.gameObject.GetComponent(scrBullet).Die();
 			GetHurt(hurtDuration);
 		}
+		else if (coll.gameObject.tag == "tagCoin") {
+			scrGame.coins++;
+			coll.gameObject.GetComponent(scrCoin).PickedUp();
+		}
 	}
 }
 

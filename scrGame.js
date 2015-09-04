@@ -23,6 +23,7 @@ static var ufoCounter : int = 0;
 
 static var score : int = 0;
 static var lives : int = 0;
+static var coins : int = 0;
 
 static var player : GameObject;
 

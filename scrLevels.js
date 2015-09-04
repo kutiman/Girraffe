@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 function Start () {
-	Level1();
+	Level2();
 }
 
 function Update () {

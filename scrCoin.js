@@ -22,3 +22,9 @@ function Rotate () {
 function Move () {
 	transform.position.x -= moveSpeed * Time.deltaTime;
 }
+
+function PickedUp () {
+	gameObject.GetComponent(AudioSource).Play();
+	Debug.Log("COIN!!!");
+	Destroy(gameObject);
+}
