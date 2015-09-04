@@ -86,5 +86,18 @@ function Level1 () {
 	yield WaitForSeconds(15);
 }
 
+function Level2 () {
+	CreateHazard("objUfo", 1, 1);
+	yield WaitForSeconds(15);
+	
+	CreateHazard("objUfo", 3, 3);
+	yield WaitForSeconds(15);
+	
+	CreateHazard("objUfo", 3, 3);
+	CreateHazard("objSmokeGrenade", 2, 2);
+	yield WaitForSeconds(15);
+	
+}
+
 
 
