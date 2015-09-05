@@ -11,12 +11,12 @@ private var hurtDuration : float = 2.0;
 
 private var collSize : float;
 
-private var sounds : AudioSource[];
+public var sound : AudioSource;
 
 function Start () {
 	//audio
-	sounds = gameObject.GetComponents(AudioSource);
-	
+	sound = gameObject.AddComponent(AudioSource);
+	sound.clip = Resources.Load("Sounds/sndCoin");
 	
 	collSize = gameObject.GetComponent(BoxCollider).size.y;
 }
@@ -60,7 +60,7 @@ function OnTriggerStay(coll : Collider) {
 		}
 		else if (coll.gameObject.tag == "tagCoin") {
 			scrGame.coins++;
-			sounds[1].Play();
+			sound.Play();
 			coll.gameObject.GetComponent(scrCoin).PickedUp();
 		}
 	}
@@ -69,7 +69,7 @@ function OnTriggerStay(coll : Collider) {
 function GetHurt (dur : float) {
 	hurt = true;
 	scrGame.lives--;
-	sounds[0].Play();
+	sound.Play();
 	
 	while(dur > 0) {
 		
