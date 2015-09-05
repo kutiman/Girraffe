@@ -24,7 +24,5 @@ function Move () {
 }
 
 function PickedUp () {
-	gameObject.GetComponent(AudioSource).Play();
-	Debug.Log("COIN!!!");
 	Destroy(gameObject);
 }
