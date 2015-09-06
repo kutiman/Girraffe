@@ -16,7 +16,7 @@ public var sound : AudioSource;
 function Start () {
 	//audio
 	sound = gameObject.AddComponent(AudioSource);
-	sound.clip = Resources.Load("Sounds/sndCoin");
+	sound.clip = Resources.Load("Sounds/sndOuch");
 	
 	collSize = gameObject.GetComponent(BoxCollider).size.y;
 }
