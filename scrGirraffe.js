@@ -60,7 +60,6 @@ function OnTriggerStay(coll : Collider) {
 		}
 		else if (coll.gameObject.tag == "tagCoin") {
 			scrGame.coins++;
-			sound.Play();
 			coll.gameObject.GetComponent(scrCoin).PickedUp();
 		}
 	}

@@ -24,5 +24,6 @@ function Move () {
 }
 
 function PickedUp () {
+	scrSounds.soundCoin.Play();
 	Destroy(gameObject);
 }
