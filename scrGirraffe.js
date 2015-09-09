@@ -18,7 +18,7 @@ function Start () {
 	sound = gameObject.AddComponent(AudioSource);
 	sound.clip = Resources.Load("Sounds/sndOuch");
 	
-	collSize = gameObject.GetComponent(BoxCollider).size.y;
+	collSize = gameObject.GetComponent(BoxCollider).size.y * transform.localScale.x;
 }
 
 function Update () {
