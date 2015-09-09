@@ -3,7 +3,7 @@
 private var moveSpeed = 5.0;
 
 function Start () {
-	transform.position = Vector2(scrGame.screenWidth * 1.05, Random.Range(-scrGame.screenHeight * 0.9, scrGame.screenHeight * 0.9));
+	transform.position = Vector2(scrGame.screenWidth * 1.05, transform.position.y);
 }
 
 function Update () {

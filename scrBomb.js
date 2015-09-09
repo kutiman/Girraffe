@@ -1,11 +1,12 @@
 ﻿#pragma strict
 
 private var rotateSpeed = 100.0;
-private var moveSpeed = 1.0;
+private var moveSpeed = 2.0;
 
 function Start () {
 	RandomSpeeds();
-	transform.position = Vector2(scrGame.screenWidth * 1.05, Random.Range(-scrGame.screenHeight * 0.9, scrGame.screenHeight * 0.9));
+	transform.position.z = 0;
+	//transform.position = Vector2(scrGame.screenWidth * 1.05, Random.Range(-scrGame.screenHeight * 0.9, scrGame.screenHeight * 0.9));
 }
 
 function Update () {
@@ -30,7 +31,7 @@ function Move (speed : float) {
 
 function RandomSpeeds () { //random movement speed and rotation speed
 	rotateSpeed = 30.0 + 150.0 * Random.Range(0.0, 1.0);
-	moveSpeed = 0.8 + 1.0 * Random.Range(0.0, 1.0);
+	//moveSpeed = 0.8 + 1.0 * Random.Range(0.0, 1.0);
 }
 
 function BlowUp () {
