@@ -51,27 +51,7 @@ function Update () {
 	CreateWeapon("objUfo", ufoGenMaxSpeed);
 	*/
 	
-	if (Input.GetKeyDown(KeyCode.Alpha1)) {
-		GameObject.Instantiate(Resources.Load("Prefabs/" + "objBomb"));
-	}
-	if (Input.GetKeyDown(KeyCode.Alpha2)) {
-		GameObject.Instantiate(Resources.Load("Prefabs/" + "objGrenade"));
-	}
-	if (Input.GetKeyDown(KeyCode.Alpha3)) {
-		GameObject.Instantiate(Resources.Load("Prefabs/" + "objRocket"));
-	}
-	if (Input.GetKeyDown(KeyCode.Alpha4)) {
-		GameObject.Instantiate(Resources.Load("Prefabs/" + "objWeight"));
-	}
-	if (Input.GetKeyDown(KeyCode.Alpha5)) {
-		GameObject.Instantiate(Resources.Load("Prefabs/" + "objUfo"));
-	}
-	if (Input.GetKeyDown(KeyCode.Alpha6)) {
-		CreateCoin(1);
-	}
-	if (Input.GetKeyDown(KeyCode.Alpha7)) {
-		GameObject.Instantiate(Resources.Load("Prefabs/" + "objSmokeGrenade"));
-	}
+	
 }
 
 function CreateWeapon (name : String, speed : float) {
@@ -115,6 +95,8 @@ static function CreateCoin (amount : int) {
 		GameObject.Instantiate(Resources.Load("Prefabs/" + "objCoin"));
 	}
 }
+
+
 
 
 

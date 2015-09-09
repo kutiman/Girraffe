@@ -1,22 +1,18 @@
 ﻿#pragma strict
 
 private var moveSpeed = 5.0;
+public var util : scrUtilities;
 
 function Start () {
 	transform.position = Vector2(scrGame.screenWidth * 1.05, transform.position.y);
 }
 
 function Update () {
-	Move(moveSpeed);
+	transform.position.x -= moveSpeed * Time.deltaTime;
 	if (transform.position.x < -scrGame.screenWidth*1.2) {
 		scrGame.rocketCounter++;
-		scrGame.CreateCoin(3);
 		Destroy(gameObject);
 	}
-}
-
-function Move (speed : float) {
-	transform.position.x -= speed * Time.deltaTime;
 }
 
 function CreateExplosion () {

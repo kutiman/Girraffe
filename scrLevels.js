@@ -10,21 +10,35 @@ function Start () {
 	//yield WaitForSeconds(33);
 	
 	//Net("objBomb", 5, 20, 6);
-	yield WaitForSeconds(3);
-	Net("objRocket", 20, 20, 3);
+	//yield WaitForSeconds(3);
+	//Net("objRocket", 20, 20, 3);
 	
 }
 
 function Update () {
-
-}
-
-function CreateHazard (name : String, amount : int, duration : float) {
-	for (var i = 0; i < amount; i++) {
-		var obj = GameObject.Instantiate(Resources.Load("Prefabs/" + name)) as GameObject;
-		yield WaitForSeconds(duration / amount);
+	if (Input.GetKeyDown(KeyCode.Alpha1)) {
+		CreateHazard("objBomb", 1, 1);
+	}
+	if (Input.GetKeyDown(KeyCode.Alpha2)) {
+		CreateHazard("objGrenade", 1, 1);
+	}
+	if (Input.GetKeyDown(KeyCode.Alpha3)) {
+		CreateHazard("objRocket", 1, 1);
+	}
+	if (Input.GetKeyDown(KeyCode.Alpha4)) {
+		CreateHazard("objWeight", 1, 1);
+	}
+	if (Input.GetKeyDown(KeyCode.Alpha5)) {
+		CreateHazard("objUfo", 1, 1);
+	}
+	if (Input.GetKeyDown(KeyCode.Alpha6)) {
+		scrGame.CreateCoin(1);
+	}
+	if (Input.GetKeyDown(KeyCode.Alpha7)) {
+		CreateHazard("objSmokeGrenade", 1, 1);
 	}
 }
+
 
 function Level1 () {
 	CreateHazard("objBomb", 10, 10);
@@ -143,6 +157,15 @@ function Level3 () {
 	yield WaitForSeconds(15);
 	
 }
+
+function CreateHazard (name : String, amount : int, duration : float) {
+	for (var i = 0; i < amount; i++) {
+		var obj = GameObject.Instantiate(Resources.Load("Prefabs/" + name)) as GameObject;
+		obj.transform.position = Vector2(scrGame.screenWidth * 1.05, Random.Range(-scrGame.screenHeight * 0.9, scrGame.screenHeight * 0.9));
+		yield WaitForSeconds(duration / amount);
+	}
+}
+
 
 function ZigZag (name : String, amount : int, waitTime : float, mirror : boolean) {
 
