@@ -1,17 +1,26 @@
 ﻿#pragma strict
 
 function Start () {
-	//ZigZag("objRocket", 150, 150, true);
-	//Net("objBomb", 20, 20, 3);
+	//Level1();
+	//yield WaitForSeconds(280);
+	//Level2();
+	//yield WaitForSeconds(50);
+	//Level3();
+	//yield WaitForSeconds(65);
+	//ZigZag("objBomb", 20, 20, false);
 	//yield WaitForSeconds(23);
-	//Net("objBomb", 20, 25, 4);
-	//yield WaitForSeconds(28);
-	//Net("objBomb", 20, 30, 5);
-	//yield WaitForSeconds(33);
+//	ZigZag("objBomb", 20, 20, true);
+//	yield WaitForSeconds(23);
+//	Net("objBomb", 20, 20, 3);
+//	yield WaitForSeconds(23);
+//	Net("objBomb", 20, 25, 4);
+//	yield WaitForSeconds(28);
+//	Net("objBomb", 20, 30, 5);
+//	yield WaitForSeconds(33);
 	
-	//Net("objBomb", 5, 20, 6);
-	//yield WaitForSeconds(3);
-	//Net("objRocket", 20, 20, 3);
+	Net("objBomb", 5, 20, 6);
+	yield WaitForSeconds(23);
+	Net("objRocket", 20, 20, 3);
 	
 }
 

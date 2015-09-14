@@ -9,7 +9,7 @@ private var throwingDistance : float;
 function Start () {
 	awakeTime = Time.time;
 	throwingHeight = (scrGame.screenHeight * 2) * 0.5;
-	endPoint = Vector2(Random.Range(-scrGame.screenWidth * 0.9, scrGame.screenWidth * 0.9), Random.Range(-scrGame.screenHeight * 0.9, scrGame.screenHeight * 0.9));
+	endPoint = GetPlayerPosition();
 	transform.position = Vector2(scrGame.screenWidth * 1.05, endPoint.y);
 	throwingDistance = transform.position.x - endPoint.x;
 }
@@ -37,7 +37,6 @@ function Rotate (speed : float) {
 function BlowUp () {
 	CreateExplosion();
 	scrGame.grenadeCounter++;
-	scrGame.CreateCoin(2);
 	Destroy(gameObject);
 }
 
@@ -46,4 +45,17 @@ function CreateExplosion () {
 	obj.transform.position = gameObject.transform.position;
 }
 
+function GetPlayerPosition () {
+	var obj : GameObject = GameObject.FindWithTag("tagPlayer");
+	var pos : Vector2 = Vector2(obj.transform.position.x, obj.transform.position.y);
+	return pos;
+}
 
+
+
+
+
+
+
+
+	
