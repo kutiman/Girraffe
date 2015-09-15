@@ -212,7 +212,6 @@ function Net (name : String, amount : int, waitTime : float, rows : int) {
 	
 	for (var n : float = 0.0; n < amount; n++) {
 		var eff : float = n % 2.0;
-		Debug.Log(eff.ToString());
 		for (var i = 0; i < rows - eff; i++) {
 			var obj = GameObject.Instantiate(Resources.Load("Prefabs/" + name)) as GameObject;
 			obj.transform.position.y = hght - (hght/rows) - (((hght * 2)/rows) * i) - (((hght * 2)/rows) * (eff/2)); 
