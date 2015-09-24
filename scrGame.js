@@ -28,7 +28,8 @@ function Start () {
 	//CreateMenu();
 	
 	cam = GameObject.FindWithTag("MainCamera");
-
+	//GetScreenSize();
+	
 	yield WaitForSeconds(0);
 	CreateLevel(0);
 }
@@ -50,7 +51,7 @@ function Update () {
 	CreateWeapon("objUfo", ufoGenMaxSpeed);
 	*/
 	
-	if (Input.GetKey(KeyCode.G)) {
+	if (Input.GetKey(KeyCode.Q)) {
 		Application.Quit();
 	}
 	
@@ -114,4 +115,7 @@ function CreateMenu () {
 	buttonPlay = GameObject.Instantiate(Resources.Load("Prefabs/Menu/objButtonPlay")) as GameObject;
 }
 
-
+function GetScreenSize () {
+	screenWidth = Screen.width / 200;
+	screenHeight = Screen.height / 200;
+}
