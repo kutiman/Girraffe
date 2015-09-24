@@ -50,6 +50,9 @@ function Update () {
 	CreateWeapon("objUfo", ufoGenMaxSpeed);
 	*/
 	
+	if (Input.GetKey(KeyCode.G)) {
+		Application.Quit();
+	}
 	
 }
 

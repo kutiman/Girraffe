@@ -16,11 +16,9 @@ function Start () {
 }
 
 function OnMouseUpAsButton () {
-	//GameObject.FindWithTag("GameController").GetComponent(scrGame).CreateLevel(scrGame.level);
-
 	cam.GetComponent(scrMainCamera).lightMode = 1;
 	yield WaitForSeconds(1);
-	Application.LoadLevel("Level");
+	Application.Quit();
 }
 
 function OnMouseDown () {
@@ -47,9 +45,11 @@ function OnMouseExit () {
 function GetSpriteList (name : String) {
 	var sprArray = new Array();
 	sprArray = Resources.LoadAll(name);
-	var spriteArray : Array = [sprArray[1],sprArray[2], sprArray[3]];
+	var spriteArray : Array = [sprArray[7],sprArray[8], sprArray[9]];
 	return spriteArray;
 }
+
+
 
 
 

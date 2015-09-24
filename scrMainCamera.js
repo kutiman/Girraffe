@@ -21,7 +21,7 @@ function Dimmer () {
 	// dims the light when going through screens
 	if (lightMode == 1) {
 		GetComponent(GUITexture).color.a += Time.deltaTime / spd;
-		Debug.Log("Working!!!");
+
 	}
 	else if (lightMode == -1) {
 		GetComponent(GUITexture).color.a -= Time.deltaTime / spd;
