@@ -4,14 +4,10 @@
 
 
 public var lightMode : int = 0;
-private var spd = 0.5;
-private var guiColor : Color;
-
-
-
+private var spd = 1.0;
 
 function Start () {
-	guiColor = gameObject.GetComponent(GUITexture).color;
+	
 }
 
 function Update () {
@@ -20,15 +16,19 @@ function Update () {
 
 
 
-
 function Dimmer () {
 	// dims the light when going through screens
 	if (lightMode == 1) {
-		guiColor.a = 255 * spd * Time.deltaTime;
+		GetComponent(GUITexture).color.a += Time.deltaTime / spd;
 		Debug.Log("Working!!!");
 	}
 	else if (lightMode == -1) {
-		guiColor.a = 0 * spd * Time.deltaTime;
+		GetComponent(GUITexture).color.a -= Time.deltaTime / spd;
+	}
+	
+	if (lightMode == -1 && GetComponent(GUITexture).color.a <= 0.0) {
+		GetComponent(GUITexture).color.a = 0;
+		lightMode = 0;
 	}
 }
 

@@ -28,6 +28,9 @@ function Start () {
 	//CreateMenu();
 	
 	cam = GameObject.FindWithTag("MainCamera");
+	cam.GetComponent(scrMainCamera).lightMode = -1;
+	cam.GetComponent(GUITexture).color.a = 1;
+	yield WaitForSeconds(0);
 	CreateLevel(0);
 }
 
@@ -97,7 +100,7 @@ function CreateLevel (level : int) {
 
 	//ResetLevelParam();
 	// creating level items
-	background = GameObject.Instantiate(Resources.Load("Prefabs/objGround")) as GameObject;
+	//background = GameObject.Instantiate(Resources.Load("Prefabs/objGround")) as GameObject;
 	levelManager = GameObject.Instantiate(Resources.Load("Prefabs/conLevels")) as GameObject;
 	player = GameObject.Instantiate(Resources.Load("Prefabs/objGiraffe")) as GameObject;
 	GameObject.Instantiate(Resources.Load("Prefabs/conGui"));
