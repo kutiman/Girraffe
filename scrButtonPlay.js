@@ -19,7 +19,7 @@ function OnMouseUpAsButton () {
 	//GameObject.FindWithTag("GameController").GetComponent(scrGame).CreateLevel(scrGame.level);
 
 	cam.GetComponent(scrMainCamera).lightMode = 1;
-	yield WaitForSeconds(2);
+	yield WaitForSeconds(1);
 	Application.LoadLevel("Level");
 }
 
