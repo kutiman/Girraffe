@@ -224,7 +224,17 @@ function Net (name : String, amount : int, waitTime : float, rows : int) {
 	
 }
 
+static var bombGenSpeed : float = 0.0;
+static var grenadeGenSpeed : float = 0.0;
+static var rocketGenSpeed : float = 0.0;
+static var weightGenSpeed : float = 0.0;
+static var ufoGenSpeed : float = 0.0;
 
+static var bombGenMaxSpeed : float = 0.02;
+static var grenadeMaxGenSpeed : float = 0.002;
+static var rocketMaxGenSpeed : float = 0.002;
+static var weightMaxGenSpeed : float = 0.002;
+static var ufoGenMaxSpeed : float = 0.002;
 
 
 

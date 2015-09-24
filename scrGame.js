@@ -3,18 +3,6 @@
 static var screenWidth : float = 4.8;
 static var screenHeight : float = 3.2;
 
-static var bombGenSpeed : float = 0.0;
-static var grenadeGenSpeed : float = 0.0;
-static var rocketGenSpeed : float = 0.0;
-static var weightGenSpeed : float = 0.0;
-static var ufoGenSpeed : float = 0.0;
-
-static var bombGenMaxSpeed : float = 0.02;
-static var grenadeMaxGenSpeed : float = 0.002;
-static var rocketMaxGenSpeed : float = 0.002;
-static var weightMaxGenSpeed : float = 0.002;
-static var ufoGenMaxSpeed : float = 0.002;
-
 static var bombCounter : int = 0;
 static var grenadeCounter : int = 0;
 static var rocketCounter : int = 0;
@@ -24,14 +12,23 @@ static var ufoCounter : int = 0;
 static var score : int = 0;
 static var lives : int = 0;
 static var coins : int = 0;
+static var level : int = 0;
 
 static var player : GameObject;
+static var background : GameObject;
+static var cam : GameObject;
+static var levelManager : GameObject;
+
+// Menu items
+public var buttonPlay : GameObject;
+public var header : GameObject;
+
 
 function Start () {
-	ResetLevelParam();
-	if (!player) {
-		player = GameObject.Instantiate(Resources.Load("Prefabs/objGirraffe")) as GameObject;
-	}
+	//CreateMenu();
+	
+	cam = GameObject.FindWithTag("MainCamera");
+	CreateLevel(0);
 }
 
 function Update () {
@@ -62,10 +59,7 @@ function CreateWeapon (name : String, speed : float) {
 }
 
 function ResetLevelParam () {
-	
-	
-	lives = 3;
-	
+	/*
 	bombGenSpeed = 0.02;
 	grenadeGenSpeed = 0.005;
 	rocketGenSpeed = 0.001;
@@ -76,7 +70,10 @@ function ResetLevelParam () {
 	grenadeCounter = 0;
 	rocketCounter = 0;
 	weightCounter = 0;
-	ufoCounter = 0;
+	ufoCounter = 0;	
+	*/
+	
+	lives = 3;
 }
 
 function CalculateScore () {
@@ -96,8 +93,20 @@ static function CreateCoin (amount : int) {
 	}
 }
 
+function CreateLevel (level : int) {
 
+	//ResetLevelParam();
+	// creating level items
+	background = GameObject.Instantiate(Resources.Load("Prefabs/objGround")) as GameObject;
+	levelManager = GameObject.Instantiate(Resources.Load("Prefabs/conLevels")) as GameObject;
+	player = GameObject.Instantiate(Resources.Load("Prefabs/objGiraffe")) as GameObject;
+	GameObject.Instantiate(Resources.Load("Prefabs/conGui"));
 
+}
 
+function CreateMenu () {
+	header = GameObject.Instantiate(Resources.Load("Prefabs/Menu/objHeaderText")) as GameObject;
+	buttonPlay = GameObject.Instantiate(Resources.Load("Prefabs/Menu/objButtonPlay")) as GameObject;
+}
 
 
