@@ -1,30 +1,41 @@
 ﻿#pragma strict
 
-function Start () {
-	//Level1();
-	//yield WaitForSeconds(280);
-	//Level2();
-	//yield WaitForSeconds(50);
-	//Level3();
-	//yield WaitForSeconds(65);
-	//ZigZag("objBomb", 20, 20, false);
-	//yield WaitForSeconds(23);
-//	ZigZag("objBomb", 20, 20, true);
-//	yield WaitForSeconds(23);
-//	Net("objBomb", 20, 20, 3);
-//	yield WaitForSeconds(23);
-//	Net("objBomb", 20, 25, 4);
-//	yield WaitForSeconds(28);
-//	Net("objBomb", 20, 30, 5);
-//	yield WaitForSeconds(33);
+// sound experiment
+var audioSource: AudioSource;
+var spectrum : float[] = new float[64];
+var samples : float[,] = new float[64,3];
+
+function Start() {
+	audioSource = GetComponent.<AudioSource>();
 	
-	Net("objBomb", 5, 20, 6);
-	yield WaitForSeconds(23);
-	Net("objRocket", 20, 20, 3);
-	
+	for (var i = 0; i < samples.GetLength(0); i++) {
+		for (var n = 0; n < samples.GetLength(1); n++) {
+			samples[i,n] = 0.0;
+		}
+	}
 }
 
+////////////////////////
+
+
 function Update () {
+	
+	// sound experiment
+	var spectrum : float[] = audioSource.GetSpectrumData(64, 0, FFTWindow.Rectangular);
+	
+	for (var i = 0; i < spectrum.Length; i+=1) {
+
+		samples[i,0] = samples[i,1];
+		samples[i,1] = samples[i,2];
+		samples[i,2] = spectrum[i];
+		
+		if (samples[i,2] < samples[i,1] && samples[i,1] > samples[i,0] && Mathf.Clamp(samples[i,1] * (50+i*i), 0.0, 50.0) > 49.9) {
+			var posY = -scrGame.screenHeight + (scrGame.screenHeight*2)/(samples.GetLength(0)) * (i);
+			//CreateHazardInPosition("objBomb", posY * 0.95);
+		} 
+	}
+	/////////////////////
+	
 	if (Input.GetKeyDown(KeyCode.Alpha1)) {
 		CreateHazard("objBomb", 1, 1);
 	}
@@ -175,6 +186,12 @@ function CreateHazard (name : String, amount : int, duration : float) {
 	}
 }
 
+function CreateHazardInPosition (name : String, posY : float) {
+
+		var obj = GameObject.Instantiate(Resources.Load("Prefabs/" + name)) as GameObject;
+		obj.transform.position = Vector2(scrGame.screenWidth * 1.05, posY);
+}
+
 
 function ZigZag (name : String, amount : int, waitTime : float, mirror : boolean) {
 
@@ -218,10 +235,7 @@ function Net (name : String, amount : int, waitTime : float, rows : int) {
 			obj.transform.position.x = wdth * 1.05;
 		}
 		yield WaitForSeconds(waitTime / amount);
-	}
-	
-	
-	
+	}	
 }
 
 static var bombGenSpeed : float = 0.0;
@@ -236,6 +250,29 @@ static var rocketMaxGenSpeed : float = 0.002;
 static var weightMaxGenSpeed : float = 0.002;
 static var ufoGenMaxSpeed : float = 0.002;
 
+function Something () {
+	//Level1();
+	//yield WaitForSeconds(280);
+	//Level2();
+	//yield WaitForSeconds(50);
+	//Level3();
+	//yield WaitForSeconds(65);
+	//ZigZag("objBomb", 20, 20, false);
+	//yield WaitForSeconds(23);
+//	ZigZag("objBomb", 20, 20, true);
+//	yield WaitForSeconds(23);
+//	Net("objBomb", 20, 20, 3);
+//	yield WaitForSeconds(23);
+//	Net("objBomb", 20, 25, 4);
+//	yield WaitForSeconds(28);
+//	Net("objBomb", 20, 30, 5);
+//	yield WaitForSeconds(33);
+	
+//	Net("objBomb", 5, 20, 6);
+//	yield WaitForSeconds(23);
+//	Net("objRocket", 20, 20, 3);
+	
+}
 
 
 
