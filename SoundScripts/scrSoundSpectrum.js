@@ -3,11 +3,14 @@
 private var iSamples : int = 64;
 var audioSource: AudioSource;
 static var spectrum : float[];
+var posList : float[];
 var cubesTransform : Transform[];
 var goTransform : Transform;
 public var cube : GameObject;
 
-private var gravity : float = 2.0;
+var cubeSize : float;
+
+public var gravity : float = 0.1;
 
 var samples : float[,] = new float[iSamples,3];
 
@@ -16,14 +19,18 @@ function Start() {
 	goTransform = GetComponent(Transform);
 	audioSource = GetComponent.<AudioSource>();
 	spectrum = new float[iSamples];
+	posList = new float[iSamples];
 	cubesTransform = new Transform[iSamples];
+	
+	cubeSize = (scrGame.screenWidth * 2) / spectrum.length;
 	
 	for (var i = 0; i < samples.GetLength(0); i++) {
 		for (var n = 0; n < samples.GetLength(1); n++) {
 			samples[i,n] = 0.0;
 		}
 	}
-	CreateCubes();
+	CreateHazardMachine();
+	
 	
 }
 
@@ -32,15 +39,7 @@ function Update () {
 		gravity = 0;
 	}
 	spectrum = audioSource.GetSpectrumData(iSamples, 0, FFTWindow.BlackmanHarris);
-	for (var i = 0; i < spectrum.length; i++) {
-		var posY = 6.4 / 50 * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0);
-		if (cubesTransform[i].localScale.y <= posY) {
-			cubesTransform[i].localScale.y = posY;
-		}
-		else /*if (cubesTransform[i].localScale.y > 0)*/{
-			cubesTransform[i].localScale.y *= 1 - gravity * Time.deltaTime;
-		}
-	}
+	UpdateHazardMachine();
 }
 	
 
@@ -62,14 +61,69 @@ function ShitFunction () {
 function CreateCubes () {
 	// for the start function
 	var tempCube : GameObject;
-	var cubeSize = (scrGame.screenWidth * 2) / spectrum.Length;
 	
 	for (var i = 0; i < spectrum.length; i++) {
 		tempCube = Instantiate(cube, new Vector3(goTransform.position.x - scrGame.screenWidth + cubeSize * i  + cubeSize/2, goTransform.position.y, goTransform.position.z),Quaternion.identity);
 		cubesTransform[i] = tempCube.GetComponent(Transform);
+		cubesTransform[i].position.y = -scrGame.screenHeight;
+
 		cubesTransform[i].parent = goTransform;
-		cubesTransform[i].localScale.x = cubeSize * 1;
-		cubesTransform[i].localScale.y = 0;
+		
 		
 	}
 }
+
+function CreateHazardMachine () {
+	// for the start function
+	for (var i = 0; i < spectrum.length; i++) {
+		posList[i] = -scrGame.screenHeight;		
+	}
+}
+
+function UpdateCubes () {
+	for (var i = 0; i < spectrum.length; i++) {
+		var posY = 6.4 / 50 * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0);
+		if (cubesTransform[i].localScale.y <= posY) {
+			cubesTransform[i].localScale.y = posY;
+		}
+		else /*if (cubesTransform[i].localScale.y > 0)*/{
+			cubesTransform[i].localScale.y *= 1 - gravity * Time.deltaTime;
+		}
+	}
+}
+
+function UpdateMountains () {
+
+	for (var i = 0; i < spectrum.length; i++) {
+		var posY = -scrGame.screenHeight + ((6.4 / 50) * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0));
+		if (cubesTransform[i].position.y <= posY) {
+			cubesTransform[i].position.y = posY;
+		}
+		else /*if (cubesTransform[i].localScale.y > 0)*/{
+			cubesTransform[i].position.y -= gravity * Time.deltaTime;
+		}
+	}
+}
+
+function UpdateHazardMachine () {
+	
+	for (var i = 0; i < spectrum.length; i++) {
+		var posY = ((6.4 / 50) * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0));
+		if (posList[i] <= posY) {
+			posList[i] = posY;
+			if (posList[i] > 0.3) {
+				var tempCube : GameObject;
+				tempCube = Instantiate(cube, new Vector3(goTransform.position.x - scrGame.screenWidth + cubeSize * i  + cubeSize/2, scrGame.screenHeight + cubeSize/2, goTransform.position.z),Quaternion.identity);
+				tempCube.transform.parent = goTransform;
+				tempCube.GetComponent(scrDroppingItem).speed = 1 + (posY);
+			}
+				
+		}
+		else /*if (cubesTransform[i].localScale.y > 0)*/{
+			posList[i] -= gravity * Time.deltaTime;
+		}
+	}
+}
+
+
+
