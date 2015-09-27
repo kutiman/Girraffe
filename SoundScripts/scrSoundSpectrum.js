@@ -4,6 +4,7 @@ private var iSamples : int = 64;
 var audioSource: AudioSource;
 static var spectrum : float[];
 var posList : float[];
+var lastItem : float[];
 var cubesTransform : Transform[];
 var goTransform : Transform;
 public var cube : GameObject;
@@ -20,6 +21,7 @@ function Start() {
 	audioSource = GetComponent.<AudioSource>();
 	spectrum = new float[iSamples];
 	posList = new float[iSamples];
+	lastItem = new float[iSamples];
 	cubesTransform = new Transform[iSamples];
 	
 	cubeSize = (scrGame.screenWidth * 2) / spectrum.length;
@@ -107,15 +109,37 @@ function UpdateMountains () {
 
 function UpdateHazardMachine () {
 	
+	var waitTime : float = 0.2;
+	
 	for (var i = 0; i < spectrum.length; i++) {
 		var posY = ((6.4 / 50) * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0));
 		if (posList[i] <= posY) {
 			posList[i] = posY;
-			if (posList[i] > 0.3) {
+			if (posList[i] > 0.3 &&  Time.time >= waitTime + lastItem[i]) {
 				var tempCube : GameObject;
-				tempCube = Instantiate(cube, new Vector3(goTransform.position.x - scrGame.screenWidth + cubeSize * i  + cubeSize/2, scrGame.screenHeight + cubeSize/2, goTransform.position.z),Quaternion.identity);
+				var pos1 : float = goTransform.position.x + (Mathf.Floor(i/2.0) * (1.0 - (i % 2) * 2) * cubeSize);
+				var pos2 : float = goTransform.position.x - scrGame.screenWidth + cubeSize * i  + cubeSize/2;
+				tempCube = Instantiate(cube, new Vector3(pos2, scrGame.screenHeight + cubeSize/2, goTransform.position.z),Quaternion.identity);
 				tempCube.transform.parent = goTransform;
 				tempCube.GetComponent(scrDroppingItem).speed = 1 + (posY);
+				var n = new Random.Range(0.0,1.0);
+				if (n > 0.98) {
+					n = new Random.Range(0.0,1.0);
+					if (n > 0.85) {
+						n = new Random.Range(0.0,1.0);
+						if (n > 0.95) {
+							tempCube.GetComponent(scrDroppingItem).itemType = 3;
+						}
+						else {
+							tempCube.GetComponent(scrDroppingItem).itemType = 2;
+						}
+					}
+					else {
+						tempCube.GetComponent(scrDroppingItem).itemType = 1;
+					}
+					
+				}
+				lastItem[i] = Time.time;
 			}
 				
 		}

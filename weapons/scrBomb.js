@@ -3,7 +3,8 @@
 public var util : scrUtilities;
 
 private var rotateSpeed = 100.0;
-private var moveSpeed = 2.0;
+public var moveSpeed = 2.0;
+public var moveDirection = "";
 
 function Start () {
 	RandomSpeeds();
