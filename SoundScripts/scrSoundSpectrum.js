@@ -3,7 +3,7 @@
 private var iSamples : int = 64;
 var audioSource: AudioSource;
 static var spectrum : float[];
-var posList : float[];
+static var posList : float[];
 var lastItem : float[];
 var cubesTransform : Transform[];
 var goTransform : Transform;
@@ -121,7 +121,8 @@ function UpdateHazardMachine () {
 				var pos2 : float = goTransform.position.x - scrGame.screenWidth + cubeSize * i  + cubeSize/2;
 				tempCube = Instantiate(cube, new Vector3(pos2, scrGame.screenHeight + cubeSize/2, goTransform.position.z),Quaternion.identity);
 				tempCube.transform.parent = goTransform;
-				tempCube.GetComponent(scrDroppingItem).speed = 1 + (posY);
+				tempCube.GetComponent(scrDroppingItem).speed = 0.2 + (posY/1.5);
+				tempCube.GetComponent(scrDroppingItem).iSpec = i;
 				var n = new Random.Range(0.0,1.0);
 				if (n > 0.98) {
 					n = new Random.Range(0.0,1.0);
