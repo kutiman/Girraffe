@@ -47,7 +47,10 @@ function OnMouseExit () {
 function GetSpriteList (name : String) {
 	var sprArray = new Array();
 	sprArray = Resources.LoadAll(name);
-	var spriteArray : Array = [sprArray[1],sprArray[2], sprArray[3]];
+	var spriteArray : Array = new Array();
+	for (var i = 1; i < sprArray.length; i++) {
+		spriteArray[i-1] = sprArray[i];
+	}
 	return spriteArray;
 }
 

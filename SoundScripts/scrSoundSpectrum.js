@@ -123,6 +123,8 @@ function UpdateHazardMachine () {
 				tempCube.transform.parent = goTransform;
 				tempCube.GetComponent(scrDroppingItem).speed = 0.2 + (posY/1.5);
 				tempCube.GetComponent(scrDroppingItem).iSpec = i;
+				var newScale : float = tempCube.GetComponent(scrDroppingItem).originalScale / 2 * (1 / (3.0 - posList[i]));
+				tempCube.transform.localScale = Vector2(newScale, newScale);
 				var n = new Random.Range(0.0,1.0);
 				if (n > 0.98) {
 					n = new Random.Range(0.0,1.0);
