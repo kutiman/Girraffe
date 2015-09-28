@@ -14,7 +14,7 @@ static var lives : int = 0;
 static var coins : int = 0;
 static var level : int = 0;
 
-static var player : GameObject;
+static public var player : GameObject;
 static var background : GameObject;
 static var cam : GameObject;
 static var levelManager : GameObject;
@@ -104,8 +104,9 @@ function CreateLevel (level : int) {
 	//ResetLevelParam();
 	// creating level items
 	//background = GameObject.Instantiate(Resources.Load("Prefabs/objGround")) as GameObject;
-	levelManager = GameObject.Instantiate(Resources.Load("Prefabs/conLevels")) as GameObject;
-	player = GameObject.Instantiate(Resources.Load("Prefabs/objGiraffe")) as GameObject;
+	//levelManager = GameObject.Instantiate(Resources.Load("Prefabs/conLevels")) as GameObject;
+	//player = GameObject.Instantiate(Resources.Load("Prefabs/objGiraffe")) as GameObject;
+	player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
 	GameObject.Instantiate(Resources.Load("Prefabs/conGui"));
 
 }

@@ -12,6 +12,7 @@ public var originalScale : float = 0.5 * (1 + ((itemType * 1.0) / 5));
 public var mats : Material[] = new Material[4];
 public var colors : Color[] = new Color[4];
 public var sprts : Sprite[] = new Sprite[48];
+private var tagsList = ["tagNormalItem", "tagBadItem", "tagUpper", "tagVacuum", "tagSpecial"];
 
 function Start () {
 	//GetComponent(MeshRenderer).material = mats[itemType];
@@ -20,6 +21,7 @@ function Start () {
 	gameObject.transform.localScale = Vector2(originalScale,originalScale);
 	sprts = GetSpriteList("Sprites/sprSnowflakes");
 	GetComponent(SpriteRenderer).sprite = sprts[Random.Range(0, sprts.length)];
+	gameObject.tag = tagsList[itemType];
 }
 
 function Update () {
@@ -66,3 +68,8 @@ function GetSpriteList (name : String) {
 	}
 	return spriteArray;
 }
+
+
+
+
+

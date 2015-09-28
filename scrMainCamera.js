@@ -8,7 +8,7 @@ private var spd = 1.0;
 
 function Start () {
 	GetComponent(scrMainCamera).lightMode = -1;
-	GetComponent(GUITexture).color.a = 1;
+	GetComponent(GUITexture).color.a = 0;
 }
 
 function Update () {
