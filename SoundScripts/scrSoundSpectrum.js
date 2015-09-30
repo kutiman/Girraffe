@@ -9,6 +9,9 @@ var cubesTransform : Transform[];
 var goTransform : Transform;
 public var cube : GameObject;
 
+public var tolerance : float = 0.3;
+public var itemSpeed : float = 0.2;
+
 var cubeSize : float;
 
 public var gravity : float = 0.1;
@@ -109,19 +112,19 @@ function UpdateMountains () {
 
 function UpdateHazardMachine () {
 	
-	var waitTime : float = 0.2;
+	var waitTime : float = 0.5;
 	
 	for (var i = 0; i < spectrum.length; i++) {
 		var posY = ((6.4 / 50) * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0));
 		if (posList[i] <= posY) {
 			posList[i] = posY;
-			if (posList[i] > 0.3 &&  Time.time >= waitTime + lastItem[i]) {
+			if (posList[i] > tolerance &&  Time.time >= waitTime + lastItem[i]) {
 				var tempCube : GameObject;
 				var pos1 : float = goTransform.position.x + (Mathf.Floor(i/2.0) * (1.0 - (i % 2) * 2) * cubeSize);
 				var pos2 : float = goTransform.position.x - scrGame.screenWidth + cubeSize * i  + cubeSize/2;
 				tempCube = Instantiate(cube, new Vector3(pos2, scrGame.screenHeight + cubeSize/2, goTransform.position.z),Quaternion.identity);
 				tempCube.transform.parent = goTransform;
-				tempCube.GetComponent(scrDroppingItem).speed = 0.2 + (posY/1.5);
+				tempCube.GetComponent(scrDroppingItem).speed = (0.2 + (posY/1.5)) * itemSpeed;
 				tempCube.GetComponent(scrDroppingItem).iSpec = i;
 				var newScale : float = tempCube.GetComponent(scrDroppingItem).originalScale / 2 * (1 / (3.0 - posList[i]));
 				tempCube.transform.localScale = Vector2(newScale, newScale);

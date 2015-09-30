@@ -84,7 +84,9 @@ function GetHurt (dur : float) {
 	gameObject.GetComponent(Material).color.a = 1.0;
 }
 
-
+function Vacuum () {
+	
+}
 
 
 
