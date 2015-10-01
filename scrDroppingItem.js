@@ -7,10 +7,10 @@ private var rotateSpeed : float = 2.0;
 public var direction = "down";
 public var itemType : int = 0;
 public var iSpec : int;
-private var declineRate : float = 1.5;
+public var decayRate : float = 0.1;
 public var sucked : boolean = false;
 
-public var originalScale : float = 0.5 * (1 + ((itemType * 1.0) / 5));
+public var myScale : float = 0.5;
 
 public var mats : Material[] = new Material[4];
 public var colors : Color[] = new Color[4];
@@ -20,9 +20,7 @@ private var tagsList = ["tagNormalItem", "tagBadItem", "tagUpper", "tagVacuum", 
 function Start () {
 	player = GameObject.FindWithTag("tagPlayer");
 	//GetComponent(MeshRenderer).material = mats[itemType];
-	originalScale = 0.5 * (1 + ((itemType * 1.0) / 5));
 	GetComponent(SpriteRenderer).color = colors[itemType];
-	gameObject.transform.localScale = Vector2(originalScale,originalScale);
 	sprts = GetSpriteList("Sprites/sprSnowflakes");
 	GetComponent(SpriteRenderer).sprite = sprts[Random.Range(0, sprts.length)];
 	gameObject.tag = tagsList[itemType];
@@ -37,7 +35,7 @@ function Update () {
 		Move();
 	}
 	Rotate();
-	CheckSpectrum();
+	Decay();
 	if (transform.position.y < -scrGame.screenHeight * 1.05) {
 		Destroy(gameObject);
 	}
@@ -47,23 +45,16 @@ function Update () {
 	}
 }
 
-function CheckSpectrum () {
-	var maxScale : float = originalScale;
-	var minScale : float = originalScale/8;
+function Decay () {
+	var minScale : float = 0.9/3;
 	var relativePosition : float = 1 - (scrGame.screenHeight - transform.position.y) / (scrGame.screenHeight * 2);
 	
-	if (/*scrSoundSpectrum.posList[iSpec] < 6.4*/ true) {
-		var scl : float = originalScale / 2 * (1 / (3.0 - scrSoundSpectrum.posList[iSpec]));
-		if (scl > originalScale * 1.5) {scl = maxScale;}
-		if (scl < gameObject.transform.localScale.x) {
-			scl = gameObject.transform.localScale.x * (1 - declineRate * Time.deltaTime);
-		}
-		gameObject.transform.localScale = Vector2(scl, scl);
-		if (gameObject.transform.localScale.x < minScale) {
-			gameObject.transform.localScale = Vector2(minScale * Mathf.Lerp(0.7, 1.0, relativePosition), minScale * Mathf.Lerp(0.7, 1.0, relativePosition));
-		}
-	}
+	myScale *= (1 - decayRate * Time.deltaTime);
+	gameObject.transform.localScale = Vector2(myScale * (Mathf.Lerp(0.5, 1.0, relativePosition)), myScale * (Mathf.Lerp(0.5, 1.0, relativePosition)));
 	
+	if (gameObject.transform.localScale.x < minScale * (Mathf.Lerp(0.5, 1.0, relativePosition))) {
+		gameObject.transform.localScale = Vector2(minScale * (Mathf.Lerp(0.5, 1.0, relativePosition)), minScale * (Mathf.Lerp(0.5, 1.0, relativePosition)));
+	}
 }
 
 function GetSpriteList (name : String) {
