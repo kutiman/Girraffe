@@ -13,7 +13,27 @@ public var item : GameObject; // the item that will be created by the machine
 public var tolerance : float = 0.3; // minimum  level for an item to be created
 public var itemSpeed : float = 0.2; // speed modifier for all items
 private var itemSize : float; // size of the item created
-public var gravity : float = 0.1;
+public var gravity : float = 0.1; // the decline rate for the machine
+
+
+
+
+function Tryout() {
+	var i: int = 1;
+	while ( i < iSamples-1 ) {
+		Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
+		Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
+		Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
+		Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.yellow);
+		i++;
+	}
+}
+
+
+
+
+
+
 
 var samples : float[,] = new float[iSamples,3];
 
@@ -39,11 +59,14 @@ function Start() {
 }
 
 function Update () {
+	// clamp speed modifier between two numbers
+	itemSpeed = Mathf.Clamp(itemSpeed,0,10);
 	if (gravity < 0) {
 		gravity = 0;
 	}
 	spectrum = audioSource.GetSpectrumData(iSamples, 0, FFTWindow.BlackmanHarris);
 	UpdateHazardMachine();
+	Tryout();
 }
 
 function CreateHazardMachine () {
@@ -51,6 +74,7 @@ function CreateHazardMachine () {
 	for (var i = 0; i < spectrum.length; i++) {
 		posList[i] = -scrGame.screenHeight;		
 	}
+	
 }
 
 
@@ -59,33 +83,33 @@ function UpdateHazardMachine () {
 	var waitTime : float = 0.5;
 	
 	for (var i = 0; i < spectrum.length; i++) {
-		var posY = 6.4 * spectrum[i];//((6.4 / 50) * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0));
+		var eff : float = 100.0;
+		var posY = (((scrGame.screenHeight*2) / eff) * Mathf.Clamp(spectrum[i]*(eff+i*i),0,eff));
 		if (posList[i] <= posY) {
 			posList[i] = posY;
 			if (posList[i] > tolerance &&  Time.time >= waitTime + lastItemTime[i]) {
-				var tempCube : GameObject;
-				var pos1 : float = goTransform.position.x + (Mathf.Floor(i/2.0) * (1.0 - (i % 2) * 2) * itemSize);
-				var pos2 : float = goTransform.position.x - scrGame.screenWidth + itemSize * i  + itemSize/2;
-				tempCube = Instantiate(item, new Vector3(pos2, scrGame.screenHeight + itemSize/2, goTransform.position.z),Quaternion.identity);
-				tempCube.transform.parent = goTransform;
-				tempCube.GetComponent(scrDroppingItem).speed = (0.2 + (posY/1.5)) * itemSpeed;
-				tempCube.GetComponent(scrDroppingItem).iSpec = i;
-				var newScale : float = tempCube.GetComponent(scrDroppingItem).originalScale / 2 * (1 / (3.0 - posList[i]));
-				tempCube.transform.localScale = Vector2(newScale, newScale);
+				var tempItem : GameObject; // 
+				var posX : float = goTransform.position.x - scrGame.screenWidth + itemSize * i  + itemSize/2;
+				tempItem = Instantiate(item, new Vector3(posX, scrGame.screenHeight + itemSize/2, goTransform.position.z),Quaternion.identity);
+				tempItem.transform.parent = goTransform;
+				tempItem.GetComponent(scrDroppingItem).speed = (0.2 + (posY/1.5)) * itemSpeed;
+				tempItem.GetComponent(scrDroppingItem).iSpec = i;
+				var newScale : float = tempItem.GetComponent(scrDroppingItem).originalScale / 2 * (1 / (3.0 - posList[i]));
+				tempItem.transform.localScale = Vector2(newScale, newScale);
 				var n = new Random.Range(0.0,1.0);
 				if (n > 0.94) {
 					n = new Random.Range(0.0,1.0);
 					if (n > 0.55) {
 						n = new Random.Range(0.0,1.0);
 						if (n > 0.95) {
-							tempCube.GetComponent(scrDroppingItem).itemType = 3;
+							tempItem.GetComponent(scrDroppingItem).itemType = 3;
 						}
 						else {
-							tempCube.GetComponent(scrDroppingItem).itemType = 2;
+							tempItem.GetComponent(scrDroppingItem).itemType = 2;
 						}
 					}
 					else {
-						tempCube.GetComponent(scrDroppingItem).itemType = 1;
+						tempItem.GetComponent(scrDroppingItem).itemType = 1;
 					}
 				}
 				lastItemTime[i] = Time.time;
@@ -96,6 +120,3 @@ function UpdateHazardMachine () {
 		}
 	}
 }
-
-
-
