@@ -1,19 +1,18 @@
 ﻿#pragma strict
 
-private var iSamples : int = 64;
-var audioSource: AudioSource;
-static var spectrum : float[];
+var audioSource: AudioSource; // calculate the spectrum of this audio source
+var goTransform : Transform; 
+var lastItemTime : float[]; // the time when the last item was created
+
+private var iSamples : int = 64; // amount of samples to be calculated in the spectrum
+static var spectrum : float[]; // raw spectrum data from the audio source
 static var posList : float[];
-var lastItem : float[];
-var cubesTransform : Transform[];
-var goTransform : Transform;
-public var cube : GameObject;
 
-public var tolerance : float = 0.3;
-public var itemSpeed : float = 0.2;
+public var item : GameObject; // the item that will be created by the machine
 
-var cubeSize : float;
-
+public var tolerance : float = 0.3; // minimum  level for an item to be created
+public var itemSpeed : float = 0.2; // speed modifier for all items
+private var itemSize : float; // size of the item created
 public var gravity : float = 0.1;
 
 var samples : float[,] = new float[iSamples,3];
@@ -24,10 +23,10 @@ function Start() {
 	audioSource = GetComponent.<AudioSource>();
 	spectrum = new float[iSamples];
 	posList = new float[iSamples];
-	lastItem = new float[iSamples];
-	cubesTransform = new Transform[iSamples];
+	lastItemTime = new float[iSamples];
+
 	
-	cubeSize = (scrGame.screenWidth * 2) / spectrum.length;
+	itemSize = (scrGame.screenWidth * 2) / spectrum.length;
 	
 	for (var i = 0; i < samples.GetLength(0); i++) {
 		for (var n = 0; n < samples.GetLength(1); n++) {
@@ -46,37 +45,6 @@ function Update () {
 	spectrum = audioSource.GetSpectrumData(iSamples, 0, FFTWindow.BlackmanHarris);
 	UpdateHazardMachine();
 }
-	
-
-function ShitFunction () {
-
-	for (var i = 0; i < spectrum.Length; i+=1) {
-		
-		samples[i,0] = samples[i,1];
-		samples[i,1] = samples[i,2];
-		samples[i,2] = spectrum[i];
-		
-		if (samples[i,2] < samples[i,1] && samples[i,1] > samples[i,0] && Mathf.Clamp(samples[i,1] * (50+i*i), 0.0, 50.0) > 49.9) {
-			var posY = -scrGame.screenHeight + (scrGame.screenHeight*2)/(samples.GetLength(0)) * (i);
-			//CreateHazardInPosition("objBomb", posY * 0.95);
-		} 	
-	}
-}
-
-function CreateCubes () {
-	// for the start function
-	var tempCube : GameObject;
-	
-	for (var i = 0; i < spectrum.length; i++) {
-		tempCube = Instantiate(cube, new Vector3(goTransform.position.x - scrGame.screenWidth + cubeSize * i  + cubeSize/2, goTransform.position.y, goTransform.position.z),Quaternion.identity);
-		cubesTransform[i] = tempCube.GetComponent(Transform);
-		cubesTransform[i].position.y = -scrGame.screenHeight;
-
-		cubesTransform[i].parent = goTransform;
-		
-		
-	}
-}
 
 function CreateHazardMachine () {
 	// for the start function
@@ -85,44 +53,20 @@ function CreateHazardMachine () {
 	}
 }
 
-function UpdateCubes () {
-	for (var i = 0; i < spectrum.length; i++) {
-		var posY = 6.4 / 50 * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0);
-		if (cubesTransform[i].localScale.y <= posY) {
-			cubesTransform[i].localScale.y = posY;
-		}
-		else /*if (cubesTransform[i].localScale.y > 0)*/{
-			cubesTransform[i].localScale.y *= 1 - gravity * Time.deltaTime;
-		}
-	}
-}
-
-function UpdateMountains () {
-
-	for (var i = 0; i < spectrum.length; i++) {
-		var posY = -scrGame.screenHeight + ((6.4 / 50) * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0));
-		if (cubesTransform[i].position.y <= posY) {
-			cubesTransform[i].position.y = posY;
-		}
-		else /*if (cubesTransform[i].localScale.y > 0)*/{
-			cubesTransform[i].position.y -= gravity * Time.deltaTime;
-		}
-	}
-}
 
 function UpdateHazardMachine () {
 	
 	var waitTime : float = 0.5;
 	
 	for (var i = 0; i < spectrum.length; i++) {
-		var posY = ((6.4 / 50) * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0));
+		var posY = 6.4 * spectrum[i];//((6.4 / 50) * Mathf.Clamp(spectrum[i]*(50+i*i),0,50.0));
 		if (posList[i] <= posY) {
 			posList[i] = posY;
-			if (posList[i] > tolerance &&  Time.time >= waitTime + lastItem[i]) {
+			if (posList[i] > tolerance &&  Time.time >= waitTime + lastItemTime[i]) {
 				var tempCube : GameObject;
-				var pos1 : float = goTransform.position.x + (Mathf.Floor(i/2.0) * (1.0 - (i % 2) * 2) * cubeSize);
-				var pos2 : float = goTransform.position.x - scrGame.screenWidth + cubeSize * i  + cubeSize/2;
-				tempCube = Instantiate(cube, new Vector3(pos2, scrGame.screenHeight + cubeSize/2, goTransform.position.z),Quaternion.identity);
+				var pos1 : float = goTransform.position.x + (Mathf.Floor(i/2.0) * (1.0 - (i % 2) * 2) * itemSize);
+				var pos2 : float = goTransform.position.x - scrGame.screenWidth + itemSize * i  + itemSize/2;
+				tempCube = Instantiate(item, new Vector3(pos2, scrGame.screenHeight + itemSize/2, goTransform.position.z),Quaternion.identity);
 				tempCube.transform.parent = goTransform;
 				tempCube.GetComponent(scrDroppingItem).speed = (0.2 + (posY/1.5)) * itemSpeed;
 				tempCube.GetComponent(scrDroppingItem).iSpec = i;
@@ -143,13 +87,11 @@ function UpdateHazardMachine () {
 					else {
 						tempCube.GetComponent(scrDroppingItem).itemType = 1;
 					}
-					
 				}
-				lastItem[i] = Time.time;
+				lastItemTime[i] = Time.time;
 			}
-				
 		}
-		else /*if (cubesTransform[i].localScale.y > 0)*/{
+		else /*if (itemsTransform[i].localScale.y > 0)*/{
 			posList[i] -= gravity * Time.deltaTime;
 		}
 	}
