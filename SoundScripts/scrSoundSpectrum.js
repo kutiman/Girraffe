@@ -15,27 +15,37 @@ public var itemSpeed : float = 0.2; // speed modifier for all items
 private var itemSize : float; // size of the item created
 public var gravity : float = 0.1; // the decline rate for the machine
 
+// Debugging ###########################
+var spectrumMax : float[] = new float[iSamples];
+var guiTexts : GUIText[] = new GUIText[iSamples];
+var gui : GameObject;
 
-
-
-function Tryout() {
-	var i: int = 1;
-	while ( i < iSamples-1 ) {
-		Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
-		Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
-		Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
-		Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.yellow);
-		i++;
+function PrintSpectrumData () {
+	for (var i = 0; i < posList.length; i++) {
+		if (posList[i] > spectrumMax[i]) {
+			spectrumMax[i] = posList[i];
+		}
+		if (!guiTexts[i]) {
+			if (!gui) {
+				gui = GameObject.FindWithTag("tagGUI");
+			}
+			else {
+				var obj : GameObject;
+				obj = gui.GetComponent(scrGui).CreateText(Vector3(0.05 + 0.2 * Mathf.Floor(i/20), 1 - 0.05 * (i % 20), 0));
+				guiTexts[i] = obj.GetComponent(GUIText);
+				guiTexts[i].color = Color.yellow;
+				guiTexts[i].anchor = TextAnchor.UpperLeft;
+				guiTexts[i].alignment = TextAlignment.Left;
+				guiTexts[i].fontSize = 14;
+			}
+		}
+		else {
+			guiTexts[i].text = spectrumMax[i].ToString("F7");
+		}
 	}
 }
-
-
-
-
-
-
-
-var samples : float[,] = new float[iSamples,3];
+// end debugging #####################
+// #####################################
 
 function Start() {
 	
@@ -44,18 +54,11 @@ function Start() {
 	spectrum = new float[iSamples];
 	posList = new float[iSamples];
 	lastItemTime = new float[iSamples];
-
-	
 	itemSize = (scrGame.screenWidth * 2) / spectrum.length;
 	
-	for (var i = 0; i < samples.GetLength(0); i++) {
-		for (var n = 0; n < samples.GetLength(1); n++) {
-			samples[i,n] = 0.0;
-		}
-	}
 	CreateHazardMachine();
 	
-	
+	gui = GameObject.FindWithTag("tagGUI");
 }
 
 function Update () {
@@ -66,7 +69,8 @@ function Update () {
 	}
 	spectrum = audioSource.GetSpectrumData(iSamples, 0, FFTWindow.BlackmanHarris);
 	UpdateHazardMachine();
-	Tryout();
+	
+	PrintSpectrumData();
 }
 
 function CreateHazardMachine () {
@@ -74,7 +78,6 @@ function CreateHazardMachine () {
 	for (var i = 0; i < spectrum.length; i++) {
 		posList[i] = -scrGame.screenHeight;		
 	}
-	
 }
 
 
@@ -83,7 +86,7 @@ function UpdateHazardMachine () {
 	var waitTime : float = 0.5;
 	
 	for (var i = 0; i < spectrum.length; i++) {
-		var eff : float = 100.0;
+		var eff : float = 10.0;
 		var posY = (((scrGame.screenHeight*2) / eff) * Mathf.Clamp(spectrum[i]*(eff+i*i),0,eff));
 		if (posList[i] <= posY) {
 			posList[i] = posY;
@@ -120,3 +123,7 @@ function UpdateHazardMachine () {
 		}
 	}
 }
+
+
+
+
