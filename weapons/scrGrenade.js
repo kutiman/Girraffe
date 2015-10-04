@@ -36,7 +36,7 @@ function Rotate (speed : float) {
 
 function BlowUp () {
 	CreateExplosion();
-	scrGame.grenadeCounter++;
+
 	Destroy(gameObject);
 }
 

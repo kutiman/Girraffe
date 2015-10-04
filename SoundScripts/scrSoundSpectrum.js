@@ -60,7 +60,7 @@ function UpdateHazardMachine () {
 				var posX : float = goTransform.position.x - scrGame.screenWidth + itemSize * i  + itemSize/2;
 				tempItem = Instantiate(item, new Vector3(posX, scrGame.screenHeight - itemSize/2, goTransform.position.z),Quaternion.identity);
 				tempItem.transform.parent = goTransform;
-				tempItem.GetComponent(scrDroppingItem).speed = (0.4 + (Mathf.Log(posY))) * itemSpeed;
+				tempItem.GetComponent(scrDroppingItem).speed.y = (-0.4 - (Mathf.Log(posY))) * itemSpeed;
 				tempItem.GetComponent(scrDroppingItem).iSpec = i;
 				tempItem.GetComponent(scrDroppingItem).myScale = itemScale;
 				

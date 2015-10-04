@@ -2,28 +2,33 @@
 
 private var player : GameObject;
 
-public var speed : float = 1.0;
+public var speed : Vector2 = Vector2(0.0,-1.0);
 private var rotateSpeed : float = 2.0;
 public var direction = "down";
 public var itemType : int = 0;
 public var iSpec : int;
 public var decayRate : float = 0.1;
 public var sucked : boolean = false;
+public var controlled : boolean = false;
 
 public var myScale : float = 0.5;
 
 public var mats : Material[] = new Material[4];
-public var colors : Color[] = new Color[4];
 public var sprts : Sprite[] = new Sprite[48];
 private var tagsList = ["tagNormalItem", "tagBadItem", "tagUpper", "tagVacuum", "tagSpecial"];
 
 function Start () {
 	player = GameObject.FindWithTag("tagPlayer");
 	//GetComponent(MeshRenderer).material = mats[itemType];
-	GetComponent(SpriteRenderer).color = colors[itemType];
+	GetComponent(SpriteRenderer).color = scrGame.colors[itemType+1];
+	GetComponent(ParticleSystem).startColor = scrGame.colors[itemType+1];
 	sprts = GetSpriteList("Sprites/sprSnowflakes");
 	GetComponent(SpriteRenderer).sprite = sprts[Random.Range(0, sprts.length)];
 	gameObject.tag = tagsList[itemType];
+	
+	if (gameObject.tag == "tagVacuum") {
+		GetComponent(ParticleSystem).Play();
+	}
 }
 
 function Update () {
@@ -70,13 +75,14 @@ function GetSpriteList (name : String) {
 function Move () {
 	switch (direction) {
 		case "down":
-			transform.position.y -= speed * Time.deltaTime;
+			transform.position.y += speed.y * Time.deltaTime;
+			transform.position.x += speed.x * Time.deltaTime;
 			break;
 	}
 }
 
 function Rotate () {
-	rotateSpeed = speed * 30;
+	rotateSpeed = speed.y * 30;
 	transform.Rotate(0, 0, Time.deltaTime * rotateSpeed);
 }
 
@@ -84,5 +90,7 @@ function GetSucked (toPosition : Vector3, speedToTarget : float) {
 	transform.position = Vector3.Lerp(transform.position, toPosition, 0.05 + speedToTarget * Time.deltaTime); 
 }
 
-
+function ChangeColors () {
+	
+}
 

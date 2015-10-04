@@ -18,7 +18,7 @@ function Update () {
 	
 	// going out of frame
 	if (transform.position.x < -scrGame.screenWidth*1.05) {
-		scrGame.bombCounter++;
+
 		BlowUp();
 	}
 }

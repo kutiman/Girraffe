@@ -61,7 +61,7 @@ function MoveOut () {
 }
 
 function Die () {
-	scrGame.ufoCounter++;
+
 	Destroy(gameObject);
 }
 

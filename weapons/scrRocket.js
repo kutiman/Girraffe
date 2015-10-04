@@ -10,7 +10,7 @@ function Start () {
 function Update () {
 	transform.position.x -= moveSpeed * Time.deltaTime;
 	if (transform.position.x < -scrGame.screenWidth*1.2) {
-		scrGame.rocketCounter++;
+
 		Destroy(gameObject);
 	}
 }
