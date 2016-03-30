@@ -14,10 +14,21 @@ static var background : GameObject;
 static var cam : GameObject;
 static var levelManager : GameObject;
 
+public var guiManager : GameObject;
+public var soundManager : GameObject;
+
 function Start () {
-	colors = AllColors();	
-	yield WaitForSeconds(0);
-	CreateLevel(0);
+	colors = AllColors();
+	if (guiManager) {
+		yield WaitForSeconds(4);
+		player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
+		yield WaitForSeconds(9);
+		CreateLevel(0);
+	}
+	else {
+		CreateLevel(0);
+	}
+	
 }
 
 function Update () {
@@ -61,8 +72,9 @@ static function CreateCoin (amount : int) {
 function CreateLevel (level : int) {
 
 	player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
-	GameObject.Instantiate(Resources.Load("Prefabs/conGui"));
-
+	if (soundManager) {
+		soundManager.GetComponent(AudioSource).Play();
+	}
 }
 
 function GetScreenSize () {

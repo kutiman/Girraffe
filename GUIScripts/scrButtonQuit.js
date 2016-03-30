@@ -27,10 +27,10 @@ function OnMouseDown () {
 
 function OnMouseOver () {
 	if (pressed) {
-		gameObject.GetComponent(SpriteRenderer).sprite = spriteArray[2];
+		gameObject.GetComponent(SpriteRenderer).sprite = spriteArray[2] as Sprite;
 	}
 	else {
-		gameObject.GetComponent(SpriteRenderer).sprite = spriteArray[1];
+		gameObject.GetComponent(SpriteRenderer).sprite = spriteArray[1] as Sprite;
 	}
 }
 
@@ -39,7 +39,7 @@ function OnMouseUp () {
 }
 
 function OnMouseExit () {
-	gameObject.GetComponent(SpriteRenderer).sprite = spriteArray[0];
+	gameObject.GetComponent(SpriteRenderer).sprite = spriteArray[0] as Sprite;
 }
 
 function GetSpriteList (name : String) {

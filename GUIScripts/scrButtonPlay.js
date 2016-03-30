@@ -72,7 +72,6 @@ function GetSpriteList (name : String) {
 function Update () {
 	if (flyingButtons) {
 		modHeight += 1 * Time.deltaTime;
-		Debug.Log(modHeight);
 	}
 }
 
