@@ -35,6 +35,10 @@ function Update () {
 
 	CalculateScore();
 	
+	if (guiManager.GetComponent(scrGui).levelStage == 3 && !soundManager.GetComponent(AudioSource).isPlaying && Time.time > 20.0) {
+		guiManager.GetComponent(scrGui).levelStage++;
+	}
+	
 	if (Input.GetKey(KeyCode.Q)) {
 		Application.Quit();
 	}
@@ -71,7 +75,7 @@ static function CreateCoin (amount : int) {
 
 function CreateLevel (level : int) {
 
-	player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
+	if (!player) {player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;}
 	if (soundManager) {
 		soundManager.GetComponent(AudioSource).Play();
 	}

@@ -69,8 +69,7 @@ function OnTriggerStay(coll : Collider) {
 				Explode();
 				UpdateScale ();
 				Destroy(coll.gameObject);
-				Debug.Log("BadItem Hit!");
-				break;
+ 				break;
 		}
 	}
 }
