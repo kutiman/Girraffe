@@ -90,7 +90,3 @@ function GetSucked (toPosition : Vector3, speedToTarget : float) {
 	transform.position = Vector3.Lerp(transform.position, toPosition, 0.05 + speedToTarget * Time.deltaTime); 
 }
 
-function ChangeColors () {
-	
-}
-

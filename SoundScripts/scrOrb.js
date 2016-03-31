@@ -47,6 +47,7 @@ function OnTriggerStay(coll : Collider) {
 		switch (coll.gameObject.tag) {
 			case "tagNormalItem":
 				Destroy(coll.gameObject);
+				scrGame.flakesCount[0] += 1;
 				break;
 			
 			case "tagUpper":
@@ -54,11 +55,13 @@ function OnTriggerStay(coll : Collider) {
 				var newScale = originalScale * (1 + grade * 0.2);
 				transform.localScale = Vector3(newScale, newScale, newScale);
 				Destroy(coll.gameObject);
+				scrGame.flakesCount[2] += 1;
 				break;
 			
 			case "tagVacuum":
 				Vacuum();
 				Destroy(coll.gameObject);
+				scrGame.flakesCount[3] += 1;
 				break;
 			
 			case "tagSpecial":
@@ -69,6 +72,7 @@ function OnTriggerStay(coll : Collider) {
 				Explode();
 				UpdateScale ();
 				Destroy(coll.gameObject);
+				scrGame.flakesCount[1] += 1;
  				break;
 		}
 	}

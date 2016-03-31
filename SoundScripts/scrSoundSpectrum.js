@@ -16,8 +16,6 @@ private var itemSize : float; // size of the item created
 public var itemScale : float = 1.2;
 public var ampDecay : float = 0.1; // the decline rate for the machine
 
-
-
 function Start() {
 	goTransform = GetComponent(Transform);
 	audioSource = GetComponent.<AudioSource>();
