@@ -3,21 +3,18 @@
 static var screenWidth : float = 4.8;
 static var screenHeight : float = 3.2;
 
-static var score : int = 0;
-static var lives : int = 0;
-static var coins : int = 0;
 static var level : int = 0;
 static var colors : Color[] = new Color[8];
+static var flakesCount : int[] = new int[4];
 
 static public var player : GameObject;
-static var background : GameObject;
-static var cam : GameObject;
-static var levelManager : GameObject;
-
 public var guiManager : GameObject;
 public var soundManager : GameObject;
+public var cam : GameObject;
+static var levelStage : int = 0;
 
 function Start () {
+	flakesCount = [0,0,0,0];
 	colors = AllColors();
 	if (guiManager) {
 		yield WaitForSeconds(4);
@@ -32,58 +29,29 @@ function Start () {
 }
 
 function Update () {
-
-	CalculateScore();
-	
-	if (guiManager.GetComponent(scrGui).levelStage == 3 && !soundManager.GetComponent(AudioSource).isPlaying && Time.time > 20.0) {
-		guiManager.GetComponent(scrGui).levelStage++;
+	if (levelStage == 1 && !soundManager.GetComponent(AudioSource).isPlaying) {
+		levelStage = 2;
 	}
 	
 	if (Input.GetKey(KeyCode.Q)) {
 		Application.Quit();
 	}
-	
 }
 
-function CreateWeapon (name : String, speed : float) {
-	var rand : float = Random.value;
-	if (speed > rand) {
-		var obj = GameObject.Instantiate(Resources.Load("Prefabs/" + name)) as GameObject;
-	}
-}
-
-function ResetLevelParam () {
-	lives = 3;
-}
-
-function CalculateScore () {
-
-}
-
-function CheckMaxGenSpeed (speed : float, maxSpeed : float) {
-	if (speed > maxSpeed) {
-		speed = maxSpeed;
-	}
-	return speed;
-}
-
-static function CreateCoin (amount : int) {
-	for (var i = 0; i < amount; i++) {
-		GameObject.Instantiate(Resources.Load("Prefabs/" + "objCoin"));
-	}
-}
-
-function CreateLevel (level : int) {
-
+public function CreateLevel (level : int) {
+	// level parameters which will help check if the music is over (time started, length of audio clip)
 	if (!player) {player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;}
 	if (soundManager) {
 		soundManager.GetComponent(AudioSource).Play();
 	}
+	levelStage = 1;
 }
 
-function GetScreenSize () {
-	screenWidth = Screen.width / 200;
-	screenHeight = Screen.height / 200;
+public function Restart() {
+	Destroy(player);
+	flakesCount = [0,0,0,0];
+	CreateLevel(0);
+	player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
 }
 
 function AllColors () {
@@ -98,7 +66,6 @@ function AllColors () {
 		"00B9FC", // blue
 		"F33389", // purple
 		"8EDC0C", // green
-		
 		"F69010" // orange
 	];
 	
@@ -110,24 +77,27 @@ function AllColors () {
 
 function HexToInt (hexChar : char) {
 	var hex : String = "" + hexChar;
-	switch (hex) {
-		case "0": return 0;
-		case "1": return 1;
-		case "2": return 2;
-		case "3": return 3;
-		case "4": return 4;
-		case "5": return 5;
-		case "6": return 6;
-		case "7": return 7;
-		case "8": return 8;
-		case "9": return 9;
-		case "A": return 10;
-		case "B": return 11;
-		case "C": return 12;
-		case "D": return 13;
-		case "E": return 14;
-		case "F": return 15;
+	var tempInt : int;
+	switch (hex) { 
+		case "0": tempInt = 0; break;
+		case "1": tempInt = 1; break;
+		case "2": tempInt = 2; break;
+		case "3": tempInt = 3; break;
+		case "4": tempInt = 4; break;
+		case "5": tempInt = 5; break;
+		case "6": tempInt = 6; break;
+		case "7": tempInt = 7; break;
+		case "8": tempInt = 8; break;
+		case "9": tempInt = 9; break;
+		case "A": tempInt = 10; break;
+		case "B": tempInt = 11; break;
+		case "C": tempInt = 12; break;
+		case "D": tempInt = 13; break;
+		case "E": tempInt = 14; break;
+		case "F": tempInt = 15; break;
+		default: tempInt = 0; break;
 	}
+	return tempInt;
 };
 
 function HexToRGB (color : String) {
