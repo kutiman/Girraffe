@@ -9,7 +9,9 @@ public var instStage : int = 0;
 private var levelStage = 0;
 
 function Start () {
-	StartingInstructions();
+	if (scrGame.levelStage == 0){
+		StartingInstructions();
+	}
 	levelStage = 1;
 	instStage = 0;
 }
@@ -37,8 +39,6 @@ function GameOverTimeline () {
 }
 
 function Update () {
-	//scoreText.GetComponent(GUIText).text = "Score: " + scrGame.score.ToString();
-	//livesText.GetComponent(GUIText).text = "Lives: " + scrGame.lives.ToString();
 	if (scrGame.levelStage == 2 && levelStage == 1) {
 		levelStage = 2;
 		GameOverTimeline();
@@ -91,7 +91,9 @@ function OnGUI () {
 			if (GUI.Button(Rect(Screen.width/2 - buttonSize.x/2, Screen.height * 0.65 - buttonSize.y/2, buttonSize.x, buttonSize.y),line7, buttonStyle)){
 				RestartPressed();
 			}
-			GUI.Button(Rect(Screen.width/2 - buttonSize.x/2, Screen.height * 0.85 - buttonSize.y/2, buttonSize.x, buttonSize.y),line8, buttonStyle);
+			if (GUI.Button(Rect(Screen.width/2 - buttonSize.x/2, Screen.height * 0.85 - buttonSize.y/2, buttonSize.x, buttonSize.y),line8, buttonStyle)){
+				GameObject.FindWithTag("GameController").GetComponent(scrGame).Menu();
+			}
 		}
 	}
 }
@@ -100,6 +102,7 @@ function RestartPressed () {
 	levelStage = 1;
 	GameObject.FindWithTag("GameController").GetComponent(scrGame).Restart();
 }
+
 
 
 

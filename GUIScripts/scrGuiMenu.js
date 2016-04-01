@@ -31,16 +31,16 @@ function QuitPressed () {
 }
 
 function OnGUI () {
-	var btnW = 200.0;
-	var btnH = 70.0;
+	var buttonSize : Vector2 = Vector2(Screen.width/5, Screen.width/15);
 	
-	
-	if (GUI.Button (Rect (Screen.width/2 - btnW/2, Screen.height*(0.65 + modHeight) - btnH/2 , btnW, btnH), "Start", minimalStyle)) {
+	if (GUI.Button (Rect (Screen.width/2 - buttonSize.x/2, Screen.height*(0.65 + modHeight) - buttonSize.y/2 , buttonSize.x, buttonSize.y), "Start", minimalStyle)) {
 		PlayPressed();
 		flyingButtons = true;
 	}
-	if (GUI.Button (Rect (Screen.width/2 - btnW/2, Screen.height*(0.80 + modHeight) - btnH/2, btnW, btnH), "Quit", minimalStyle)) {
+	/*
+	if (GUI.Button (Rect (Screen.width/2 - buttonSize.x/2, Screen.height*(0.85 + modHeight) - buttonSize.y/2 , buttonSize.x, buttonSize.y), "Quit", minimalStyle)) {
 		QuitPressed();
 		flyingButtons = true;
 	}
+	*/
 }

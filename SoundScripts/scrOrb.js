@@ -106,6 +106,8 @@ function Explode () {
 		spd.x = Mathf.Sqrt(1 - Mathf.Pow(spd.y, 2)) * Mathf.Sign(spd.x);
 		obj.GetComponent(scrDroppingItem).speed = spd;
 		obj.GetComponent(scrDroppingItem).itemType = 2;
+		obj.GetComponent(scrDroppingItem).lifeTime = Vector2(Time.time, 3.0);
+		obj.GetComponent(scrDroppingItem).dying = true;
 	}
 	GetHurt();
 	grade = Mathf.Ceil(grade/2.0);

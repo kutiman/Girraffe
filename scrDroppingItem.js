@@ -10,6 +10,8 @@ public var iSpec : int;
 public var decayRate : float = 0.1;
 public var sucked : boolean = false;
 public var controlled : boolean = false;
+public var lifeTime : Vector2;
+public var dying : boolean = false;
 
 public var myScale : float = 0.5;
 
@@ -48,6 +50,8 @@ function Update () {
 	if (Input.GetKeyDown(KeyCode.G)) {
 		sucked = !sucked;
 	}
+	
+	SlowlyDie();
 }
 
 function Decay () {
@@ -89,4 +93,28 @@ function Rotate () {
 function GetSucked (toPosition : Vector3, speedToTarget : float) {
 	transform.position = Vector3.Lerp(transform.position, toPosition, 0.05 + speedToTarget * Time.deltaTime); 
 }
+
+function SlowlyDie () {
+	if (dying) {
+		var dimTime : float = 2.0;
+		var timeOfDeath = lifeTime.x + lifeTime.y;
+		if (timeOfDeath <= Time.time) {
+			Destroy(gameObject);
+		}
+		else if (timeOfDeath - dimTime < Time.time) {
+			var tempAlpha : float = (dimTime - (Time.time - (timeOfDeath - dimTime))) / dimTime;
+			GetComponent(SpriteRenderer).color.a = tempAlpha;
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
 

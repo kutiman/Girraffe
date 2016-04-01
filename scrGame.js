@@ -13,23 +13,26 @@ public var soundManager : GameObject;
 public var cam : GameObject;
 static var levelStage : int = 0;
 
+var gamePaused = false;
+
 function Start () {
 	flakesCount = [0,0,0,0];
 	colors = AllColors();
-	if (guiManager) {
+	if (levelStage == 0) {
 		yield WaitForSeconds(4);
 		player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
 		yield WaitForSeconds(9);
 		CreateLevel(0);
 	}
 	else {
+		player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
 		CreateLevel(0);
 	}
 	
 }
 
 function Update () {
-	if (levelStage == 1 && !soundManager.GetComponent(AudioSource).isPlaying) {
+	if (levelStage == 1 && !soundManager.GetComponent(AudioSource).isPlaying && !gamePaused) {
 		levelStage = 2;
 	}
 	
@@ -52,6 +55,16 @@ public function Restart() {
 	flakesCount = [0,0,0,0];
 	CreateLevel(0);
 	player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
+}
+
+public function Menu() {
+
+	cam.GetComponent(scrCamEffect).lightMode = 1;
+	yield WaitForSeconds(1);
+	levelStage = 1;
+	Destroy(player);
+	flakesCount = [0,0,0,0];
+	Application.LoadLevel("Menu");	
 }
 
 function AllColors () {
@@ -112,5 +125,7 @@ function HexToRGB (color : String) {
 	return finalColor;
 };
 
-
+function OnApplicationFocus(focusStatus: boolean) {
+		gamePaused = !focusStatus;
+	}
 
