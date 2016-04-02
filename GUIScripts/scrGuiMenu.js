@@ -21,7 +21,7 @@ function Update () {
 function PlayPressed () {
 	cam.GetComponent(scrMainCamera).lightMode = 1;
 	yield WaitForSeconds(1);
-	Application.LoadLevel("Level");
+	Application.LoadLevel("ChooseLevel");
 }
 
 function QuitPressed () {

@@ -5,6 +5,10 @@ private var livesText : GameObject;
 
 public var instructionsStyle : GUIStyle;
 public var buttonStyle : GUIStyle;
+public var iconStyle : GUIStyle;
+
+public var icons : Texture[];
+
 public var instStage : int = 0;
 private var levelStage = 0;
 
@@ -73,7 +77,20 @@ function OnGUI () {
 		if (instStage > 1) {GUI.Label(Rect(0,Screen.height/6,Screen.width,Screen.height/3),line2, instructionsStyle);}
 		if (instStage > 2) {GUI.Label(Rect(0,Screen.height/3,Screen.width,Screen.height/3),line3, instructionsStyle);}
 	}
-	
+	// level icons
+	/*
+	else if (scrGame.levelStage == 1) {
+		var iconHeight : float = new Screen.height/15;
+		var pad : float = 0.02; //percentage of screen width to use as padding... 
+		if (GUI.Button(Rect(Screen.width * (1.0 - pad) - (iconHeight * (icons[0].width / icons[0].height)), Screen.width * pad, iconHeight * (icons[0].width / icons[0].height), iconHeight), icons[0], iconStyle)) {
+			GameObject.FindWithTag("GameController").GetComponent(scrGame).Menu();
+		}
+		if (GUI.Button(Rect(5.0, 5.0, Screen.width * pad, iconHeight * (icons[0].width / icons[0].height), iconHeight), icons[0], iconStyle)) {
+			GameObject.FindWithTag("GameController").GetComponent(scrGame).Menu();
+		}
+	}
+	*/
+	// game end menu
 	else if (scrGame.levelStage == 2) {
 		
 		var buttonSize : Vector2 = Vector2(Screen.width/5, Screen.width/15);

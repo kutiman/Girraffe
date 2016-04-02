@@ -1,10 +1,12 @@
 ﻿#pragma strict
 
+
 static var screenWidth : float = 4.8;
 static var screenHeight : float = 3.2;
 
 static var level : int = 0;
 static var colors : Color[] = new Color[8];
+public var songsList : AudioClip[];
 static var flakesCount : int[] = new int[4];
 
 static public var player : GameObject;
@@ -16,24 +18,27 @@ static var levelStage : int = 0;
 var gamePaused = false;
 
 function Start () {
-	flakesCount = [0,0,0,0];
-	colors = AllColors();
-	if (levelStage == 0) {
-		yield WaitForSeconds(4);
-		player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
-		yield WaitForSeconds(9);
-		CreateLevel(0);
+	if (Application.loadedLevelName == "Level") {
+		flakesCount = [0,0,0,0];
+		colors = AllColors();
+		if (levelStage == 0) {
+			yield WaitForSeconds(4);
+			player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
+			yield WaitForSeconds(9);
+			CreateLevel(level);
+		}
+		else {
+			player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
+			CreateLevel(level);
+		}
 	}
-	else {
-		player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
-		CreateLevel(0);
-	}
-	
 }
 
 function Update () {
-	if (levelStage == 1 && !soundManager.GetComponent(AudioSource).isPlaying && !gamePaused) {
-		levelStage = 2;
+	if (Application.loadedLevelName == "Level") {
+		if (levelStage == 1 && !soundManager.GetComponent(AudioSource).isPlaying && !gamePaused) {
+			levelStage = 2;
+		}
 	}
 	
 	if (Input.GetKey(KeyCode.Q)) {
@@ -42,19 +47,25 @@ function Update () {
 }
 
 public function CreateLevel (level : int) {
-	// level parameters which will help check if the music is over (time started, length of audio clip)
-	if (!player) {player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;}
-	if (soundManager) {
-		soundManager.GetComponent(AudioSource).Play();
+	if (Application.loadedLevelName == "Level") {
+		// level parameters which will help check if the music is over (time started, length of audio clip)
+		if (!player) {player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;}
+		if (soundManager) {
+			Debug.Log(songsList.Length);
+			soundManager.GetComponent(AudioSource).clip = songsList[level];
+			soundManager.GetComponent(AudioSource).Play();
+		}
+		levelStage = 1;
 	}
-	levelStage = 1;
 }
 
 public function Restart() {
-	Destroy(player);
-	flakesCount = [0,0,0,0];
-	CreateLevel(0);
-	player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
+	if (Application.loadedLevelName == "Level") {
+		Destroy(player);
+		flakesCount = [0,0,0,0];
+		CreateLevel(level);
+		player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
+	}
 }
 
 public function Menu() {
@@ -126,6 +137,7 @@ function HexToRGB (color : String) {
 };
 
 function OnApplicationFocus(focusStatus: boolean) {
-		gamePaused = !focusStatus;
-	}
+	gamePaused = !focusStatus;
+}
+
 

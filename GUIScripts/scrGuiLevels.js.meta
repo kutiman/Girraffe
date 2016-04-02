@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: d99e08befc30ea14ea2c3b62094a6d8b
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - manager: {instanceID: 0}
+  - cam: {fileID: 100000, guid: 0d69471fa976cd74897c35a0b158b239, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
