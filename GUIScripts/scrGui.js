@@ -85,9 +85,6 @@ function OnGUI () {
 		if (GUI.Button(Rect(Screen.width * (1.0 - pad) - (iconHeight * (icons[0].width / icons[0].height)), Screen.width * pad, iconHeight * (icons[0].width / icons[0].height), iconHeight), icons[0], iconStyle)) {
 			GameObject.FindWithTag("GameController").GetComponent(scrGame).Menu();
 		}
-		if (GUI.Button(Rect(5.0, 5.0, iconHeight * (icons[0].width / icons[0].height), iconHeight), icons[0], iconStyle)) {
-			GameObject.FindWithTag("GameController").GetComponent(scrGame).Menu();
-		}
 	}
 	
 	// game end menu
