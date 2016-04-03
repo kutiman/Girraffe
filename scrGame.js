@@ -3,6 +3,7 @@
 
 static var screenWidth : float = 4.8;
 static var screenHeight : float = 3.2;
+static var tutorialPassed : boolean = false;
 
 static var level : int = 0;
 static var colors : Color[] = new Color[8];
@@ -10,9 +11,9 @@ public var songsList : AudioClip[];
 static var flakesCount : int[] = new int[4];
 
 static public var player : GameObject;
-public var guiManager : GameObject;
 public var soundManager : GameObject;
 public var cam : GameObject;
+public var gameOverMenu : GameObject;
 static var levelStage : int = 0;
 
 var gamePaused = false;
@@ -37,6 +38,7 @@ function Start () {
 function Update () {
 	if (Application.loadedLevelName == "Level") {
 		if (levelStage == 1 && !soundManager.GetComponent(AudioSource).isPlaying && !gamePaused) {
+			GameObject.Instantiate(gameOverMenu, Vector3.zero, Quaternion.identity);
 			levelStage = 2;
 		}
 	}
@@ -68,7 +70,7 @@ public function Restart() {
 	}
 }
 
-public function Menu() {
+public function ChooseLevel() {
 
 	GameObject.FindWithTag("tagFader").GetComponent(scrFader).levelToLoad = "ChooseLevel";
 	GameObject.FindWithTag("tagFader").GetComponent(scrFader).sceneEnding = true;

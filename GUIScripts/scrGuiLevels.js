@@ -1,35 +1,40 @@
 ﻿#pragma strict
 
 var levelsAmount : int = 0;
-public var bigButtonStyle : GUIStyle;
 
 public var manager : GameObject;
-public var cam : GameObject;
+public var buttonObject : GameObject;
 
-function Start () {
+function Awake () {
 	manager = GameObject.FindWithTag("GameController") as GameObject;
 	levelsAmount = manager.GetComponent(scrGame).songsList.Length;
 }
 
-function Update () {
-	GUI.color.a = 0.5;
+function Start () {
+	CreateLevelButtons();
 }
 
-function OnGUI () {
-	var nRows = 5;
-	
-	if (levelsAmount < nRows) {nRows = levelsAmount;}
-	var btnSize : Vector2 = Vector2(Screen.width/10.0, Screen.width/15.0);
-	
-	var ancY : float = Screen.height * 0.333;
-	var padY : float = 20.0;
-	for (var i = 0; i < levelsAmount; i++) {
-		var tempX = ((Screen.width / (nRows + 1)) * ((i % nRows) + 1)) - btnSize.x/2;
-		var tempY = ancY + Mathf.Floor(i / nRows) * (btnSize.y + padY);
-		if (GUI.Button(Rect(tempX, tempY, btnSize.x, btnSize.y), (i+1).ToString(), bigButtonStyle)) {
-			scrGame.level = i;
-			GameObject.FindWithTag("tagFader").GetComponent(scrFader).levelToLoad = "Level";
-			GameObject.FindWithTag("tagFader").GetComponent(scrFader).sceneEnding = true;
+function CreateLevelButtons () {
+	var w : float = scrGame.screenWidth;
+	var h : float = scrGame.screenHeight;
+	var btnSize : Vector3;
+	var pad : float = 0.05;
+	if (buttonObject) {
+		if (buttonObject.GetComponent(BoxCollider)) {
+			btnSize = buttonObject.GetComponent(BoxCollider).size;
 		}
+	}
+	
+	var ancY : float = h - (h * 2 * 0.4);
+	var nRows : float = 4;
+	if (nRows > levelsAmount) {nRows = levelsAmount;}
+	
+	for (var i = 0; i < levelsAmount; i++) {
+		var tempX : float = -w + ((w*2.0) / (nRows + 1)) * ((i % nRows) + 1);
+		var tempY : float = ancY - Mathf.Floor(i / nRows) * (btnSize.y + btnSize.y * pad);
+		
+		var btn : GameObject = GameObject.Instantiate(buttonObject, Vector3(tempX, tempY, 0), Quaternion.identity);
+		btn.GetComponent(scrButton).buttonType = "Level";
+		btn.GetComponent(scrButton).levelNumber = i;
 	}
 }

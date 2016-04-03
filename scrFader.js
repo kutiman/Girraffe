@@ -3,7 +3,7 @@
 public var fadeSpeed : float = 1.0f; // Speed that the screen fades to and from black.
 private var sceneStarting : boolean = true; // Whether or not the scene is still fading in.
 public var sceneEnding : boolean = false;
-public var levelToLoad : String = "Menu";
+public var levelToLoad : String = "ChooseLevel";
 
 function Awake () {
     // Set the texture so that it is the the size of the screen and covers it.
