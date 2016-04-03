@@ -17,7 +17,6 @@ function Update () {
 
 	if (lightMode == 1) {
 		guiColor.a = 255 * spd * Time.deltaTime;
-		Debug.Log("Working!!!");
 	}
 	else if (lightMode == -1) {
 		guiColor.a = 255 * spd * Time.deltaTime;

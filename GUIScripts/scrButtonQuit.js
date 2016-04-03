@@ -16,8 +16,6 @@ function Start () {
 }
 
 function OnMouseUpAsButton () {
-	cam.GetComponent(scrMainCamera).lightMode = 1;
-	yield WaitForSeconds(1);
 	Application.Quit();
 }
 

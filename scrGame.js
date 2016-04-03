@@ -70,12 +70,12 @@ public function Restart() {
 
 public function Menu() {
 
-	cam.GetComponent(scrCamEffect).lightMode = 1;
-	yield WaitForSeconds(1);
+	GameObject.FindWithTag("tagFader").GetComponent(scrFader).levelToLoad = "ChooseLevel";
+	GameObject.FindWithTag("tagFader").GetComponent(scrFader).sceneEnding = true;
+	
 	levelStage = 1;
 	Destroy(player);
 	flakesCount = [0,0,0,0];
-	Application.LoadLevel("Menu");	
 }
 
 function AllColors () {

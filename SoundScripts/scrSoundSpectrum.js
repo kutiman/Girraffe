@@ -41,6 +41,7 @@ function CreateHazardMachine () {
 	for (var i = 0; i < spectrum.length; i++) {
 		ampList[i] = -scrGame.screenHeight;		
 	}
+	
 }
 
 

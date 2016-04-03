@@ -1,8 +1,5 @@
 ﻿#pragma strict
-
-#pragma strict
-
-
+/*
 public var lightMode : int = 0;
 private var spd = 1.0;
 
@@ -34,6 +31,6 @@ function Dimmer () {
 }
 
 
-
+*/
 
 
