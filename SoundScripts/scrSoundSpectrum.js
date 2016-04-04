@@ -6,7 +6,7 @@ var lastItemTime : float[]; // the time when the last item was created
 
 private var iSamples : int = 64; // amount of samples to be calculated in the spectrum
 static var spectrum : float[]; // raw spectrum data from the audio source
-static var ampList : float[];
+public var ampList : float[];
 
 public var item : GameObject; // the item that will be created by the machine
 
@@ -33,7 +33,7 @@ function Update () {
 	if (ampDecay < 0) {
 		ampDecay = 0;
 	}
-	spectrum = audioSource.GetSpectrumData(iSamples, 0, FFTWindow.BlackmanHarris);
+	spectrum = audioSource.GetSpectrumData(iSamples, 0, FFTWindow.Triangle);
 	UpdateHazardMachine();
 }
 
@@ -50,8 +50,9 @@ function UpdateHazardMachine () {
 	var waitTime : float = 0.5;
 	
 	for (var i = 1; i < spectrum.length -1; i++) {
-		var eff : float = 1000.0;
-		var posY = spectrum[i]*(i*i);
+		var eff : float = 5.0;
+//		var posY = spectrum[i] * (i*i);
+		var posY = Mathf.Sqrt(spectrum[i]) * (i) * eff;
 		if (ampList[i] <= posY) {
 			ampList[i] = posY;
 			if (ampList[i] > tolerance &&  Time.time >= waitTime + lastItemTime[i]) {
