@@ -56,10 +56,10 @@ private function EndScene ()
     FadeToBlack();
     
     // If the screen is almost black...
-    if(guiTexture.color.a >= 0.95f)
+    if(guiTexture.color.a >= 0.45f) {
         // ... reload the level.
         guiTexture.color = Color.black;
-        guiTexture.enabled = false;
         sceneEnding = false;
         Application.LoadLevel(levelToLoad);
+    }
 }
