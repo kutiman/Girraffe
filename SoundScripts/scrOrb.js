@@ -9,17 +9,24 @@ public var grade : int = 1;
 private var item : GameObject;
 private var factoryTransform : Transform;
 
+// Shooting values ########################################
+public var bulletObject : GameObject;
+public var reloadSpeed : float = 0.5;
+private var lastShot : float = 0.0;
+public var autoShoot : boolean = true;
+// Shooting end ########################################
+
 var hurt = false;
 private var hurtDuration : float = 2.0;
 
-private var collSize : float;
+private var collR : float;
 
 public var sound : AudioSource;
 
 function Start () {
 	//audio
 	sound = gameObject.AddComponent(AudioSource);
-	collSize = gameObject.GetComponent(SphereCollider).radius * 2;
+	collR = gameObject.GetComponent(SphereCollider).radius;
 	grade = 0;
 	item = GameObject.FindWithTag("tagFactory").GetComponent(scrSoundSpectrum).item;
 	factoryTransform = GameObject.FindWithTag("tagFactory").transform;
@@ -28,6 +35,10 @@ function Start () {
 function Update () {
 	Spin(spinSpeed);
 	Move();
+	// shoot
+	if (autoShoot) {
+		Shoot();
+	}
 }
 
 function Spin (speed : float) {
@@ -35,10 +46,10 @@ function Spin (speed : float) {
 }
 
 function Move () {
-	if (Input.GetKey (KeyCode.UpArrow) && transform.position.y < screenHeight - collSize/2) {transform.position.y += moveSpeed * Time.deltaTime;}
-	else if (Input.GetKey (KeyCode.DownArrow) && transform.position.y > -screenHeight + collSize/2) {transform.position.y -= moveSpeed * Time.deltaTime;}
-	if (Input.GetKey (KeyCode.RightArrow) && transform.position.x < screenWidth - collSize/2) {transform.position.x += moveSpeed * Time.deltaTime;}
-	else if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x > -screenWidth + collSize/2) {transform.position.x -= moveSpeed * Time.deltaTime;}
+	if (Input.GetKey (KeyCode.UpArrow) && transform.position.y < screenHeight - collR) {transform.position.y += moveSpeed * Time.deltaTime;}
+	else if (Input.GetKey (KeyCode.DownArrow) && transform.position.y > -screenHeight + collR) {transform.position.y -= moveSpeed * Time.deltaTime;}
+	if (Input.GetKey (KeyCode.RightArrow) && transform.position.x < screenWidth - collR) {transform.position.x += moveSpeed * Time.deltaTime;}
+	else if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x > -screenWidth + collR) {transform.position.x -= moveSpeed * Time.deltaTime;}
 }
 
 function OnTriggerStay(coll : Collider) {
@@ -89,7 +100,7 @@ function Vacuum () {
 	
 	for (var child : Transform in factoryTransform) {
 		var scr = child.gameObject.GetComponent(scrDroppingItem);
-		if (child.gameObject.tag != "tagBadItem") {
+		if (child.gameObject.tag == "tagUpper") {
 			scr.sucked = true;
 		}
 	}
@@ -118,6 +129,12 @@ function UpdateScale () {
 	transform.localScale = Vector3(newScale, newScale, newScale);
 }
 
+function Shoot () {
+	if (Time.time > lastShot + reloadSpeed) {
+		var bullet : GameObject = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
+		lastShot = Time.time;
+	}
+}
 
 
 

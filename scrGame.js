@@ -14,7 +14,7 @@ static public var player : GameObject;
 public var soundManager : GameObject;
 public var cam : GameObject;
 public var gameOverMenu : GameObject;
-static var levelStage : int = 0;
+static var levelStage : int = 1;
 
 var gamePaused = false;
 

@@ -24,8 +24,12 @@ function Start () {
 	//GetComponent(MeshRenderer).material = mats[itemType];
 	GetComponent(SpriteRenderer).color = scrGame.colors[itemType+1];
 	GetComponent(ParticleSystem).startColor = scrGame.colors[itemType+1];
+	
+	/* // get sprites for multiple images
 	sprts = GetSpriteList("Sprites/sprSnowflakes");
 	GetComponent(SpriteRenderer).sprite = sprts[Random.Range(0, sprts.length)];
+	
+	*/
 	gameObject.tag = tagsList[itemType];
 	
 	if (gameObject.tag == "tagVacuum") {
@@ -41,7 +45,7 @@ function Update () {
 	else {
 		Move();
 	}
-	Rotate();
+	//Rotate();
 	Decay();
 	if (transform.position.y < -scrGame.screenHeight * 1.05) {
 		Destroy(gameObject);

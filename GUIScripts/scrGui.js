@@ -4,7 +4,7 @@ public var objText : GameObject;
 public var icons : Texture[];
 public var buttonObject : GameObject;
 
-public var vSliderValue : float = 5.0;
+public var vSliderValue : float = 15.0;
 public var sliderStyle : GUIStyle;
 public var thumbStyle : GUIStyle;
 

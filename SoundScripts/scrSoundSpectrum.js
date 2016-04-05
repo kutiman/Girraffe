@@ -50,9 +50,9 @@ function UpdateHazardMachine () {
 	var waitTime : float = 0.5;
 	
 	for (var i = 1; i < spectrum.length -1; i++) {
-		var eff : float = 5.0;
+		var eff : float = 15.0;
 //		var posY = spectrum[i] * (i*i);
-		var posY = Mathf.Sqrt(spectrum[i]) * (i) * eff;
+		var posY = Mathf.Sqrt(spectrum[i]) * (i*eff);
 		if (ampList[i] <= posY) {
 			ampList[i] = posY;
 			if (ampList[i] > tolerance &&  Time.time >= waitTime + lastItemTime[i]) {
