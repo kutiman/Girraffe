@@ -3,7 +3,7 @@
 private var player : GameObject;
 
 public var speed : Vector2 = Vector2(0.0,-1.0);
-private var rotateSpeed : float = 2.0;
+private var rotateSpeed : float = 90.0;
 public var direction = "down";
 public var itemType : int = 0;
 public var iSpec : int;
@@ -90,7 +90,7 @@ function Move () {
 }
 
 function Rotate () {
-	rotateSpeed = speed.y * 30;
+	rotateSpeed = speed.y * 600;
 	transform.Rotate(0, 0, Time.deltaTime * rotateSpeed);
 }
 

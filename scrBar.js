@@ -8,6 +8,8 @@ public var ancPos : float;
 
 public var equalizer : GameObject;
 
+static var unitHeight : float = 1.61;
+
 function Start () {
 	
 	barsList = CreateBars(64);
@@ -15,7 +17,7 @@ function Start () {
 
 function Update () {
 	if (equalizer) {
-		barSizes = equalizer.GetComponent(scrSoundSpectrum).ampList;
+		barSizes = equalizer.GetComponent(scrSpec).ampList;
 	}
 }
 
@@ -33,16 +35,6 @@ function CreateBars (amount : int) {
 		tempList[i].GetComponent(scrBarUnit).manager = gameObject;
 	}
 	return tempList;
-}
-
-public function UpdateBars (objList : GameObject[], transformList : float[]) {
-	if (objList.Length == transformList.Length) {
-		for (var i = 0; i < objList.Length; i++) {
-			Debug.Log("Doing it!" + transformList[i].ToString);
-			objList[i].transform.position.y = Mathf.Clamp(-(transformList[i]), 0.0, 15.0);
-		}
-		
-	}
 }
 
 

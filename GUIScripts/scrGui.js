@@ -38,7 +38,7 @@ function OnGUI () {
 	thumbStyle.overflow.left = size.y/20;
 	thumbStyle.overflow.right = size.y/20;
 	vSliderValue = GUI.VerticalSlider (Rect (Screen.width * 0.95, Screen.height/2 - size.y/2, size.x, size.y), vSliderValue, 1.0, 15.0, sliderStyle, thumbStyle);
-	GameObject.FindWithTag("tagFactory").GetComponent(scrSoundSpectrum).tolerance = vSliderValue;
+	GameObject.FindWithTag("tagFactory").GetComponent(scrSpec).tolerance = vSliderValue;
 }
 
 function RestartPressed () {

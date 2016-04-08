@@ -9,12 +9,18 @@ public var grade : int = 1;
 private var item : GameObject;
 private var factoryTransform : Transform;
 
+private var manager : GameObject;
+
 // Shooting values ########################################
 public var bulletObject : GameObject;
 public var reloadSpeed : float = 0.5;
 private var lastShot : float = 0.0;
 public var autoShoot : boolean = true;
-// Shooting end ########################################
+
+// Hunger end ########################################
+public var initialEnergy : float = 100.0;
+public var currentEnergy : float;
+public var hungryInSeconds : float = 5.0;
 
 var hurt = false;
 private var hurtDuration : float = 2.0;
@@ -22,14 +28,18 @@ private var hurtDuration : float = 2.0;
 private var collR : float;
 
 public var sound : AudioSource;
+function Awake () {
+	manager = GameObject.FindGameObjectWithTag ("GameController");
+}
 
 function Start () {
 	//audio
 	sound = gameObject.AddComponent(AudioSource);
 	collR = gameObject.GetComponent(SphereCollider).radius;
 	grade = 0;
-	item = GameObject.FindWithTag("tagFactory").GetComponent(scrSoundSpectrum).item;
+	item = GameObject.FindWithTag("tagFactory").GetComponent(scrSpec).item;
 	factoryTransform = GameObject.FindWithTag("tagFactory").transform;
+	currentEnergy = initialEnergy;
 }
 
 function Update () {
@@ -39,6 +49,8 @@ function Update () {
 	if (autoShoot) {
 		Shoot();
 	}
+	
+	GetHungry();
 }
 
 function Spin (speed : float) {
@@ -57,12 +69,15 @@ function OnTriggerStay(coll : Collider) {
 	if (!hurt) {
 		switch (coll.gameObject.tag) {
 			case "tagNormalItem":
+				Explode(1);
+				currentEnergy = initialEnergy;
 				Destroy(coll.gameObject);
 				scrGame.flakesCount[0] += 1;
 				break;
 			
 			case "tagUpper":
 				grade++;
+				currentEnergy = initialEnergy;
 				var newScale = originalScale * (1 + grade * 0.2);
 				transform.localScale = Vector3(newScale, newScale, newScale);
 				Destroy(coll.gameObject);
@@ -80,7 +95,8 @@ function OnTriggerStay(coll : Collider) {
 				break;
 				
 			case "tagBadItem":
-				Explode();
+				Explode(Mathf.Floor(grade/2));
+				currentEnergy = initialEnergy;
 				UpdateScale ();
 				Destroy(coll.gameObject);
 				scrGame.flakesCount[1] += 1;
@@ -106,8 +122,7 @@ function Vacuum () {
 	}
 }
 
-function Explode () {
-	var amountToCreate = Mathf.Floor(grade/2);
+function Explode (amountToCreate : int) {
 	for (var i = 0; i < amountToCreate; i++) {
 		var obj = GameObject.Instantiate(item);
 		obj.transform.position = transform.position;
@@ -121,7 +136,7 @@ function Explode () {
 		obj.GetComponent(scrDroppingItem).dying = true;
 	}
 	GetHurt();
-	grade = Mathf.Ceil(grade/2.0);
+	grade -= amountToCreate;
 }
 
 function UpdateScale () {
@@ -133,9 +148,18 @@ function Shoot () {
 	if (Time.time > lastShot + reloadSpeed) {
 		var bullet : GameObject = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
 		lastShot = Time.time;
+		bullet.transform.parent = manager.transform;
 	}
 }
 
-
+function GetHungry () {
+	if (currentEnergy <= 0.0) {
+		Explode(1);
+		currentEnergy = initialEnergy;
+	}
+	else {
+		currentEnergy -= initialEnergy / hungryInSeconds * Time.deltaTime;
+	}
+}
 
 
