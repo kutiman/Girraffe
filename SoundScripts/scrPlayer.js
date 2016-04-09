@@ -5,9 +5,10 @@ private var moveSpeed = 2.4;
 private var originalScale : float = 0.2;
 private var screenWidth = 4.8;
 private var screenHeight = 3.2;
-public var grade : int = 1;
 private var item : GameObject;
 private var factoryTransform : Transform;
+
+private var 
 
 private var manager : GameObject;
 
@@ -36,7 +37,6 @@ function Start () {
 	//audio
 	sound = gameObject.AddComponent(AudioSource);
 	collR = gameObject.GetComponent(SphereCollider).radius;
-	grade = 0;
 	item = GameObject.FindWithTag("tagFactory").GetComponent(scrSpec).item;
 	factoryTransform = GameObject.FindWithTag("tagFactory").transform;
 	currentEnergy = initialEnergy;
@@ -49,7 +49,7 @@ function Update () {
 	if (autoShoot) {
 		Shoot();
 	}
-	
+	UpdateScale();
 	GetHungry();
 }
 
@@ -70,16 +70,13 @@ function OnTriggerStay(coll : Collider) {
 		switch (coll.gameObject.tag) {
 			case "tagNormalItem":
 				LoseSize(1);
-				currentEnergy = initialEnergy;
+				currentEnergy -= 5.0;
 				Destroy(coll.gameObject);
 				scrGame.flakesCount[0] += 1;
 				break;
 			
 			case "tagUpper":
-				grade++;
-				currentEnergy = initialEnergy;
-				var newScale = originalScale * (1 + grade * 0.2);
-				transform.localScale = Vector3(newScale, newScale, newScale);
+				currentEnergy += 20.0;
 				Destroy(coll.gameObject);
 				scrGame.flakesCount[2] += 1;
 				break;
@@ -95,9 +92,8 @@ function OnTriggerStay(coll : Collider) {
 				break;
 				
 			case "tagBadItem":
-				LoseSize(Mathf.Floor(grade/2));
-				currentEnergy = initialEnergy;
-				UpdateScale ();
+				LoseSize(5);
+				currentEnergy *= 0.75;
 				Destroy(coll.gameObject);
 				scrGame.flakesCount[1] += 1;
  				break;
@@ -136,12 +132,11 @@ function LoseSize (amountToCreate : int) {
 		obj.GetComponent(scrDroppingItem).dying = true;
 		Destroy(obj.GetComponent(BoxCollider));
 	}
-	GetHurt();
-	grade -= amountToCreate;
+	//GetHurt();
 }
 
 function UpdateScale () {
-	var newScale = originalScale * (1 + grade * 0.2);
+	var newScale = originalScale * (currentEnergy / initialEnergy);
 	transform.localScale = Vector3(newScale, newScale, newScale);
 }
 
@@ -155,11 +150,11 @@ function Shoot () {
 
 function GetHungry () {
 	if (currentEnergy <= 0.0) {
-		LoseSize(1);
-		currentEnergy = initialEnergy;
+		//die
+		Debug.Log("I'm Dead!");
 	}
 	else {
-		currentEnergy -= initialEnergy / hungryInSeconds * Time.deltaTime;
+		currentEnergy -= hungryInSeconds * Time.deltaTime;
 	}
 }
 

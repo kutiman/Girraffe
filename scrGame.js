@@ -53,7 +53,6 @@ public function CreateLevel (level : int) {
 		// level parameters which will help check if the music is over (time started, length of audio clip)
 		if (!player) {player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;}
 		if (soundManager) {
-			Debug.Log(songsList.Length);
 			soundManager.GetComponent(AudioSource).clip = songsList[level];
 			soundManager.GetComponent(AudioSource).Play();
 		}

@@ -50,8 +50,7 @@ private function EndScene ()
 {
     // Make sure the texture is enabled.
     guiTexture.enabled = true;
-    Debug.Log ("Fading To Black. alpha is " + guiTexture.color.a.ToString());
-    
+   
     // Start fading towards black.
     FadeToBlack();
     

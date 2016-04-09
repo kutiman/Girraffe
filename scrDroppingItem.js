@@ -99,11 +99,12 @@ function SlowlyDie () {
 public function BreakToPieces (pieces : int) {
 
 	for (var i = 0; i < pieces; i++) {
-		var obj = GameObject.Instantiate(gameObject, transform.parent.position, Quaternion.identity)
+		var obj = GameObject.Instantiate(gameObject, transform.position, Quaternion.identity);
 		
 		var spd : Vector2 = new Vector2(new Random.Range(-1.0, 1.0), new Random.Range(-1.0, 1.0));
 		spd.x = Mathf.Sqrt(1 - Mathf.Pow(spd.y, 2)) * Mathf.Sign(spd.x);
 		obj.GetComponent(scrDroppingItem).speed = spd;
+		obj.GetComponent(scrDroppingItem).myScale = 0.2;
 		obj.GetComponent(scrDroppingItem).itemType = itemType;
 		obj.GetComponent(scrDroppingItem).lifeTime = Vector2(Time.time, 1.0);
 		obj.GetComponent(scrDroppingItem).dying = true;
