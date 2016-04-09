@@ -14,7 +14,9 @@ static public var player : GameObject;
 public var soundManager : GameObject;
 public var cam : GameObject;
 public var gameOverMenu : GameObject;
+private var endMenu : GameObject;
 static var levelStage : int = 1;
+static var musicPlaying : boolean;
 
 var gamePaused = false;
 
@@ -36,9 +38,18 @@ function Start () {
 }
 
 function Update () {
+
+	musicPlaying = soundManager.GetComponent(AudioSource).isPlaying;
+	
 	if (Application.loadedLevelName == "Level") {
-		if (levelStage == 1 && !soundManager.GetComponent(AudioSource).isPlaying && !gamePaused) {
-			GameObject.Instantiate(gameOverMenu, Vector3.zero, Quaternion.identity);
+		if (levelStage == 1 && !musicPlaying && !gamePaused && player) {
+			endMenu = GameObject.Instantiate(gameOverMenu, Vector3.zero, Quaternion.identity) as GameObject;
+			endMenu.GetComponent(scrEndMenu).levelWon = true;
+			levelStage = 2;
+		}
+		else if (levelStage == 1 && musicPlaying && !gamePaused && !player) {
+			endMenu = GameObject.Instantiate(gameOverMenu, Vector3.zero, Quaternion.identity) as GameObject;
+			endMenu.GetComponent(scrEndMenu).levelWon = false;
 			levelStage = 2;
 		}
 	}

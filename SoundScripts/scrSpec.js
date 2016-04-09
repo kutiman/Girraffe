@@ -8,6 +8,7 @@ private var iSamples : int = 64; // amount of samples to be calculated in the sp
 static var spectrum : float[]; // raw spectrum data from the audio source
 public var ampList : float[];
 static var maxVelocity : float = 100.0;
+public var musicPlaying : boolean = false;
 
 public var item : GameObject; // the item that will be created by the machine
 
@@ -29,6 +30,8 @@ function Start() {
 }
 
 function Update () {
+	// check if music is playing
+	musicPlaying = GetComponent(AudioSource).isPlaying;
 	// clamp speed modifier between two numbers
 	itemSpeed = Mathf.Clamp(itemSpeed,0,10);
 	if (ampDecay < 0) {

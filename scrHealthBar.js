@@ -19,7 +19,9 @@ function Update () {
 	}
 	else {
 		player = GameObject.FindWithTag("tagPlayer");
-		playerScript = player.GetComponent(scrPlayer);
-		initialEnergy = playerScript.initialEnergy;
+		if (player) {
+			playerScript = player.GetComponent(scrPlayer);
+			initialEnergy = playerScript.initialEnergy;
+		}
 	}
 }
