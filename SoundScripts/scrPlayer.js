@@ -8,8 +8,6 @@ private var screenHeight = 3.2;
 private var item : GameObject;
 private var factoryTransform : Transform;
 
-private var 
-
 private var manager : GameObject;
 
 // Shooting values ########################################
@@ -21,7 +19,7 @@ public var autoShoot : boolean = true;
 // Hunger end ########################################
 public var initialEnergy : float = 100.0;
 public var currentEnergy : float;
-public var hungryInSeconds : float = 5.0;
+public var hungryInSeconds : float = 3.0;
 
 var hurt = false;
 private var hurtDuration : float = 2.0;
@@ -46,6 +44,7 @@ function Update () {
 	Spin(spinSpeed);
 	Move();
 	// shoot
+	autoShoot = scrGame.musicPlaying;
 	if (autoShoot) {
 		Shoot();
 	}
@@ -136,7 +135,7 @@ function LoseSize (amountToCreate : int) {
 }
 
 function UpdateScale () {
-	var newScale = originalScale * (currentEnergy / initialEnergy);
+	var newScale = originalScale * ((currentEnergy + initialEnergy/2) / initialEnergy);
 	transform.localScale = Vector3(newScale, newScale, newScale);
 }
 
@@ -152,6 +151,8 @@ function GetHungry () {
 	if (currentEnergy <= 0.0) {
 		//die
 		Debug.Log("I'm Dead!");
+		Destroy(gameObject);
+		currentEnergy = 0.0;
 	}
 	else {
 		currentEnergy -= hungryInSeconds * Time.deltaTime;
