@@ -21,15 +21,8 @@ private var tagsList = ["tagNormalItem", "tagBadItem", "tagUpper", "tagVacuum", 
 
 function Start () {
 	player = GameObject.FindWithTag("tagPlayer");
-	//GetComponent(MeshRenderer).material = mats[itemType];
 	GetComponent(SpriteRenderer).color = scrGame.colors[itemType+1];
 	GetComponent(ParticleSystem).startColor = scrGame.colors[itemType+1];
-	
-	/* // get sprites for multiple images
-	sprts = GetSpriteList("Sprites/sprSnowflakes");
-	GetComponent(SpriteRenderer).sprite = sprts[Random.Range(0, sprts.length)];
-	
-	*/
 	gameObject.tag = tagsList[itemType];
 	
 	if (gameObject.tag == "tagVacuum") {
@@ -70,16 +63,6 @@ function Decay () {
 	}
 }
 
-function GetSpriteList (name : String) {
-	var sprArray = new Array();
-	sprArray = Resources.LoadAll(name);
-	var spriteArray : Array = new Array();
-	for (var i = 1; i < sprArray.length; i++) {
-		spriteArray[i-1] = sprArray[i];
-	}
-	return spriteArray;
-}
-
 function Move () {
 	switch (direction) {
 		case "down":
@@ -113,6 +96,20 @@ function SlowlyDie () {
 
 }
 
+public function BreakToPieces (pieces : int) {
+
+	for (var i = 0; i < pieces; i++) {
+		var obj = GameObject.Instantiate(gameObject, transform.parent.position, Quaternion.identity)
+		
+		var spd : Vector2 = new Vector2(new Random.Range(-1.0, 1.0), new Random.Range(-1.0, 1.0));
+		spd.x = Mathf.Sqrt(1 - Mathf.Pow(spd.y, 2)) * Mathf.Sign(spd.x);
+		obj.GetComponent(scrDroppingItem).speed = spd;
+		obj.GetComponent(scrDroppingItem).itemType = itemType;
+		obj.GetComponent(scrDroppingItem).lifeTime = Vector2(Time.time, 1.0);
+		obj.GetComponent(scrDroppingItem).dying = true;
+		Destroy(obj.GetComponent(BoxCollider));
+	}
+}
 
 
 

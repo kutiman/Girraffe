@@ -69,7 +69,7 @@ function OnTriggerStay(coll : Collider) {
 	if (!hurt) {
 		switch (coll.gameObject.tag) {
 			case "tagNormalItem":
-				Explode(1);
+				LoseSize(1);
 				currentEnergy = initialEnergy;
 				Destroy(coll.gameObject);
 				scrGame.flakesCount[0] += 1;
@@ -95,7 +95,7 @@ function OnTriggerStay(coll : Collider) {
 				break;
 				
 			case "tagBadItem":
-				Explode(Mathf.Floor(grade/2));
+				LoseSize(Mathf.Floor(grade/2));
 				currentEnergy = initialEnergy;
 				UpdateScale ();
 				Destroy(coll.gameObject);
@@ -122,7 +122,7 @@ function Vacuum () {
 	}
 }
 
-function Explode (amountToCreate : int) {
+function LoseSize (amountToCreate : int) {
 	for (var i = 0; i < amountToCreate; i++) {
 		var obj = GameObject.Instantiate(item);
 		obj.transform.position = transform.position;
@@ -132,8 +132,9 @@ function Explode (amountToCreate : int) {
 		spd.x = Mathf.Sqrt(1 - Mathf.Pow(spd.y, 2)) * Mathf.Sign(spd.x);
 		obj.GetComponent(scrDroppingItem).speed = spd;
 		obj.GetComponent(scrDroppingItem).itemType = 2;
-		obj.GetComponent(scrDroppingItem).lifeTime = Vector2(Time.time, 3.0);
+		obj.GetComponent(scrDroppingItem).lifeTime = Vector2(Time.time, 2.0);
 		obj.GetComponent(scrDroppingItem).dying = true;
+		Destroy(obj.GetComponent(BoxCollider));
 	}
 	GetHurt();
 	grade -= amountToCreate;
@@ -154,12 +155,22 @@ function Shoot () {
 
 function GetHungry () {
 	if (currentEnergy <= 0.0) {
-		Explode(1);
+		LoseSize(1);
 		currentEnergy = initialEnergy;
 	}
 	else {
 		currentEnergy -= initialEnergy / hungryInSeconds * Time.deltaTime;
 	}
 }
+
+
+
+
+
+
+
+
+
+
 
 
