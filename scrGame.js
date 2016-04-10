@@ -12,6 +12,7 @@ static var flakesCount : int[] = new int[4];
 
 static public var player : GameObject;
 public var soundManager : GameObject;
+public var soundEffectsManager : GameObject;
 public var cam : GameObject;
 public var gameOverMenu : GameObject;
 private var endMenu : GameObject;
@@ -39,7 +40,7 @@ function Start () {
 
 function Update () {
 
-	musicPlaying = soundManager.GetComponent(AudioSource).isPlaying;
+	if (soundManager) {musicPlaying = soundManager.GetComponent(AudioSource).isPlaying;}
 	
 	if (Application.loadedLevelName == "Level") {
 		if (levelStage == 1 && !musicPlaying && !gamePaused && player) {
@@ -48,9 +49,13 @@ function Update () {
 			levelStage = 2;
 		}
 		else if (levelStage == 1 && musicPlaying && !gamePaused && !player) {
+			levelStage = 2;
 			endMenu = GameObject.Instantiate(gameOverMenu, Vector3.zero, Quaternion.identity) as GameObject;
 			endMenu.GetComponent(scrEndMenu).levelWon = false;
-			levelStage = 2;
+			soundManager.GetComponent(AudioSource).Stop();
+			soundEffectsManager.GetComponent(scrSounds).audioSources[0].Play();
+			
+			
 		}
 	}
 	

@@ -1,17 +1,14 @@
 ﻿#pragma strict
 
-static public var soundOuch : AudioSource;
-static public var soundCoin : AudioSource;
+public var soundEffects : AudioClip[];
+public var audioSources : AudioSource[];
 
 function Start () {
-
-	soundOuch = gameObject.AddComponent(AudioSource);
-	soundOuch.clip = Resources.Load("Sounds/sndOuch") as AudioClip;
-	
-	soundCoin = gameObject.AddComponent(AudioSource);
-	soundCoin.clip = Resources.Load("Sounds/sndCoin") as AudioClip;
+	audioSources = new AudioSource[soundEffects.Length];
+	for (var i = 0; i < soundEffects.Length; i++) {
+		audioSources[i] = gameObject.AddComponent(AudioSource);
+		audioSources[i].clip = soundEffects[i] as AudioClip;
+	}
 }
 
-function Update () {
 
-}
