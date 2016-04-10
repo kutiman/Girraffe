@@ -20,6 +20,7 @@ public var autoShoot : boolean = true;
 public var initialEnergy : float = 100.0;
 public var currentEnergy : float;
 public var hungryInSeconds : float = 3.0;
+public var multiplier : int;
 
 var hurt = false;
 private var hurtDuration : float = 2.0;
@@ -41,15 +42,22 @@ function Start () {
 }
 
 function Update () {
+	multiplier = Mathf.Ceil(currentEnergy / initialEnergy);
 	Spin(spinSpeed);
 	Move();
 	// shoot
 	autoShoot = scrGame.musicPlaying;
 	if (autoShoot) {
-		Shoot();
+		Shoot(multiplier);
 	}
 	UpdateScale();
 	GetHungry();
+	
+	// Debug//////
+	if (Input.GetKeyDown(KeyCode.Space)) {
+		currentEnergy += 50;
+	}
+	///////
 }
 
 function Spin (speed : float) {
@@ -139,11 +147,37 @@ function UpdateScale () {
 	transform.localScale = Vector3(newScale, newScale, newScale);
 }
 
-function Shoot () {
+function Shoot (level : int) {
+	if (level < 1) {level = 1;}
 	if (Time.time > lastShot + reloadSpeed) {
-		var bullet : GameObject = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
 		lastShot = Time.time;
-		bullet.transform.parent = manager.transform;
+		var bullets : GameObject[] = new GameObject[level];
+		var i : int = 0;
+		switch (level) {
+			case 1 :
+				bullets[0] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
+				bullets[0].transform.parent = manager.transform;	 
+				break;
+				
+			case 2 : 
+				for (i = 0; i < level; i++) {
+					bullets[i] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
+					bullets[i].transform.Rotate(Vector3(0,0,10 * Mathf.Pow(-1, i+1)));
+					bullets[i].transform.parent = manager.transform;			
+				}
+				break;
+			
+			case 3 : 
+				bullets[0] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
+				bullets[1] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
+				bullets[0].transform.Rotate(Vector3(0,0,10));
+				bullets[1].transform.Rotate(Vector3(0,0,-10));
+				bullets[0].transform.parent = manager.transform;
+				bullets[1].transform.parent = manager.transform;
+			
+			default :
+				break;
+		}
 	}
 }
 
