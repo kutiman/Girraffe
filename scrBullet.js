@@ -1,9 +1,10 @@
 ﻿#pragma strict
 
 public var speed : float = 3.0;
+private var lifetime = 4.0;
 
 function Start () {
-	yield WaitForSeconds(10);
+	yield WaitForSeconds(lifetime);
 	Destroy(gameObject);
 }
 function FixedUpdate () {

@@ -18,10 +18,10 @@ function Update () {
 	transform.position.y += speed.y * Time.deltaTime;
 	transform.position.x += speed.x * Time.deltaTime;
 	
-	Dying();
+	FadeOut();
 }
 
-function Dying () {
+function FadeOut () {
 	if (timeRemaining <= 0.0) {
 		Destroy(gameObject);
 	}

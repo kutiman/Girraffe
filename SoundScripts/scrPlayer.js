@@ -9,6 +9,8 @@ private var item : GameObject;
 private var factoryTransform : Transform;
 
 private var manager : GameObject;
+public var shard : GameObject;
+private var trash : GameObject;
 
 // Shooting values ########################################
 public var bulletObject : GameObject;
@@ -17,6 +19,7 @@ private var lastShot : float = 0.0;
 public var autoShoot : boolean = true;
 
 // Hunger end ########################################
+public var healthBar : GameObject;
 public var initialEnergy : float = 100.0;
 public var currentEnergy : float;
 public var hungryInSeconds : float = 3.0;
@@ -34,11 +37,13 @@ function Awake () {
 
 function Start () {
 	//audio
+	trash = GameObject.FindWithTag("Trash");
 	sound = gameObject.AddComponent(AudioSource);
 	collR = gameObject.GetComponent(SphereCollider).radius;
 	item = GameObject.FindWithTag("tagFactory").GetComponent(scrSpec).item;
 	factoryTransform = GameObject.FindWithTag("tagFactory").transform;
 	currentEnergy = initialEnergy;
+	GameObject.Instantiate(healthBar);
 }
 
 function Update () {
@@ -76,7 +81,7 @@ function OnTriggerStay(coll : Collider) {
 	if (!hurt) {
 		switch (coll.gameObject.tag) {
 			case "tagNormalItem":
-				LoseSize(1);
+				BreakToPieces(1);
 				currentEnergy -= 5.0;
 				Destroy(coll.gameObject);
 				scrGame.flakesCount[0] += 1;
@@ -99,8 +104,8 @@ function OnTriggerStay(coll : Collider) {
 				break;
 				
 			case "tagBadItem":
-				LoseSize(5);
-				currentEnergy *= 0.75;
+				BreakToPieces(5);
+				currentEnergy -= 40.0;
 				Destroy(coll.gameObject);
 				scrGame.flakesCount[1] += 1;
  				break;
@@ -123,23 +128,6 @@ function Vacuum () {
 			scr.sucked = true;
 		}
 	}
-}
-
-function LoseSize (amountToCreate : int) {
-	for (var i = 0; i < amountToCreate; i++) {
-		var obj = GameObject.Instantiate(item);
-		obj.transform.position = transform.position;
-		obj.transform.parent = factoryTransform;
-		
-		var spd : Vector2 = new Vector2(new Random.Range(-1.0, 1.0), new Random.Range(-1.0, 1.0));
-		spd.x = Mathf.Sqrt(1 - Mathf.Pow(spd.y, 2)) * Mathf.Sign(spd.x);
-		obj.GetComponent(scrDroppingItem).speed = spd;
-		obj.GetComponent(scrDroppingItem).itemType = 2;
-		obj.GetComponent(scrDroppingItem).lifeTime = Vector2(Time.time, 2.0);
-		obj.GetComponent(scrDroppingItem).dying = true;
-		Destroy(obj.GetComponent(BoxCollider));
-	}
-	//GetHurt();
 }
 
 function UpdateScale () {
@@ -173,6 +161,17 @@ function GetHungry () {
 	}
 	else {
 		currentEnergy -= hungryInSeconds * Time.deltaTime;
+	}
+}
+
+public function BreakToPieces (pieces : int) {
+
+	for (var i = 0; i < pieces; i++) {
+		var obj = GameObject.Instantiate(shard, transform.position, Quaternion.identity);
+		obj.GetComponent(SpriteRenderer).color = GetComponent(SpriteRenderer).color;
+		if (trash) {
+			obj.transform.parent = trash.transform;
+		}
 	}
 }
 

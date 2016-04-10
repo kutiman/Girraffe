@@ -1,4 +1,4 @@
-﻿#pragma strict
+#pragma strict
 
 var audioSource: AudioSource; // calculate the spectrum of this audio source
 var goTransform : Transform; 
@@ -9,6 +9,9 @@ static var spectrum : float[]; // raw spectrum data from the audio source
 public var ampList : float[];
 static var maxVelocity : float = 100.0;
 public var musicPlaying : boolean = false;
+
+public var itemChances : float[];
+private var chancesSum : float;
 
 public var item : GameObject; // the item that will be created by the machine
 
@@ -25,6 +28,10 @@ function Start() {
 	ampList = new float[iSamples];
 	lastItemTime = new float[iSamples];
 	itemSize = (scrGame.screenWidth * 2) / spectrum.length;
+	
+	for (var n : float in itemChances) {
+		chancesSum += n;
+	} 
 	
 	CreateHazardMachine();
 }
@@ -74,25 +81,35 @@ function UpdateHazardMachine () {
 				var p : int = 0;
 				for (var child : Transform in transform) {
 					allItemsList[p] = child.gameObject;
-					if (allItemsList[p].GetComponent(scrDroppingItem).iSpec == i) {
-						allItemsList[p].GetComponent(scrDroppingItem).myScale = itemScale;
+					var tr = allItemsList[p].GetComponent(scrDroppingItem).timeRemaining;
+					var lt = allItemsList[p].GetComponent(scrDroppingItem).lifetime;
+					if (allItemsList[p].GetComponent(scrDroppingItem).iSpec == i && tr < lt/2.0) {
+						allItemsList[p].GetComponent(scrDroppingItem).timeRemaining *= 2;
 					}
 						p++;
 				}
-				
-				var n = new Random.Range(0.0,1.0);
-				if (n > 0.94) {
-					n = new Random.Range(0.0,1.0);
-					if (n > 0.55) {
-						n = new Random.Range(0.0,1.0);
-						if (n > 0.95) {tempItem.GetComponent(scrDroppingItem).itemType = 3;}
-						else {tempItem.GetComponent(scrDroppingItem).itemType = 2;}
-					}
-					else {tempItem.GetComponent(scrDroppingItem).itemType = 1;}
-				}
+		
+				tempItem.GetComponent(scrDroppingItem).itemType = GetRandomItem();
 				lastItemTime[i] = Time.time;
 			}
 		}
 		else {ampList[i]*= 1 - ampDecay * Time.deltaTime;}
 	}
 }
+
+function GetRandomItem () : int {
+	var type = 0;
+	var r = new Random.Range(0.0,1.0);
+	var tempSum = 0.0;
+	for (var i = 0; i < itemChances.Length; i++) {
+		
+		if ((itemChances[i] + tempSum) / chancesSum >= r) {
+			return i;
+		}
+		else {
+			tempSum += itemChances[i];
+		}
+	}
+}
+
+

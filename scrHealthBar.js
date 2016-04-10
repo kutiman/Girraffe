@@ -19,6 +19,7 @@ function Update () {
 	tm.text = "X" + n.ToString();
 	if (player) {
 		currentEnergy = playerScript.currentEnergy;
+		if (currentEnergy < 0.0) {currentEnergy = 0.0;}
 		filler.transform.localScale.x = (currentEnergy % initialEnergy) / initialEnergy;
 	}
 	else {
@@ -26,6 +27,9 @@ function Update () {
 		if (player) {
 			playerScript = player.GetComponent(scrPlayer);
 			initialEnergy = playerScript.initialEnergy;
+		}
+		else {
+			Destroy(gameObject);
 		}
 	}
 }
