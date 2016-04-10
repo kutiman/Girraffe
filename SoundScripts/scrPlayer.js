@@ -152,31 +152,14 @@ function Shoot (level : int) {
 	if (Time.time > lastShot + reloadSpeed) {
 		lastShot = Time.time;
 		var bullets : GameObject[] = new GameObject[level];
-		var i : int = 0;
-		switch (level) {
-			case 1 :
-				bullets[0] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
-				bullets[0].transform.parent = manager.transform;	 
-				break;
-				
-			case 2 : 
-				for (i = 0; i < level; i++) {
-					bullets[i] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
-					bullets[i].transform.Rotate(Vector3(0,0,10 * Mathf.Pow(-1, i+1)));
-					bullets[i].transform.parent = manager.transform;			
-				}
-				break;
-			
-			case 3 : 
-				bullets[0] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
-				bullets[1] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
-				bullets[0].transform.Rotate(Vector3(0,0,10));
-				bullets[1].transform.Rotate(Vector3(0,0,-10));
-				bullets[0].transform.parent = manager.transform;
-				bullets[1].transform.parent = manager.transform;
-			
-			default :
-				break;
+		
+		for (var i = 0; i < level; i++) {
+			bullets[i] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
+			if (level > 1) {
+			var offset = (level * -10.0) / 2 + ((level * 10.0) / level-1) * i;
+				bullets[i].transform.Rotate(Vector3(0,0,offset));
+			}
+			bullets[i].transform.parent = manager.transform;			
 		}
 	}
 }
@@ -193,6 +176,37 @@ function GetHungry () {
 	}
 }
 
+/*
+switch (level) {
+			case 1 :
+				bullets[0] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
+				bullets[0].transform.parent = manager.transform;	 
+				break;
+				
+			case 2 : 
+				for (i = 0; i < level; i++) {
+					bullets[i] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
+					bullets[i].transform.Rotate(Vector3(0,0,10 * Mathf.Pow(-1, i+1)));
+					bullets[i].transform.parent = manager.transform;			
+				}
+				break;
+			
+			case 3 : 
+				for (i = 0; i < level; i++) {
+					bullets[i] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
+					bullets[i].transform.Rotate(Vector3(0,0,-15.0 + 15.0 * i));
+					bullets[i].transform.parent = manager.transform;			
+				}
+				break;
+			
+			default :
+				for (i = 0; i < level; i++) {
+						bullets[i] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
+						bullets[i].transform.Rotate(Vector3(0,0,-15.0 + 15.0 * i));
+						bullets[i].transform.parent = manager.transform;
+				break;
+		}
+*/
 
 
 

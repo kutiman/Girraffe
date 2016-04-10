@@ -2,6 +2,10 @@
 
 public var speed : float = 3.0;
 
+function Start () {
+	yield WaitForSeconds(10);
+	Destroy(gameObject);
+}
 function FixedUpdate () {
 	MoveUp();
 	if (transform.position.y > scrGame.screenHeight * 1.1) {

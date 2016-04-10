@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 private var player : GameObject;
+public var shard : GameObject;
 
 public var speed : Vector2 = Vector2(0.0,-1.0);
 private var rotateSpeed : float = 90.0;
@@ -52,7 +53,7 @@ function Update () {
 }
 
 function Decay () {
-	var minScale : float = 0.9/3;
+	var minScale : float = 0.3;
 	var relativePosition : float = 1 - (scrGame.screenHeight - transform.position.y) / (scrGame.screenHeight * 2);
 	
 	myScale *= (1 - decayRate * Time.deltaTime);
@@ -99,16 +100,8 @@ function SlowlyDie () {
 public function BreakToPieces (pieces : int) {
 
 	for (var i = 0; i < pieces; i++) {
-		var obj = GameObject.Instantiate(gameObject, transform.position, Quaternion.identity);
-		
-		var spd : Vector2 = new Vector2(new Random.Range(-1.0, 1.0), new Random.Range(-1.0, 1.0));
-		spd.x = Mathf.Sqrt(1 - Mathf.Pow(spd.y, 2)) * Mathf.Sign(spd.x);
-		obj.GetComponent(scrDroppingItem).speed = spd;
-		obj.GetComponent(scrDroppingItem).myScale = 0.2;
-		obj.GetComponent(scrDroppingItem).itemType = itemType;
-		obj.GetComponent(scrDroppingItem).lifeTime = Vector2(Time.time, 1.0);
-		obj.GetComponent(scrDroppingItem).dying = true;
-		Destroy(obj.GetComponent(BoxCollider));
+		var obj = GameObject.Instantiate(shard, transform.position, Quaternion.identity);
+		obj.GetComponent(SpriteRenderer).material = this.GetComponent(SpriteRenderer).material;
 	}
 }
 
