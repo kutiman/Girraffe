@@ -48,7 +48,7 @@ function Start () {
 
 function Update () {
 	multiplier = Mathf.Ceil(currentEnergy / initialEnergy);
-	Spin(spinSpeed);
+	//Spin(spinSpeed);
 	Move();
 	// shoot
 	autoShoot = scrGame.musicPlaying;
@@ -168,7 +168,7 @@ public function BreakToPieces (pieces : int) {
 
 	for (var i = 0; i < pieces; i++) {
 		var obj = GameObject.Instantiate(shard, transform.position, Quaternion.identity);
-		obj.GetComponent(SpriteRenderer).color = GetComponent(SpriteRenderer).color;
+		obj.GetComponent(SpriteRenderer).color = gameObject.renderer.material.color;
 		if (trash) {
 			obj.transform.parent = trash.transform;
 		}
