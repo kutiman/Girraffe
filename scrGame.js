@@ -45,6 +45,7 @@ function Update () {
 	if (Application.loadedLevelName == "Level") {
 		if (levelStage == 1 && !musicPlaying && !gamePaused && player) {
 			player.GetComponent(scrPlayer).BreakToPieces(40);
+			Destroy(player.gameObject);
 			endMenu = GameObject.Instantiate(gameOverMenu, Vector3.zero, Quaternion.identity) as GameObject;
 			endMenu.GetComponent(scrEndMenu).levelWon = true;
 			levelStage = 2;

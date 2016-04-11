@@ -80,14 +80,14 @@ function OnTriggerStay(coll : Collider) {
 	
 	if (!hurt) {
 		switch (coll.gameObject.tag) {
-			case "tagNormalItem":
+			case "NormalBit":
 				BreakToPieces(1);
 				currentEnergy -= 5.0;
 				Destroy(coll.gameObject);
 				scrGame.flakesCount[0] += 1;
 				break;
 			
-			case "tagUpper":
+			case "EnergyBit":
 				currentEnergy += 20.0;
 				Destroy(coll.gameObject);
 				scrGame.flakesCount[2] += 1;
@@ -103,7 +103,7 @@ function OnTriggerStay(coll : Collider) {
 				Destroy(coll.gameObject);
 				break;
 				
-			case "tagBadItem":
+			case "FollowBit":
 				BreakToPieces(5);
 				currentEnergy -= 40.0;
 				Destroy(coll.gameObject);
@@ -124,7 +124,7 @@ function Vacuum () {
 	
 	for (var child : Transform in factoryTransform) {
 		var scr = child.gameObject.GetComponent(scrDroppingItem);
-		if (child.gameObject.tag == "tagUpper") {
+		if (child.gameObject.tag == "EnergyBit") {
 			scr.sucked = true;
 		}
 	}

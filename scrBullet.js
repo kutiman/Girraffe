@@ -21,7 +21,7 @@ function MoveUp () {
 function OnTriggerStay(coll : Collider) {
 	var scr : scrDroppingItem = coll.GetComponent(scrDroppingItem);
 	switch (coll.gameObject.tag) {
-		case "tagNormalItem":
+		case "NormalBit":
 			if (scr) {scr.BreakToPieces(4);}
 			Destroy(coll.gameObject);
 			scrGame.flakesCount[0] += 1;
@@ -34,7 +34,7 @@ function OnTriggerStay(coll : Collider) {
 			Destroy(gameObject);
 			break;
 			
-		case "tagBadItem":
+		case "FollowBit":
 			if (scr) {scr.BreakToPieces(6);}
 			Destroy(coll.gameObject);
 			scrGame.flakesCount[1] += 1;

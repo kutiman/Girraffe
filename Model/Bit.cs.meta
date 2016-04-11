@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 59f8c3490e15975469442cb63a98118f
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - player: {instanceID: 0}
+  - shard: {fileID: 100000, guid: f328520fa954afd41b3bb0fc5348f057, type: 2}
+  - trash: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

@@ -13,7 +13,7 @@ public var timeRemaining : float;
 
 public var myScale : float = 0.5;
 
-private var tagsList = ["tagNormalItem", "tagBadItem", "tagUpper", "tagVacuum", "tagSpecial"];
+private var tagsList = ["NormalBit", "FollowBit", "EnergyBit", "tagVacuum", "tagSpecial"];
 
 function Start () {
 	timeRemaining = lifetime;

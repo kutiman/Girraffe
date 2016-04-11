@@ -10,6 +10,7 @@ public var ampList : float[];
 static var maxVelocity : float = 100.0;
 public var musicPlaying : boolean = false;
 
+public var bits : GameObject[];
 public var itemChances : float[];
 private var chancesSum : float;
 
@@ -67,9 +68,68 @@ function UpdateHazardMachine () {
 		if (ampList[i] <= posY) {
 			ampList[i] = posY;
 			if (ampList[i] > tolerance &&  Time.time >= waitTime + lastItemTime[i]) {
-				var tempItem : GameObject; // 
+				var tempItem : GameObject; 
 				var posX : float = goTransform.position.x - scrGame.screenWidth + itemSize * i  + itemSize/2;
 				var positionY : float = scrGame.screenHeight - itemSize/2 - (scrBar.unitHeight * Mathf.Clamp(ampList[i], 0.0, maxVelocity) / maxVelocity);
+				var r = GetRandomItem();
+				tempItem = Instantiate(bits[r], new Vector3(posX, positionY, goTransform.position.z),Quaternion.identity);
+				tempItem.transform.parent = goTransform;
+				tempItem.GetComponent(Bit).speed = (-0.4 - (Mathf.Log(posY))) * itemSpeed;
+				tempItem.GetComponent(Bit).iSpec = i;
+				tempItem.GetComponent(Bit).myScale = itemScale;
+				
+				var allItemsList : GameObject[] = new GameObject[transform.childCount];
+
+				var p : int = 0;
+				for (var child : Transform in transform) {
+					allItemsList[p] = child.gameObject;
+					var tr = allItemsList[p].GetComponent(Bit).timeRemaining;
+					var lt = allItemsList[p].GetComponent(Bit).lifetime;
+					if (allItemsList[p].GetComponent(Bit).iSpec == i && tr < lt/2.0) {
+						allItemsList[p].GetComponent(Bit).timeRemaining *= 2;
+					}
+						p++;
+				}
+		
+				lastItemTime[i] = Time.time;
+			}
+		}
+		else {ampList[i]*= 1 - ampDecay * Time.deltaTime;}
+	}
+}
+
+function GetRandomItem () : int {
+	var type = 0;
+	var r = new Random.Range(0.0,1.0);
+	var tempSum = 0.0;
+	for (var i = 0; i < itemChances.Length; i++) {
+		
+		if ((itemChances[i] + tempSum) / chancesSum >= r) {
+			return i;
+		}
+		else {
+			tempSum += itemChances[i];
+		}
+	}
+}
+
+/*
+
+function UpdateHazardMachine () {
+	
+	var waitTime : float = 0.5;
+	
+	for (var i = 1; i < spectrum.length -1; i++) {
+		var eff : float = 15.0;
+//		var posY = spectrum[i] * (i*i);
+		var posY = Mathf.Sqrt(spectrum[i]) * (i*i) * 0.7;
+		if (ampList[i] <= posY) {
+			ampList[i] = posY;
+			if (ampList[i] > tolerance &&  Time.time >= waitTime + lastItemTime[i]) {
+				var tempItem : GameObject; 
+				var posX : float = goTransform.position.x - scrGame.screenWidth + itemSize * i  + itemSize/2;
+				var positionY : float = scrGame.screenHeight - itemSize/2 - (scrBar.unitHeight * Mathf.Clamp(ampList[i], 0.0, maxVelocity) / maxVelocity);
+				var r = GetRandomItem();
 				tempItem = Instantiate(item, new Vector3(posX, positionY, goTransform.position.z),Quaternion.identity);
 				tempItem.transform.parent = goTransform;
 				tempItem.GetComponent(scrDroppingItem).speed.y = (-0.4 - (Mathf.Log(posY))) * itemSpeed;
@@ -97,19 +157,6 @@ function UpdateHazardMachine () {
 	}
 }
 
-function GetRandomItem () : int {
-	var type = 0;
-	var r = new Random.Range(0.0,1.0);
-	var tempSum = 0.0;
-	for (var i = 0; i < itemChances.Length; i++) {
-		
-		if ((itemChances[i] + tempSum) / chancesSum >= r) {
-			return i;
-		}
-		else {
-			tempSum += itemChances[i];
-		}
-	}
-}
+*/
 
 
