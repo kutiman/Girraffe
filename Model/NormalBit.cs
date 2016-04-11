@@ -3,10 +3,11 @@ using System.Collections;
 
 public class NormalBit : Bit {
 	
-	float speed = 2f;
+
 
 	public override void Start () {
 		base.Start();
+		speed = 2f;
 	}
 	
 	public override void Update () {

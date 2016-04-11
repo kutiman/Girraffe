@@ -72,25 +72,25 @@ function UpdateHazardMachine () {
 				var posX : float = goTransform.position.x - scrGame.screenWidth + itemSize * i  + itemSize/2;
 				var positionY : float = scrGame.screenHeight - itemSize/2 - (scrBar.unitHeight * Mathf.Clamp(ampList[i], 0.0, maxVelocity) / maxVelocity);
 				var r = GetRandomItem();
-				tempItem = Instantiate(bits[r], new Vector3(posX, positionY, goTransform.position.z),Quaternion.identity);
+				tempItem = Instantiate(item, new Vector3(posX, positionY, goTransform.position.z),Quaternion.identity) as GameObject;
 				tempItem.transform.parent = goTransform;
-				tempItem.GetComponent(Bit).speed = (-0.4 - (Mathf.Log(posY))) * itemSpeed;
-				tempItem.GetComponent(Bit).iSpec = i;
-				tempItem.GetComponent(Bit).myScale = itemScale;
+				tempItem.GetComponent(scrDroppingItem).speed.y = (-0.4 - (Mathf.Log(posY))) * itemSpeed;
+				tempItem.GetComponent(scrDroppingItem).iSpec = i;
+				tempItem.GetComponent(scrDroppingItem).myScale = itemScale;
 				
 				var allItemsList : GameObject[] = new GameObject[transform.childCount];
 
 				var p : int = 0;
 				for (var child : Transform in transform) {
 					allItemsList[p] = child.gameObject;
-					var tr = allItemsList[p].GetComponent(Bit).timeRemaining;
-					var lt = allItemsList[p].GetComponent(Bit).lifetime;
-					if (allItemsList[p].GetComponent(Bit).iSpec == i && tr < lt/2.0) {
-						allItemsList[p].GetComponent(Bit).timeRemaining *= 2;
+					var tr = allItemsList[p].GetComponent(scrDroppingItem).timeRemaining;
+					var lt = allItemsList[p].GetComponent(scrDroppingItem).lifetime;
+					if (allItemsList[p].GetComponent(scrDroppingItem).iSpec == i && tr < lt/2.0) {
+						allItemsList[p].GetComponent(scrDroppingItem).timeRemaining *= 2;
 					}
 						p++;
 				}
-		
+				tempItem.GetComponent(scrDroppingItem).itemType = GetRandomItem();
 				lastItemTime[i] = Time.time;
 			}
 		}

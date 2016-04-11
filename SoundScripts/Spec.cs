@@ -55,7 +55,7 @@ public class Spec : MonoBehaviour {
 	}
 	
 	void CreateHazardMachine () {
-		for (var i = 0; i < spectrum.length; i++) {
+		for (var i = 0; i < spectrum.Length; i++) {
 			ampList[i] = -worldSize.x;		
 		}
 		
@@ -75,23 +75,23 @@ public class Spec : MonoBehaviour {
 				if (ampList[i] > tolerance &&  Time.time >= waitTime + lastItemTime[i]) {
 					GameObject tempItem; 
 					float posX = goTransform.position.x - worldSize.x + itemSize * i  + itemSize/2;
-					float positionY = worldSize.y - itemSize/2 - (Bar.unitHeight * Mathf.Clamp(ampList[i], 0.0, maxVelocity) / maxVelocity);
+					float positionY = worldSize.y - itemSize/2f - (Bar.unitHeight * Mathf.Clamp(ampList[i], 0f, maxVelocity) / maxVelocity);
 					int r = GetRandomItem();
-					tempItem = Instantiate(bits[r], new Vector3(posX, positionY, goTransform.position.z),Quaternion.identity);
+					tempItem = Instantiate(bits[r], new Vector3(posX, positionY, goTransform.position.z),Quaternion.identity) as GameObject;
 					tempItem.transform.parent = goTransform;
-					tempItem.GetComponent<Bit>().speed = (-0.4 - (Mathf.Log(posY))) * itemSpeed;
+					tempItem.GetComponent<Bit>().speed = (-0.4f - (Mathf.Log(posY))) * itemSpeed;
 					tempItem.GetComponent<Bit>().iSpec = i;
 					tempItem.GetComponent<Bit>().myScale = itemScale;
 					
-					var allItemsList : GameObject[] = new GameObject[transform.childCount];
+				GameObject[] allItemsList = new GameObject[transform.childCount];
 					
-					var p : int = 0;
-					for (var child : Transform in transform) {
+					int p = 0;
+					foreach (Transform child in transform) {
 						allItemsList[p] = child.gameObject;
-						var tr = allItemsList[p].GetComponent(Bit).timeRemaining;
-						var lt = allItemsList[p].GetComponent(Bit).lifetime;
-						if (allItemsList[p].GetComponent(Bit).iSpec == i && tr < lt/2.0) {
-							allItemsList[p].GetComponent(Bit).timeRemaining *= 2;
+						float tr = allItemsList[p].GetComponent<Bit>().timeRemaining;
+						float lt = allItemsList[p].GetComponent<Bit>().lifetime;
+						if (allItemsList[p].GetComponent<Bit>().iSpec == i && tr < lt/2f) {
+							allItemsList[p].GetComponent<Bit>().timeRemaining *= 2f;
 						}
 						p++;
 					}
@@ -104,8 +104,8 @@ public class Spec : MonoBehaviour {
 	}
 	
 	int GetRandomItem () {
-		var type = 0;
-		var r = new Random.Range(0f,1f);
+		int type = 0;
+		float r = Random.Range(0f,1f);
 		float tempSum = 0f;
 		for (var i = 0; i < itemChances.Length; i++) {
 			
@@ -116,6 +116,7 @@ public class Spec : MonoBehaviour {
 				tempSum += itemChances[i];
 			}
 		}
+		return 0;
 	}
 
 }

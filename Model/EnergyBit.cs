@@ -3,10 +3,11 @@ using System.Collections;
 
 public class EnergyBit : Bit {
 	
-	float speed = 5f;
+
 	
 	public override void Start () {
 		base.Start();
+		speed = 5f;
 	}
 	
 	public override void Update () {

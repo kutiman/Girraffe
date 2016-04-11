@@ -3,10 +3,11 @@ using System.Collections;
 
 public class FollowBit : Bit {
 	
-	float speed = 1f;
+
 	
 	public override void Start () {
 		base.Start();
+		speed = 1f;
 	}
 	
 	public override void Update () {
