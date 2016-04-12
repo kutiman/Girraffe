@@ -48,9 +48,10 @@ public class Bit : MonoBehaviour {
 	}
 	
 	void FadeOut () {
-		var t = timeRemaining / lifetime;
+		float t = timeRemaining / lifetime;
 		//gameObject.transform.localScale = new Vector2(myScale * (Mathf.Lerp(0.1f, 1f, t)), myScale * (Mathf.Lerp(0.1f, 1f, t)));
-		gameObject.transform.localScale = new Vector2(myScale * t, myScale * t);
+		float root =  (myScale * Mathf.Sqrt( t ));
+		gameObject.transform.localScale = new Vector2(root, root);
 		timeRemaining -= Time.deltaTime;
 		if (timeRemaining <= 0f) {
 			Destroy(gameObject);

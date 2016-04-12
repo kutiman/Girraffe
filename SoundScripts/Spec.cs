@@ -84,13 +84,14 @@ public class Spec : MonoBehaviour {
 					tempItem.GetComponent<Bit>().myScale = itemScale;
 					
 				GameObject[] allItemsList = new GameObject[transform.childCount];
-					
+
+					// make items bigger during their life if frequency is banging
 					int p = 0;
 					foreach (Transform child in transform) {
 						allItemsList[p] = child.gameObject;
 						float tr = allItemsList[p].GetComponent<Bit>().timeRemaining;
 						float lt = allItemsList[p].GetComponent<Bit>().lifetime;
-						if (allItemsList[p].GetComponent<Bit>().iSpec == i && tr < lt/2f) {
+						if (allItemsList[p].GetComponent<Bit>().iSpec == i && tr < lt/3f) {
 							allItemsList[p].GetComponent<Bit>().timeRemaining *= 2f;
 						}
 						p++;
