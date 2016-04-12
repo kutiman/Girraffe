@@ -15,12 +15,15 @@ public class BarUnit : MonoBehaviour {
 	
 	void Update () {
 		// changing the vertical scale of the bar according to velocity
+		Vector3 newScale;
 		if (iSpec > 0 && manager && manager.GetComponent<Bar>().barSizes.Length > iSpec) {
 			float s = Mathf.Clamp((manager.GetComponent<Bar>().barSizes[iSpec]), 0, maxVelocity) / maxVelocity;
-			//transform.localScale.y = s;
+			newScale = new Vector3(transform.localScale.x, s, transform.localScale.z); 
+			transform.localScale = newScale;
 		}
 		if (iSpec == 0) {
-			//transform.localScale.y = 0;
+			newScale = new Vector3(transform.localScale.x, 0, transform.localScale.z);
+			transform.localScale = newScale;
 		}
 	}
 }

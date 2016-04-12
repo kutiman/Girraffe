@@ -2,12 +2,10 @@
 using System.Collections;
 
 public class NormalBit : Bit {
-	
-
 
 	public override void Start () {
 		base.Start();
-		speed = 2f;
+		speed = 1f;
 	}
 	
 	public override void Update () {

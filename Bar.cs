@@ -25,8 +25,8 @@ public class Bar : MonoBehaviour {
 	}
 	
 	GameObject[] CreateBars (int amount) {
-		float w = GetComponent<Spec>().worldSize.x;
-		float h = GetComponent<Spec>().worldSize.y;
+		float w = Game.worldSize.x;
+		float h = Game.worldSize.y;
 		GameObject[] tempList = new GameObject[amount];
 		//var eff : float = 10.6667
 		for (var i = 0; i < amount; i++) {

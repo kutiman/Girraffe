@@ -26,7 +26,7 @@ public class Bit : MonoBehaviour {
 		CheckBounds();
 	}
 
-	void BreakToPieces (int pieces) {
+	public void BreakToPieces (int pieces) {
 	
 		for (int i = 0; i < pieces; i++) {
 			GameObject obj = GameObject.Instantiate(shard, transform.position, Quaternion.identity) as GameObject;

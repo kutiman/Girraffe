@@ -14,30 +14,30 @@ public class Game : MonoBehaviour {
 	public static int[] flakesCount = new int[4];
 	
 	public static GameObject player;
+	public GameObject playerObject;
 	public GameObject soundManager;
 	public GameObject soundEffectsManager;
 	public GameObject cam;
 	public GameObject gameOverMenu;
 	private GameObject endMenu;
-	static int levelStage = 1;
-	static bool musicPlaying;
+	public static int levelStage = 1;
+	public static bool musicPlaying;
 	
-	bool gamePaused = false;
+	public bool gamePaused = false;
 	
 	void Start () {
 		if (Application.loadedLevelName == "Level") {
 			flakesCount = new int[] {0,0,0,0};
 			colors = AllColors();
-			if (levelStage == 0) {
+
+				/*
 				yield return new WaitForSeconds(4);
 				player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
 				yield return new WaitForSeconds(9);
 				CreateLevel(level);
-			}
-			else {
-				player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
-				CreateLevel(level);
-			}
+				*/
+			player = GameObject.Instantiate(playerObject) as GameObject;
+			CreateLevel(level);
 		}
 	}
 	
@@ -69,96 +69,94 @@ public class Game : MonoBehaviour {
 		}
 	}
 	
-	public function CreateLevel (level : int) {
+	public void CreateLevel (int level) {
 		if (Application.loadedLevelName == "Level") {
 			// level parameters which will help check if the music is over (time started, length of audio clip)
 			if (!player) {player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;}
 			if (soundManager) {
-				soundManager.GetComponent(AudioSource).clip = songsList[level];
-				soundManager.GetComponent(AudioSource).Play();
+				soundManager.GetComponent<AudioSource>().clip = songsList[level];
+				soundManager.GetComponent<AudioSource>().Play();
 			}
 			levelStage = 1;
 		}
 	}
 	
-	public function Restart() {
+	public void Restart() {
 		if (Application.loadedLevelName == "Level") {
 			Destroy(player);
-			flakesCount = [0,0,0,0];
+			flakesCount = new int[] {0,0,0,0};
 			CreateLevel(level);
 			player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
 		}
 	}
 	
-	public function ChooseLevel() {
+	public void ChooseLevel() {
 		
-		GameObject.FindWithTag("tagFader").GetComponent(scrFader).levelToLoad = "ChooseLevel";
-		GameObject.FindWithTag("tagFader").GetComponent(scrFader).sceneEnding = true;
+		GameObject.FindWithTag("tagFader").GetComponent<Fader>().levelToLoad = "ChooseLevel";
+		GameObject.FindWithTag("tagFader").GetComponent<Fader>().sceneEnding = true;
 		
 		levelStage = 1;
 		Destroy(player);
-		flakesCount = [0,0,0,0];
+		flakesCount = new int[] {0,0,0,0};
 	}
 	
-	function AllColors () {
-		var list : String[] = new String[8];
-		var colorList : Color[] = new Color[list.length];
-		list = 
-			[
-			 "0B080F", // black
-			 "FFFFFF", // white
-			 "FD0100", // red
-			 "FEE300", // yellow
-			 "00B9FC", // blue
-			 "F33389", // purple
-			 "8EDC0C", // green
-			 "F69010" // orange
-			 ];
+	Color[] AllColors () {
+		string[] list = new string[] {
+			"0B080F", // black
+			"FFFFFF", // white
+			"FD0100", // red
+			"FEE300", // yellow
+			"00B9FC", // blue
+			"F33389", // purple
+			"8EDC0C", // green
+			"F69010" // orange
+		};
+		Color[] colorList = new Color[list.Length];		
 		
-		for (var i = 0; i < list.length; i++) {
+		for (int i = 0; i < list.Length; i++) {
 			colorList[i] = HexToRGB(list[i]);
 		}
 		return colorList;
 	}
 	
-	function HexToInt (hexChar : char) {
-		var hex : String = "" + hexChar;
-		var tempInt : int;
+	int HexToInt (char hexChar) {
+		string hex = "" + hexChar;
+		int tempInt;
 		switch (hex) { 
-		case "0": tempInt = 0; break;
-		case "1": tempInt = 1; break;
-		case "2": tempInt = 2; break;
-		case "3": tempInt = 3; break;
-		case "4": tempInt = 4; break;
-		case "5": tempInt = 5; break;
-		case "6": tempInt = 6; break;
-		case "7": tempInt = 7; break;
-		case "8": tempInt = 8; break;
-		case "9": tempInt = 9; break;
-		case "A": tempInt = 10; break;
-		case "B": tempInt = 11; break;
-		case "C": tempInt = 12; break;
-		case "D": tempInt = 13; break;
-		case "E": tempInt = 14; break;
-		case "F": tempInt = 15; break;
-		default: tempInt = 0; break;
+			case "0": tempInt = 0; break;
+			case "1": tempInt = 1; break;
+			case "2": tempInt = 2; break;
+			case "3": tempInt = 3; break;
+			case "4": tempInt = 4; break;
+			case "5": tempInt = 5; break;
+			case "6": tempInt = 6; break;
+			case "7": tempInt = 7; break;
+			case "8": tempInt = 8; break;
+			case "9": tempInt = 9; break;
+			case "A": tempInt = 10; break;
+			case "B": tempInt = 11; break;
+			case "C": tempInt = 12; break;
+			case "D": tempInt = 13; break;
+			case "E": tempInt = 14; break;
+			case "F": tempInt = 15; break;
+			default: tempInt = 0; break;
 		}
 		return tempInt;
-	};
+	}
 	
-	function HexToRGB (color : String) {
-		var red = (HexToInt(color[1]) + HexToInt(color[0]) * 16.000) / 255;
-		var green = (HexToInt(color[3]) + HexToInt(color[2]) * 16.000) / 255;
-		var blue = (HexToInt(color[5]) + HexToInt(color[4]) * 16.000) / 255;
-		var finalColor = new Color();
+	Color HexToRGB (string color) {
+		float red = (HexToInt(color[1]) + HexToInt(color[0]) * 16f) / 255f;
+		float green = (HexToInt(color[3]) + HexToInt(color[2]) * 16f) / 255f;
+		float blue = (HexToInt(color[5]) + HexToInt(color[4]) * 16f) / 255f;
+		Color finalColor = new Color();
 		finalColor.r = red;
 		finalColor.g = green;
 		finalColor.b = blue;
 		finalColor.a = 1;
 		return finalColor;
-	};
+	}
 	
-	function OnApplicationFocus(focusStatus: boolean) {
+	void OnApplicationFocus(bool focusStatus) {
 		gamePaused = !focusStatus;
 	}
 }
