@@ -58,7 +58,7 @@ public class Game : MonoBehaviour {
 				endMenu = GameObject.Instantiate(gameOverMenu, Vector3.zero, Quaternion.identity) as GameObject;
 				endMenu.GetComponent<EndMenu>().levelWon = false;
 				soundManager.GetComponent<AudioSource>().Stop();
-				//soundEffectsManager.GetComponent(Sounds).audioSources[0].Play();
+				soundEffectsManager.GetComponent<SoundEffects>().audioSources[0].Play();
 				
 				
 			}

@@ -20,8 +20,8 @@ public class Bullet : MonoBehaviour {
 	void MoveUp () {
 		transform.Translate(Vector3.up * speed * Time.deltaTime);
 	}
-	
-	void OnTriggerStay(Collider coll) {
+
+	public void OnTriggerStay(Collider coll) {
 		Bit scr = coll.GetComponent<Bit>();
 		switch (coll.gameObject.tag) {
 			case "NormalBit":
@@ -46,4 +46,5 @@ public class Bullet : MonoBehaviour {
 				break;
 		}
 	}
+
 }

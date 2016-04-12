@@ -14,7 +14,7 @@ public class Shard : MonoBehaviour {
 		
 		
 		//yield WaitForSeconds(2);
-		Destroy(gameObject);
+
 	}
 	
 	void Update () {
