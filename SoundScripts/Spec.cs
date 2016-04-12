@@ -79,7 +79,7 @@ public class Spec : MonoBehaviour {
 					int r = GetRandomItem();
 					tempItem = Instantiate(bits[r], new Vector3(posX, positionY, goTransform.position.z),Quaternion.identity) as GameObject;
 					tempItem.transform.parent = goTransform;
-					tempItem.GetComponent<Bit>().speed = (-0.4f - (Mathf.Log(posY))) * itemSpeed;
+					tempItem.GetComponent<Bit>().speed = (0.2f + (Mathf.Log(posY))) * itemSpeed;
 					tempItem.GetComponent<Bit>().iSpec = i;
 					tempItem.GetComponent<Bit>().myScale = itemScale;
 					
