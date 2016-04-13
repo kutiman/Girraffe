@@ -15,6 +15,11 @@ public class Bullet : MonoBehaviour {
 		myScale = 0.3f;
 		timeRemaining = lifetime;
 		gameObject.tag = "tagBullet";
+
+		float zMod = Random.Range (-4f, 4f);
+		transform.Rotate (new Vector3 (0, 0, zMod));
+		float sMod = Random.Range (0.75f, 1.25f);
+		speed *= sMod;
 	}
 
 	void Update () {
