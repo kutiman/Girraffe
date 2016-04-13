@@ -100,7 +100,7 @@ function UpdateHazardMachine () {
 
 function GetRandomItem () : int {
 	var type = 0;
-	var r = new Random.Range(0.0,1.0);
+	var r = Random.value;
 	var tempSum = 0.0;
 	for (var i = 0; i < itemChances.Length; i++) {
 		

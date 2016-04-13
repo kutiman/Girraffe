@@ -12,4 +12,11 @@ public class NormalBit : Bit {
 	void Move () {
 		transform.Translate (Vector3.down * Time.deltaTime * speed);
 	}
+
+	public void ChangeToObject (GameObject objectToCreate) {
+		GameObject obj = Instantiate (objectToCreate, transform.position, Quaternion.identity) as GameObject;
+		obj.GetComponent<Bit> ().timeRemaining = timeRemaining;
+		obj.GetComponent<Bit> ().iSpec = iSpec;
+		Destroy (gameObject);
+	}
 }

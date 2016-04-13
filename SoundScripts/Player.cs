@@ -97,16 +97,16 @@ public class Player : MonoBehaviour {
 				Destroy(coll.gameObject);
 				Game.flakesCount[2] += 1;
 				break;
-				
-			case "tagVacuum":
-				Vacuum();
-				Destroy(coll.gameObject);
-				Game.flakesCount[3] += 1;
-				break;
-				
-			case "tagSpecial":
-				Destroy(coll.gameObject);
-				break;
+//				
+//			case "tagVacuum":
+//				Vacuum();
+//				Destroy(coll.gameObject);
+//				Game.flakesCount[3] += 1;
+//				break;
+//				
+//			case "tagSpecial":
+//				Destroy(coll.gameObject);
+//				break;
 				
 //			case "FollowBit":
 //				BreakToPieces(5);
@@ -135,7 +135,7 @@ public class Player : MonoBehaviour {
 	}
 	
 	void UpdateScale () {
-		float newScale = originalScale * ((currentEnergy + initialEnergy/2f) / initialEnergy);
+		float newScale = originalScale * Mathf.Sqrt((currentEnergy + initialEnergy/2f) / initialEnergy);
 		transform.localScale = new Vector3(newScale, newScale, newScale);
 	}
 	

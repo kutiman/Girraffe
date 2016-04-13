@@ -106,7 +106,7 @@ public class Spec : MonoBehaviour {
 	
 	int GetRandomItem () {
 		int type = 0;
-		float r = Random.Range(0f,1f);
+		float r = Random.value;
 		float tempSum = 0f;
 		for (var i = 0; i < itemChances.Length; i++) {
 			
