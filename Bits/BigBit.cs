@@ -12,7 +12,7 @@ public class BigBit : Bit {
 	public override void Start () {
 
 		base.Start();
-
+		shardsAmount = 20;
 		shotCounter = shootSpeed;
 		speed = 0.5f;
 		timeRemaining = lifetime * 3f;
@@ -37,8 +37,9 @@ public class BigBit : Bit {
 			transform.parent = gameObject.transform;
 
 			if (player) obj.transform.Rotate(new Vector3(0, 0, AngleCalc(transform.position, player.transform.position)));
-			obj.GetComponent<Bit>().speed = 2f;
+			obj.GetComponent<Bit>().speed = 3f;
 			obj.GetComponent<Bit>().iSpec = iSpec;
+			obj.GetComponent<Bit>().lifetime = 2f;
 			obj.GetComponent<SpriteRenderer>().color = this.GetComponent<SpriteRenderer>().color;
 			timeRemaining -= 1f;
 			shotCounter = 0;
@@ -50,7 +51,7 @@ public class BigBit : Bit {
 
 	void OnTriggerEnter (Collider coll) {
 		if (coll.gameObject.tag == "NormalBit") {
-			timeRemaining += coll.GetComponent<Bit>().timeRemaining/5;
+			timeRemaining += coll.GetComponent<Bit>().timeRemaining/10;
 			Destroy (coll.gameObject);
 		}
 	}

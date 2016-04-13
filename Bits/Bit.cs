@@ -7,6 +7,7 @@ public class Bit : MonoBehaviour {
 	public GameObject shard;
 	public GameObject trash;
 
+
 	public Vector2 worldSize = new Vector2 (4.8f, 3.2f);
 
 	public float speed;
@@ -14,6 +15,9 @@ public class Bit : MonoBehaviour {
 	public float lifetime = 5f;
 	public float timeRemaining;
 	public float myScale = 0.5f;
+	public float damageMultiplier = 1f;
+	public bool badBit = true;
+	public int shardsAmount = 4;
 
 	public virtual void Start () {
 		timeRemaining = lifetime;
@@ -48,15 +52,37 @@ public class Bit : MonoBehaviour {
 	}
 	
 	void FadeOut () {
-		float t = timeRemaining / lifetime;
-		//gameObject.transform.localScale = new Vector2(myScale * (Mathf.Lerp(0.1f, 1f, t)), myScale * (Mathf.Lerp(0.1f, 1f, t)));
-		float root =  (myScale * Mathf.Sqrt( t ));
-		gameObject.transform.localScale = new Vector2(root, root);
-		timeRemaining -= Time.deltaTime;
+
 		if (timeRemaining <= 0f) {
 			Destroy(gameObject);
-		}	
+		}
+		else {
+			float t = timeRemaining / lifetime;
+			float root =  (myScale * Mathf.Sqrt( t ));
+//			float newSize =  (myScale * t);
+			gameObject.transform.localScale = new Vector2(root, root);
+//			gameObject.transform.localScale = new Vector3(newSize, newSize, 1f);
+			timeRemaining -= Time.deltaTime;
+		}
 	}
+
+	public virtual void OnTriggerStay(Collider coll) {
+		if (badBit) {
+			if (coll.gameObject.tag == "tagPlayer") {
+				player.GetComponent<Player>().TakeDamage(timeRemaining * damageMultiplier);
+				BreakToPieces(shardsAmount);
+				Destroy (gameObject);
+			}
+			else if (coll.gameObject.tag == "tagBullet") {
+				timeRemaining -= coll.GetComponent<Bullet>().timeRemaining;
+				Destroy (coll.gameObject);
+				if (timeRemaining <= 0f) {
+					BreakToPieces(shardsAmount);
+					Destroy (gameObject);
+				}
+			}
+		}
+	} 
 }
 
 

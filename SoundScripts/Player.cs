@@ -26,7 +26,7 @@ public class Player : MonoBehaviour {
 	public float initialEnergy = 100f;
 	public float currentEnergy;
 	public float hungryInSeconds = 3f;
-	public float multiplier;
+	public int multiplier;
 	
 	bool hurt = false;
 	private float hurtDuration = 2f;
@@ -51,13 +51,13 @@ public class Player : MonoBehaviour {
 	}
 	
 	void Update () {
-		multiplier = Mathf.Ceil(currentEnergy / initialEnergy);
+		multiplier = Mathf.CeilToInt(currentEnergy / initialEnergy);
 		//Spin(spinSpeed);
 		Move();
 		// shoot
 		autoShoot = Game.musicPlaying;
 		if (autoShoot) {
-			Shoot((int)multiplier);
+			Shoot(multiplier);
 		}
 		UpdateScale();
 		GetHungry();
@@ -84,12 +84,13 @@ public class Player : MonoBehaviour {
 		
 		if (!hurt) {
 			switch (coll.gameObject.tag) {
-			case "NormalBit":
-				BreakToPieces(1);
-				currentEnergy -= 5f;
-				Destroy(coll.gameObject);
-				Game.flakesCount[0] += 1;
-				break;
+
+//			case "NormalBit":
+//				BreakToPieces(1);
+//				currentEnergy -= 5f;
+//				Destroy(coll.gameObject);
+//				Game.flakesCount[0] += 1;
+//				break;
 				
 			case "EnergyBit":
 				currentEnergy += 20f;
@@ -107,12 +108,12 @@ public class Player : MonoBehaviour {
 				Destroy(coll.gameObject);
 				break;
 				
-			case "FollowBit":
-				BreakToPieces(5);
-				currentEnergy -= 40f;
-				Destroy(coll.gameObject);
-				Game.flakesCount[1] += 1;
-				break;
+//			case "FollowBit":
+//				BreakToPieces(5);
+//				currentEnergy -= 40f;
+//				Destroy(coll.gameObject);
+//				Game.flakesCount[1] += 1;
+//				break;
 			}
 		}
 	}
@@ -124,7 +125,7 @@ public class Player : MonoBehaviour {
 		hurt = false;
 	}
 	
-	void Vacuum () {
+	public void Vacuum () {
 		
 		foreach (Transform child in factoryTransform) {
 			if (child.gameObject.tag == "EnergyBit") {
@@ -176,6 +177,11 @@ public class Player : MonoBehaviour {
 				obj.transform.parent = trash.transform;
 			}
 		}
+	}
+
+	public void TakeDamage (float damage) {
+		currentEnergy -= damage;
+		BreakToPieces (Mathf.CeilToInt (damage));
 	}
 	
 	/*

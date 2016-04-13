@@ -8,6 +8,7 @@ public class FollowBit : Bit {
 	public override void Start () {
 		base.Start();
 		speed = 1f;
+		shardsAmount = 8;
 	}
 	
 	public override void Update () {

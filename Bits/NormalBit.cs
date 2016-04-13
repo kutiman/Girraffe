@@ -3,6 +3,7 @@ using System.Collections;
 
 public class NormalBit : Bit {
 
+
 	public override void Update () {
 		base.Update();
 		Move ();

@@ -23,7 +23,8 @@ public class HealthBar : MonoBehaviour {
 		if (player) {
 			currentEnergy = playerScript.currentEnergy;
 			if (currentEnergy < 0f) {currentEnergy = 0f;}
-			filler.transform.localScale = new Vector3((currentEnergy % initialEnergy) / initialEnergy, 0, 0);
+			Vector3 oldScale = filler.transform.localScale;
+			filler.transform.localScale = new Vector3((currentEnergy % initialEnergy) / initialEnergy, oldScale.y, oldScale.z);
 		}
 		else {
 			player = GameObject.FindWithTag("tagPlayer");

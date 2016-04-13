@@ -12,4 +12,5 @@ public class BigBitBullet : MonoBehaviour {
 	void Update () {
 	
 	}
+
 }
