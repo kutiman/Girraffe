@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Bit : MonoBehaviour {
 
-	public GameObject player;
+	public Player player;
 	public GameObject shard;
-	public GameObject trash;
+	public Transform trash;
 
 
 	public Vector2 worldSize = new Vector2 (4.8f, 3.2f);
@@ -21,8 +21,8 @@ public class Bit : MonoBehaviour {
 
 	public virtual void Start () {
 		timeRemaining = lifetime;
-		trash = GameObject.FindWithTag("Trash");
-		player = GameObject.FindWithTag("tagPlayer");
+		trash = GameObject.FindWithTag("Trash").transform;
+		player = GameObject.FindWithTag("tagPlayer").GetComponent<Player>();
 	}
 
 	public virtual void Update () {
@@ -35,9 +35,8 @@ public class Bit : MonoBehaviour {
 		for (int i = 0; i < pieces; i++) {
 			GameObject obj = GameObject.Instantiate(shard, transform.position, Quaternion.identity) as GameObject;
 			obj.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
-			if (trash) {
-				obj.transform.parent = trash.transform;
-			}
+			// putting the shards in the trash parent
+			if (trash) obj.transform.parent = trash;
 		}
 	}
 
@@ -69,7 +68,7 @@ public class Bit : MonoBehaviour {
 	public virtual void OnTriggerStay(Collider coll) {
 		if (badBit) {
 			if (coll.gameObject.tag == "tagPlayer") {
-				player.GetComponent<Player>().TakeDamage(timeRemaining * damageMultiplier);
+				player.TakeDamage(timeRemaining * damageMultiplier);
 				BreakToPieces(shardsAmount);
 				Destroy (gameObject);
 			}

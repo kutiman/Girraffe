@@ -57,9 +57,9 @@ public class GuiMain : MonoBehaviour {
 	}
 	
 	void ShowTutorial () {
-		float waitTime = 2f;
+//		float waitTime = 2f;
 		float ancY = 2f;
-		float pad  = Game.worldSize.y / 6f;
+		float pad  = Game.WorldSize.y / 6f;
 		
 		string[] tutorialLines = new string[] {
 	        "You are a small yellow orb.",

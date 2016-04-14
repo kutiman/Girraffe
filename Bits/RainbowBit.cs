@@ -40,8 +40,6 @@ public class RainbowBit : Bit {
 	public override void OnTriggerStay(Collider coll) {
 		if (coll.gameObject.tag == "tagPlayer") {
 			int i = 0;
-
-
 			GameObject[] normalBits = GameObject.FindGameObjectsWithTag("NormalBit");
 			foreach (GameObject obj in normalBits) {
 				if (Random.value > 0.7f) i = 1;

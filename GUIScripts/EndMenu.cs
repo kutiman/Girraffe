@@ -24,9 +24,9 @@ public class EndMenu : MonoBehaviour {
 	
 	public void GameOverMenu(string[] txt) {
 		
-		float waitTime = 2f;
+//		float waitTime = 2f;
 		float ancY = 2f;
-		float pad = Game.worldSize.y / 6f;
+		float pad = Game.WorldSize.y / 6f;
 
 		GameObject[] objList = new GameObject[txt.Length];
 		
@@ -40,20 +40,20 @@ public class EndMenu : MonoBehaviour {
 		
 		GameObject[] buttons = new GameObject[2];
 		
-		buttons[0] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.worldSize.x * 0.3f, 0), Quaternion.identity) as GameObject;
+		buttons[0] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.WorldSize.x * 0.3f, 0), Quaternion.identity) as GameObject;
 		buttons[0].GetComponent<Button>().buttonType = "ChooseLevel";
 		buttons[0].transform.parent = gameObject.transform;
 		
-		buttons[1] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.worldSize.x * 0.5f, 0), Quaternion.identity) as GameObject;
+		buttons[1] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.WorldSize.x * 0.5f, 0), Quaternion.identity) as GameObject;
 		buttons[1].GetComponent<Button>().buttonType = "Restart";
 		buttons[1].transform.parent = gameObject.transform;
 	}
 	
 	public void GameOverMenu() {
 		
-		float waitTime = 2f;
+//		float waitTime = 2f;
 		float ancY = 2f;
-		float pad = Game.worldSize.y / 6f;
+		float pad = Game.WorldSize.y / 6f;
 
 		string[] endMenuLines = new string[] {
 		                               "You are dead.",
@@ -72,11 +72,11 @@ public class EndMenu : MonoBehaviour {
 		
 		GameObject[] buttons = new GameObject[2];
 		
-		buttons[0] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.worldSize.x * 0.3f, 0), Quaternion.identity) as GameObject;
+		buttons[0] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.WorldSize.x * 0.3f, 0), Quaternion.identity) as GameObject;
 		buttons[0].GetComponent<Button>().buttonType = "ChooseLevel";
 		buttons[0].transform.parent = gameObject.transform;
 		
-		buttons[1] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.worldSize.x * 0.5f, 0), Quaternion.identity) as GameObject;
+		buttons[1] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.WorldSize.x * 0.5f, 0), Quaternion.identity) as GameObject;
 		buttons[1].GetComponent<Button>().buttonType = "Restart";
 		buttons[1].transform.parent = gameObject.transform;
 	}

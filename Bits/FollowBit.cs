@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class FollowBit : Bit {
-	
 
-	
 	public override void Start () {
 		base.Start();
 		speed = 1f;
@@ -24,7 +22,4 @@ public class FollowBit : Bit {
 			transform.Translate (Vector3.down * Time.deltaTime * speed);
 		}
 	}
-
-
-
 }

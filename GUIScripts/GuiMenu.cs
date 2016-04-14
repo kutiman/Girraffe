@@ -14,7 +14,7 @@ public class GuiMenu : MonoBehaviour {
 	
 	void Start () {
 		if (textObject) {
-			GameObject obj = GameObject.Instantiate(textObject, new Vector3(0, -Game.worldSize.y * 0.55f, 0), Quaternion.identity) as GameObject;
+			GameObject obj = GameObject.Instantiate(textObject, new Vector3(0, -Game.WorldSize.y * 0.55f, 0), Quaternion.identity) as GameObject;
 			obj.GetComponent<TextMesh>().text = introLabel;
 			obj.GetComponent<TextMesh>().fontSize = 20;
 			obj.GetComponent<TextMesh>().color = textColor;

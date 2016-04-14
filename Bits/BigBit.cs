@@ -36,7 +36,7 @@ public class BigBit : Bit {
 			obj.gameObject.tag = "BitBullet";
 			transform.parent = gameObject.transform;
 
-			if (player) obj.transform.Rotate(new Vector3(0, 0, AngleCalc(transform.position, player.transform.position)));
+			if (player) obj.transform.Rotate(new Vector3(0, 0, Utilities.AngleCalc(transform.position, player.transform.position)));
 			obj.GetComponent<Bit>().speed = 3f;
 			obj.GetComponent<Bit>().iSpec = iSpec;
 			obj.GetComponent<Bit>().lifetime = 2f;
@@ -56,24 +56,5 @@ public class BigBit : Bit {
 		}
 	}
 
-	float AngleCalc (Vector3 pos1, Vector3 pos2) {
-		float x = Mathf.Abs(pos2.x - pos1.x);
-		float y = Mathf.Abs(pos2.y - pos1.y);
-		float angle = (Mathf.Atan (x / y)) * Mathf.Rad2Deg;
 
-		if (pos1.y <= pos2.y) {
-
-			if (pos1.x > pos2.x) {
-				angle += 180f;
-			}
-			else {
-				angle = 180f - angle;
-			}
-		}
-		else if (pos1.x > pos2.x) {
-			angle = 360 - angle;
-		}
-
-		return angle;
-	}
 }

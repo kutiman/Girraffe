@@ -3,13 +3,11 @@ using System.Collections;
 
 public class Game : MonoBehaviour {
 
-	
-	public static Vector2 worldSize = new Vector2 (4.8f, 3.2f);
+	static public Vector2 WorldSize = new Vector2 (4.8f, 3.2f);
 
 	public static bool tutorialPassed = false;
 	
 	public static int level = 0;
-	public static Color[] colors = new Color[8];
 	public AudioClip[] songsList;
 	public static int[] flakesCount = new int[4];
 	
@@ -28,8 +26,6 @@ public class Game : MonoBehaviour {
 	void Start () {
 		if (Application.loadedLevelName == "Level") {
 			flakesCount = new int[] {0,0,0,0};
-			colors = AllColors();
-
 				/*
 				yield return new WaitForSeconds(4);
 				player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
@@ -47,7 +43,7 @@ public class Game : MonoBehaviour {
 		
 		if (Application.loadedLevelName == "Level") {
 			if (levelStage == 1 && !musicPlaying && !gamePaused && player) {
-				//player.GetComponent(scrPlayer).BreakToPieces(40);
+				//player.BreakToPieces(40);
 				Destroy(player.gameObject);
 				endMenu = GameObject.Instantiate(gameOverMenu, Vector3.zero, Quaternion.identity) as GameObject;
 				endMenu.GetComponent<EndMenu>().levelWon = true;
@@ -64,9 +60,7 @@ public class Game : MonoBehaviour {
 			}
 		}
 		
-		if (Input.GetKey(KeyCode.Q)) {
-			Application.Quit();
-		}
+		if (Input.GetKey(KeyCode.Q)) Application.Quit();
 	}
 	
 	public void CreateLevel (int level) {
@@ -98,62 +92,6 @@ public class Game : MonoBehaviour {
 		levelStage = 1;
 		Destroy(player);
 		flakesCount = new int[] {0,0,0,0};
-	}
-	
-	Color[] AllColors () {
-		string[] list = new string[] {
-			"0B080F", // black
-			"FFFFFF", // white
-			"FD0100", // red
-			"FEE300", // yellow
-			"00B9FC", // blue
-			"F33389", // purple
-			"8EDC0C", // green
-			"F69010" // orange
-		};
-		Color[] colorList = new Color[list.Length];		
-		
-		for (int i = 0; i < list.Length; i++) {
-			colorList[i] = HexToRGB(list[i]);
-		}
-		return colorList;
-	}
-	
-	int HexToInt (char hexChar) {
-		string hex = "" + hexChar;
-		int tempInt;
-		switch (hex) { 
-			case "0": tempInt = 0; break;
-			case "1": tempInt = 1; break;
-			case "2": tempInt = 2; break;
-			case "3": tempInt = 3; break;
-			case "4": tempInt = 4; break;
-			case "5": tempInt = 5; break;
-			case "6": tempInt = 6; break;
-			case "7": tempInt = 7; break;
-			case "8": tempInt = 8; break;
-			case "9": tempInt = 9; break;
-			case "A": tempInt = 10; break;
-			case "B": tempInt = 11; break;
-			case "C": tempInt = 12; break;
-			case "D": tempInt = 13; break;
-			case "E": tempInt = 14; break;
-			case "F": tempInt = 15; break;
-			default: tempInt = 0; break;
-		}
-		return tempInt;
-	}
-	
-	Color HexToRGB (string color) {
-		float red = (HexToInt(color[1]) + HexToInt(color[0]) * 16f) / 255f;
-		float green = (HexToInt(color[3]) + HexToInt(color[2]) * 16f) / 255f;
-		float blue = (HexToInt(color[5]) + HexToInt(color[4]) * 16f) / 255f;
-		Color finalColor = new Color();
-		finalColor.r = red;
-		finalColor.g = green;
-		finalColor.b = blue;
-		finalColor.a = 1;
-		return finalColor;
 	}
 	
 	void OnApplicationFocus(bool focusStatus) {

@@ -20,7 +20,7 @@ public class VacuumBit : Bit {
 
 	public override void OnTriggerStay(Collider coll) {
 		if (coll.gameObject.tag == "tagPlayer") {
-			player.GetComponent<Player>().Vacuum();
+			player.Vacuum();
 			Destroy (gameObject);
 		}
 	}

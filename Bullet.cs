@@ -43,32 +43,4 @@ public class Bullet : MonoBehaviour {
 			timeRemaining -= Time.deltaTime;
 		}
 	}
-
-//	public void OnTriggerStay(Collider coll) {
-//		Bit scr = coll.GetComponent<Bit>();
-////		switch (coll.gameObject.tag) {
-////			case "NormalBit":
-////				coll.GetComponent<Bit>().BreakToPieces(4);
-////			if (scr) {scr.BreakToPieces(4);}
-////				Debug.Log ("Killed Normal");
-////				Destroy(coll.gameObject);
-////				Game.flakesCount[0] += 1;
-////				Destroy(gameObject);
-////				break;
-////				
-////			case "BitBullet":
-////				if (scr) {scr.BreakToPieces(4);}
-////				Destroy(coll.gameObject);
-////				Destroy(gameObject);
-////				break;
-//				
-////			case "FollowBit":
-////				if (scr) {scr.BreakToPieces(6);}
-////				Destroy(coll.gameObject);
-////				Game.flakesCount[1] += 1;
-////				Destroy(gameObject);
-////				break;
-//		}
-//	}
-
 }

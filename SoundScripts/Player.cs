@@ -2,8 +2,7 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
-	
-	private float spinSpeed = 60f;
+
 	private float moveSpeed = 2.4f;
 	private float originalScale = 0.2f;
 	private float screenWidth = 4.8f;
@@ -13,7 +12,7 @@ public class Player : MonoBehaviour {
 	
 	private GameObject manager;
 	public GameObject shard;
-	private GameObject trash;
+	private Transform trash;
 	
 	// Shooting values ########################################
 	public GameObject bulletObject;
@@ -41,7 +40,7 @@ public class Player : MonoBehaviour {
 	
 	void Start () {
 		//audio
-		trash = GameObject.FindWithTag("Trash");
+		trash = GameObject.FindWithTag("Trash").transform;
 		sound = gameObject.AddComponent<AudioSource>();
 		collR = gameObject.GetComponent<SphereCollider>().radius;
 		item = GameObject.FindWithTag("tagFactory").GetComponent<Spec>().item;
@@ -79,45 +78,7 @@ public class Player : MonoBehaviour {
 		if (Input.GetKey (KeyCode.RightArrow) && transform.position.x < screenWidth - collR) {transform.Translate(moveSpeed * Time.deltaTime, 0, 0);}
 		else if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x > -screenWidth + collR) {transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);}
 	}
-	
-	void OnTriggerStay(Collider coll) {
-		
-		if (!hurt) {
-			switch (coll.gameObject.tag) {
 
-//			case "NormalBit":
-//				BreakToPieces(1);
-//				currentEnergy -= 5f;
-//				Destroy(coll.gameObject);
-//				Game.flakesCount[0] += 1;
-//				break;
-				
-			case "EnergyBit":
-				currentEnergy += 20f;
-				Destroy(coll.gameObject);
-				Game.flakesCount[2] += 1;
-				break;
-//				
-//			case "tagVacuum":
-//				Vacuum();
-//				Destroy(coll.gameObject);
-//				Game.flakesCount[3] += 1;
-//				break;
-//				
-//			case "tagSpecial":
-//				Destroy(coll.gameObject);
-//				break;
-				
-//			case "FollowBit":
-//				BreakToPieces(5);
-//				currentEnergy -= 40f;
-//				Destroy(coll.gameObject);
-//				Game.flakesCount[1] += 1;
-//				break;
-			}
-		}
-	}
-	
 	void GetHurt () {
 		hurt = true;
 		sound.Play();
@@ -174,7 +135,7 @@ public class Player : MonoBehaviour {
 			GameObject obj = GameObject.Instantiate(shard, transform.position, Quaternion.identity) as GameObject;
 			obj.GetComponent<SpriteRenderer>().color = gameObject.renderer.material.color;
 			if (trash) {
-				obj.transform.parent = trash.transform;
+				obj.transform.parent = trash;
 			}
 		}
 	}
@@ -183,48 +144,4 @@ public class Player : MonoBehaviour {
 		currentEnergy -= damage;
 		BreakToPieces (Mathf.CeilToInt (damage));
 	}
-	
-	/*
-switch (level) {
-			case 1 :
-				bullets[0] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
-				bullets[0].transform.parent = manager.transform;	 
-				break;
-				
-			case 2 : 
-				for (i = 0; i < level; i++) {
-					bullets[i] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
-					bullets[i].transform.Rotate(Vector3(0,0,10 * Mathf.Pow(-1, i+1)));
-					bullets[i].transform.parent = manager.transform;			
-				}
-				break;
-			
-			case 3 : 
-				for (i = 0; i < level; i++) {
-					bullets[i] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
-					bullets[i].transform.Rotate(Vector3(0,0,-15.0 + 15.0 * i));
-					bullets[i].transform.parent = manager.transform;			
-				}
-				break;
-			
-			default :
-				for (i = 0; i < level; i++) {
-						bullets[i] = GameObject.Instantiate(bulletObject, transform.position, Quaternion.identity);
-						bullets[i].transform.Rotate(Vector3(0,0,-15.0 + 15.0 * i));
-						bullets[i].transform.parent = manager.transform;
-				break;
-		}
-*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

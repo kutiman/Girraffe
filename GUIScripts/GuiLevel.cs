@@ -18,8 +18,8 @@ public class GuiLevel : MonoBehaviour {
 	}
 	
 	void CreateLevelButtons () {
-		float w = Game.worldSize.x;
-		float h = Game.worldSize.y;
+		float w = Game.WorldSize.x;
+		float h = Game.WorldSize.y;
 		Vector3 btnSize = Vector3.one;
 		float pad = 0.05f;
 		if (buttonObject) {

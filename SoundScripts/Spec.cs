@@ -15,7 +15,8 @@ public class Spec : MonoBehaviour {
 	public static float maxVelocity = 100f;
 	public bool musicPlaying = false;
 	
-	public GameObject[] bits;
+	//	public GameObject[] bits;
+	public Bit[] bits;
 	public float[] itemChances;
 	private float chancesSum;
 	
@@ -58,10 +59,8 @@ public class Spec : MonoBehaviour {
 		for (var i = 0; i < spectrum.Length; i++) {
 			ampList[i] = -worldSize.x;		
 		}
-		
 	}
-	
-	
+
 	void UpdateHazardMachine () {
 		
 		float waitTime = 0.5f;
@@ -73,39 +72,38 @@ public class Spec : MonoBehaviour {
 			if (ampList[i] <= posY) {
 				ampList[i] = posY;
 				if (ampList[i] > tolerance &&  Time.time >= waitTime + lastItemTime[i]) {
-					GameObject tempItem; 
+					Bit tempItem; 
 					float posX = goTransform.position.x - worldSize.x + itemSize * i  + itemSize/2;
 					float positionY = worldSize.y - itemSize/2f - (Bar.unitHeight * Mathf.Clamp(ampList[i], 0f, maxVelocity) / maxVelocity);
 					int r = GetRandomItem();
-					tempItem = Instantiate(bits[r], new Vector3(posX, positionY, goTransform.position.z),Quaternion.identity) as GameObject;
+					tempItem = Instantiate(bits[r], new Vector3(posX, positionY, goTransform.position.z),Quaternion.identity) as Bit;
 					tempItem.transform.parent = goTransform;
-					tempItem.GetComponent<Bit>().speed = (0.2f + (Mathf.Log(posY))) * itemSpeed;
-					tempItem.GetComponent<Bit>().iSpec = i;
-					tempItem.GetComponent<Bit>().myScale = itemScale;
+					tempItem.speed = (0.2f + (Mathf.Log(posY))) * itemSpeed;
+					tempItem.iSpec = i;
+					tempItem.myScale = itemScale;
 					
-				GameObject[] allItemsList = new GameObject[transform.childCount];
-
+					Bit[] allItemsList = new Bit[transform.childCount];
+					
 					// make items bigger during their life if frequency is banging
 					int p = 0;
 					foreach (Transform child in transform) {
-						allItemsList[p] = child.gameObject;
-						float tr = allItemsList[p].GetComponent<Bit>().timeRemaining;
-						float lt = allItemsList[p].GetComponent<Bit>().lifetime;
-						if (allItemsList[p].GetComponent<Bit>().iSpec == i && tr < lt/3f) {
-							allItemsList[p].GetComponent<Bit>().timeRemaining *= 2f;
+						allItemsList[p] = child.gameObject.GetComponent<Bit>();
+						float tr = allItemsList[p].timeRemaining;
+						float lt = allItemsList[p].lifetime;
+						if (allItemsList[p].iSpec == i && tr < lt/3f) {
+							allItemsList[p].timeRemaining *= 2f;
 						}
 						p++;
 					}
-					
+
 					lastItemTime[i] = Time.time;
 				}
 			}
 			else {ampList[i]*= 1f - ampDecay * Time.deltaTime;}
 		}
 	}
-	
+
 	int GetRandomItem () {
-		int type = 0;
 		float r = Random.value;
 		float tempSum = 0f;
 		for (var i = 0; i < itemChances.Length; i++) {

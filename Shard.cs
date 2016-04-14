@@ -10,16 +10,10 @@ public class Shard : MonoBehaviour {
 	void Start () {
 		timeRemaining = lifetime;
 		speed = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-//		speed.x = Mathf.Sqrt(1 - Mathf.Pow(speed.y, 2)) * Mathf.Sign(speed.x);
-		
-		
-		//yield WaitForSeconds(2);
-
 	}
 	
 	void Update () {
 		transform.Translate(speed.x * Time.deltaTime, speed.y *  Time.deltaTime, 0);
-		
 		FadeOut();
 	}
 	
