@@ -94,7 +94,27 @@ public class Bit : MonoBehaviour {
 				}
 			}
 		}
-	} 
+	}
+
+	public float ShootCircular (int amount, float costPerShot, float bulletSpeed, float bulletScale, float bulletLiftime, float sSpeed, float sCounter) {
+		if (sCounter >= sSpeed) {
+			
+			for (int i = 0; i < amount; i++) {
+				NormalBit nb = (NormalBit) Instantiate (normalBit, transform.position, Quaternion.identity);
+				nb.gameObject.tag = "BitBullet";
+				nb.transform.parent = trash;
+				nb.transform.Rotate(new Vector3(0, 0, 360f / amount * i));
+				nb.InitValues(bulletSpeed, iSpec, bulletScale, bulletLiftime);
+				nb.GetComponent<SpriteRenderer>().color = this.GetComponent<SpriteRenderer>().color;
+			}
+			timeRemaining -= costPerShot;
+			sCounter = 0;
+		}
+		else {
+			sCounter += Time.deltaTime;
+		}
+		return sCounter;
+	}
 }
 
 

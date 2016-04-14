@@ -11,7 +11,6 @@ public class Bullet : MonoBehaviour {
 
 	void Start () {
 		lifetime = 3f;
-		timeRemaining = lifetime;
 		myScale = 0.3f;
 		timeRemaining = lifetime;
 		gameObject.tag = "tagBullet";

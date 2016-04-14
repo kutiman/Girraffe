@@ -113,7 +113,7 @@ public class Player : MonoBehaviour {
 			currentEnergy = 0f;
 		}
 		else {
-			currentEnergy -= hungryInSeconds * Time.deltaTime;
+			currentEnergy -= hungryInSeconds * Time.deltaTime * Mathf.Sqrt(multiplier);
 		}
 	}
 	

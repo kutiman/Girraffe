@@ -21,33 +21,14 @@ public class QvintBit : Bit {
 	public override void Update () {
 		base.Update();
 		Move ();
-		Shoot ();
+		shotCounter = ShootCircular (5, 1f, 2f, 0.4f, 20f, shootSpeed, shotCounter);
 	}
 	
 	void Move () {
 		transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPos, speed * Time.deltaTime);
 	}
 	
-	void Shoot () {
-		if (shotCounter >= shootSpeed) {
 
-			for (int i = 0; i < 5; i++) {
-				NormalBit nb = (NormalBit) Instantiate (normalBit, transform.position, Quaternion.identity);
-				nb.gameObject.tag = "BitBullet";
-				nb.transform.parent = gameObject.transform;
-				nb.transform.Rotate(new Vector3(0, 0, 360f / 5f * i));
-				nb.InitValues(2f, iSpec, 0.4f, 3f);
-				nb.GetComponent<SpriteRenderer>().color = this.GetComponent<SpriteRenderer>().color;
-
-			}
-			timeRemaining -= 1f;
-			shotCounter = 0;
-		}
-		else {
-			shotCounter += Time.deltaTime;
-		}
-	}
-	
 	void OnTriggerEnter (Collider coll) {
 		if (coll.gameObject.tag == "NormalBit") {
 			timeRemaining += coll.GetComponent<Bit>().timeRemaining/10;
