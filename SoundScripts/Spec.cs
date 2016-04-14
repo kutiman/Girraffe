@@ -66,8 +66,6 @@ public class Spec : MonoBehaviour {
 		float waitTime = 0.5f;
 		
 		for (int i = 1; i < spectrum.Length -1; i++) {
-			float eff = 15f;
-			//		var posY = spectrum[i] * (i*i);
 			var posY = Mathf.Sqrt(spectrum[i]) * (i*i) * 0.7f;
 			if (ampList[i] <= posY) {
 				ampList[i] = posY;
@@ -78,12 +76,9 @@ public class Spec : MonoBehaviour {
 					int r = GetRandomItem();
 					tempItem = Instantiate(bits[r], new Vector3(posX, positionY, goTransform.position.z),Quaternion.identity) as Bit;
 					tempItem.transform.parent = goTransform;
-					tempItem.speed = (0.2f + (Mathf.Log(posY))) * itemSpeed;
-					tempItem.iSpec = i;
-					tempItem.myScale = itemScale;
-					
+					tempItem.InitValues( (0.2f + (Mathf.Log(posY))) * itemSpeed, i, itemScale); 
+
 					Bit[] allItemsList = new Bit[transform.childCount];
-					
 					// make items bigger during their life if frequency is banging
 					int p = 0;
 					foreach (Transform child in transform) {

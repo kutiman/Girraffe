@@ -3,8 +3,6 @@ using System.Collections;
 
 public class BigBit : Bit {
 
-	public GameObject normalBit;
-
 	private float shotCounter = 0;
 	private float shootSpeed = 2f;
 	private Vector3 targetPos;
@@ -32,15 +30,13 @@ public class BigBit : Bit {
 	void Shoot () {
 		if (shotCounter >= shootSpeed) {
 
-			GameObject obj = Instantiate (normalBit, transform.position, Quaternion.identity) as GameObject;
-			obj.gameObject.tag = "BitBullet";
-			transform.parent = gameObject.transform;
+			NormalBit nb = (NormalBit) Instantiate (normalBit, transform.position, Quaternion.identity);
+			nb.gameObject.tag = "BitBullet";
+			nb.transform.parent = gameObject.transform;
 
-			if (player) obj.transform.Rotate(new Vector3(0, 0, Utilities.AngleCalc(transform.position, player.transform.position)));
-			obj.GetComponent<Bit>().speed = 3f;
-			obj.GetComponent<Bit>().iSpec = iSpec;
-			obj.GetComponent<Bit>().lifetime = 2f;
-			obj.GetComponent<SpriteRenderer>().color = this.GetComponent<SpriteRenderer>().color;
+			if (player) nb.transform.Rotate(new Vector3(0, 0, Utilities.AngleCalc(transform.position, player.transform.position)));
+			nb.InitValues(3f, iSpec, 0.5f, 2f);
+			nb.GetComponent<SpriteRenderer>().color = this.GetComponent<SpriteRenderer>().color;
 			timeRemaining -= 1f;
 			shotCounter = 0;
 		}

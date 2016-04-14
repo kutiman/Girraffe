@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HealthBar : MonoBehaviour {
 
-	public Player player;
+	public GameObject player;
 	private float initialEnergy;
 	public float currentEnergy;
 	public Transform filler;
@@ -20,14 +20,14 @@ public class HealthBar : MonoBehaviour {
 		int n = Mathf.CeilToInt(currentEnergy/initialEnergy);
 		tm.text = "X" + n.ToString();
 		if (player) {
-			currentEnergy = player.currentEnergy;
+			currentEnergy = player.GetComponent<Player>().currentEnergy;
 			if (currentEnergy < 0f) {currentEnergy = 0f;}
 			Vector3 oldScale = filler.transform.localScale;
 			filler.transform.localScale = new Vector3((currentEnergy % initialEnergy) / initialEnergy, oldScale.y, oldScale.z);
 		}
 		else {
-			player = (Player) GameObject.FindWithTag("tagPlayer").GetComponent<Player>();
-			if (player) initialEnergy = player.initialEnergy;
+			player = (GameObject) GameObject.FindWithTag("tagPlayer");
+			if (player) initialEnergy = player.GetComponent<Player>().initialEnergy;
 			else Destroy(gameObject);
 		}
 	}

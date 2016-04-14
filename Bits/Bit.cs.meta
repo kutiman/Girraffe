@@ -6,6 +6,7 @@ MonoImporter:
   - player: {instanceID: 0}
   - shard: {fileID: 100000, guid: f328520fa954afd41b3bb0fc5348f057, type: 2}
   - trash: {instanceID: 0}
+  - normalBit: {fileID: 11400000, guid: 5a2f56c36facea64dad809f75e883e47, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

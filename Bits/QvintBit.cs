@@ -3,8 +3,6 @@ using System.Collections;
 
 public class QvintBit : Bit {
 	
-	public GameObject normalBit;
-	
 	private float shotCounter = 0;
 	private float shootSpeed = 3f;
 	private Vector3 targetPos;
@@ -34,15 +32,12 @@ public class QvintBit : Bit {
 		if (shotCounter >= shootSpeed) {
 
 			for (int i = 0; i < 5; i++) {
-				GameObject obj = Instantiate (normalBit, transform.position, Quaternion.identity) as GameObject;
-				obj.gameObject.tag = "BitBullet";
-				transform.parent = gameObject.transform;
-				obj.transform.Rotate(new Vector3(0, 0, 360f / 5f * i));
-				obj.GetComponent<Bit>().speed = 2f;
-				obj.GetComponent<Bit>().iSpec = iSpec;
-				obj.GetComponent<Bit>().lifetime = 3f;
-				obj.GetComponent<Bit>().myScale = 0.4f;
-				obj.GetComponent<SpriteRenderer>().color = this.GetComponent<SpriteRenderer>().color;
+				NormalBit nb = (NormalBit) Instantiate (normalBit, transform.position, Quaternion.identity);
+				nb.gameObject.tag = "BitBullet";
+				nb.transform.parent = gameObject.transform;
+				nb.transform.Rotate(new Vector3(0, 0, 360f / 5f * i));
+				nb.InitValues(2f, iSpec, 0.4f, 3f);
+				nb.GetComponent<SpriteRenderer>().color = this.GetComponent<SpriteRenderer>().color;
 
 			}
 			timeRemaining -= 1f;

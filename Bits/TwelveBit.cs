@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class TwelveBit : Bit {
-	
-	public GameObject normalBit;
-	
+		
 	private float shotCounter = 0;
 	private float shootSpeed = 4f;
 	private Vector3 targetPos;
@@ -34,15 +32,12 @@ public class TwelveBit : Bit {
 		if (shotCounter >= shootSpeed) {
 			
 			for (int i = 0; i < 12; i++) {
-				GameObject obj = Instantiate (normalBit, transform.position, Quaternion.identity) as GameObject;
-				obj.gameObject.tag = "BitBullet";
-				transform.parent = gameObject.transform;
-				obj.transform.Rotate(new Vector3(0, 0, 360f / 12f * i));
-				obj.GetComponent<Bit>().speed = 2f;
-				obj.GetComponent<Bit>().iSpec = iSpec;
-				obj.GetComponent<Bit>().lifetime = 2.5f;
-				obj.GetComponent<Bit>().myScale = 0.3f;
-				obj.GetComponent<SpriteRenderer>().color = this.GetComponent<SpriteRenderer>().color;
+				NormalBit nb = (NormalBit) Instantiate (normalBit, transform.position, Quaternion.identity);
+				nb.gameObject.tag = "BitBullet";
+				nb.transform.parent = gameObject.transform;
+				nb.transform.Rotate(new Vector3(0, 0, 360f / 12f * i));
+				nb.InitValues(2f, iSpec, 0.3f, 2.5f);
+				nb.GetComponent<SpriteRenderer>().color = this.GetComponent<SpriteRenderer>().color;
 				
 			}
 			timeRemaining -= 1f;

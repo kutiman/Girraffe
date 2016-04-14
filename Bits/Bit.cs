@@ -6,8 +6,8 @@ public class Bit : MonoBehaviour {
 	public Player player;
 	public GameObject shard;
 	public Transform trash;
-
-
+	public NormalBit normalBit;
+	
 	public Vector2 worldSize = new Vector2 (4.8f, 3.2f);
 
 	public float speed;
@@ -22,12 +22,25 @@ public class Bit : MonoBehaviour {
 	public virtual void Start () {
 		timeRemaining = lifetime;
 		trash = GameObject.FindWithTag("Trash").transform;
-		player = GameObject.FindWithTag("tagPlayer").GetComponent<Player>();
+		GameObject playerObj = (GameObject) GameObject.FindWithTag("tagPlayer");
+		if (playerObj) player = playerObj.GetComponent<Player> ();
 	}
 
 	public virtual void Update () {
 		FadeOut();
 		CheckBounds();
+	}
+
+	public void InitValues (float mySpeed, int myISpec, float scaleMod) {
+		speed = mySpeed;
+		iSpec = myISpec;
+		myScale = scaleMod;
+	}
+	public void InitValues (float mySpeed, int myISpec, float scaleMod, float myLifetime) {
+		speed = mySpeed;
+		iSpec = myISpec;
+		myScale = scaleMod;
+		lifetime = myLifetime;
 	}
 
 	public void BreakToPieces (int pieces) {

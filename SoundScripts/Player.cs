@@ -26,10 +26,7 @@ public class Player : MonoBehaviour {
 	public float currentEnergy;
 	public float hungryInSeconds = 3f;
 	public int multiplier;
-	
-	bool hurt = false;
-	private float hurtDuration = 2f;
-	
+
 	private float collR;
 	
 	public AudioSource sound;
@@ -43,7 +40,6 @@ public class Player : MonoBehaviour {
 		trash = GameObject.FindWithTag("Trash").transform;
 		sound = gameObject.AddComponent<AudioSource>();
 		collR = gameObject.GetComponent<SphereCollider>().radius;
-		item = GameObject.FindWithTag("tagFactory").GetComponent<Spec>().item;
 		factoryTransform = GameObject.FindWithTag("tagFactory").transform;
 		currentEnergy = initialEnergy;
 		GameObject.Instantiate(healthBar);
@@ -79,15 +75,7 @@ public class Player : MonoBehaviour {
 		else if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x > -screenWidth + collR) {transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);}
 	}
 
-	void GetHurt () {
-		hurt = true;
-		sound.Play();
-		//yield return new WaitForSeconds(0.5);
-		hurt = false;
-	}
-	
 	public void Vacuum () {
-		
 		foreach (Transform child in factoryTransform) {
 			if (child.gameObject.tag == "EnergyBit") {
 				child.gameObject.GetComponent<EnergyBit>().sucked = true;
