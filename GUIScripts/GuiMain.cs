@@ -47,7 +47,7 @@ public class GuiMain : MonoBehaviour {
 		//thumbStyle.overflow.right = (int) size.y/20f;
 
 		vSliderValue = GUI.VerticalSlider (new Rect (Screen.width * 0.95f, Screen.height/2f - size.y/2f, size.x, size.y), vSliderValue, 1f, 15f, sliderStyle, thumbStyle);
-		GameObject.FindWithTag("tagFactory").GetComponent<Spec>().tolerance = vSliderValue;
+		GameObject.FindWithTag("tagFactory").GetComponent<Factory>().tolerance = vSliderValue;
 
 	}
 	

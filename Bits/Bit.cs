@@ -7,8 +7,6 @@ public class Bit : MonoBehaviour {
 	public GameObject shard;
 	public Transform trash;
 	public NormalBit normalBit;
-	
-	public Vector2 worldSize = new Vector2 (4.8f, 3.2f);
 
 	public float speed;
 	public int iSpec;
@@ -54,7 +52,7 @@ public class Bit : MonoBehaviour {
 	}
 
 	void CheckBounds () {
-		if (Mathf.Abs(transform.position.x) > worldSize.x || Mathf.Abs(transform.position.y) > worldSize.y) {
+		if (Mathf.Abs(transform.position.x) > Game.WorldSize.x || Mathf.Abs(transform.position.y) > Game.WorldSize.y) {
 			Destroy(gameObject);
 		}
 	}

@@ -14,7 +14,7 @@ public class BigBit : Bit {
 		shotCounter = shootSpeed;
 		speed = 0.5f;
 		timeRemaining = lifetime * 3f;
-		targetPos = new Vector3 (transform.localPosition.x, Random.Range (-worldSize.y / 2, worldSize.y / 2), transform.localPosition.z);
+		targetPos = new Vector3 (transform.localPosition.x, Random.Range (-Game.WorldSize.y / 2, Game.WorldSize.y / 2), transform.localPosition.z);
 	}
 
 	public override void Update () {
@@ -32,7 +32,7 @@ public class BigBit : Bit {
 
 			NormalBit nb = (NormalBit) Instantiate (normalBit, transform.position, Quaternion.identity);
 			nb.gameObject.tag = "BitBullet";
-			nb.transform.parent = gameObject.transform;
+			nb.transform.parent = trash;
 
 			if (player) nb.transform.Rotate(new Vector3(0, 0, Utilities.AngleCalc(transform.position, player.transform.position)));
 			nb.InitValues(3f, iSpec, 0.5f, 2f);

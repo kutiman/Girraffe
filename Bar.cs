@@ -9,7 +9,7 @@ public class Bar : MonoBehaviour {
 	public float[] barSizes = new float[64];
 	public float ancPos;
 	
-	public GameObject equalizer;
+	public Factory factory;
 	
 	public static float unitHeight = 1.61f;
 	
@@ -19,8 +19,8 @@ public class Bar : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (equalizer) {
-			barSizes = equalizer.GetComponent<Spec>().ampList;
+		if (factory) {
+			barSizes = factory.equalizer.curedSpectrum;
 		}
 	}
 	

@@ -15,7 +15,7 @@ public class QvintBit : Bit {
 		speed = 0.4f;
 		lifetime = 5f;
 		timeRemaining = lifetime * 5f;
-		targetPos = new Vector3 (transform.localPosition.x, Random.Range (-worldSize.y / 2, worldSize.y / 2), transform.localPosition.z);
+		targetPos = new Vector3 (transform.localPosition.x, Random.Range (-Game.WorldSize.y / 2, Game.WorldSize.y / 2), transform.localPosition.z);
 	}
 	
 	public override void Update () {

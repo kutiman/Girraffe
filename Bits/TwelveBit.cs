@@ -15,7 +15,7 @@ public class TwelveBit : Bit {
 		speed = 0.3f;
 		lifetime = 4f;
 		timeRemaining = lifetime * 6f;
-		targetPos = new Vector3 (transform.localPosition.x, Random.Range (-worldSize.y / 2, worldSize.y / 2), transform.localPosition.z);
+		targetPos = new Vector3 (transform.localPosition.x, Random.Range (-Game.WorldSize.y / 2, Game.WorldSize.y / 2), transform.localPosition.z);
 	}
 	
 	public override void Update () {

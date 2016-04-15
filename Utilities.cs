@@ -79,4 +79,19 @@ public class Utilities {
 		finalColor.a = 1;
 		return finalColor;
 	}
+
+	public static int GetIntByChance (float[] chancesList) {
+
+		float sum = 0f;
+		float tempSum = 0f;
+		float r = Random.value;
+		
+		foreach (float n in chancesList) {sum += n;} 
+		
+		for (var i = 0; i < chancesList.Length; i++) {
+			if ((chancesList[i] + tempSum) / sum >= r) {return i;}
+			else {tempSum += chancesList[i];}
+		}
+		return 0;
+	}
 }
