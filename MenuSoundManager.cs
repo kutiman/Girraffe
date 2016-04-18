@@ -30,7 +30,7 @@ public class MenuSoundManager : MonoBehaviour {
 		
 		float n = equalizer.curedSpectrum [iSpec];
 		if (n > originalScale && counter >= waitTime) {
-			n = originalScale * (1f + n / limit * 0.1f);
+			n = originalScale * (1f + n / limit * 0.2f);
 			if (trans) {
 				trans.localScale = new Vector3 (n, n, 1f);
 				counter = 0;

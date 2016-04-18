@@ -52,7 +52,7 @@ public class Player : MonoBehaviour {
 		// shoot
 		autoShoot = Game.musicPlaying;
 		if (autoShoot) {
-			Shoot(multiplier);
+			Shoot(Mathf.CeilToInt(multiplier));
 		}
 		UpdateScale();
 		if (Game.levelStage == 1) GetHungry();

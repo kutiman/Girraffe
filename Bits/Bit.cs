@@ -40,6 +40,14 @@ public class Bit : MonoBehaviour {
 		myScale = scaleMod;
 		lifetime = myLifetime;
 	}
+	
+	public void InitValues (float mySpeed, int myISpec, float scaleMod, float myLifetime, float myDamageMultiplier) {
+		speed = mySpeed;
+		iSpec = myISpec;
+		myScale = scaleMod;
+		lifetime = myLifetime;
+		damageMultiplier = myDamageMultiplier;
+	}
 
 	public void BreakToPieces (int pieces) {
 	

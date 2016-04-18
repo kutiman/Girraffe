@@ -35,7 +35,8 @@ public class BigBit : Bit {
 			nb.transform.parent = trash;
 
 			if (player) nb.transform.Rotate(new Vector3(0, 0, Utilities.AngleCalc(transform.position, player.transform.position)));
-			nb.InitValues(3f, iSpec, 0.5f, 2f);
+			nb.InitValues(3f, iSpec, 0.5f, 2f, 5f);
+			
 			nb.GetComponent<SpriteRenderer>().color = this.GetComponent<SpriteRenderer>().color;
 			timeRemaining -= 1f;
 			shotCounter = 0;

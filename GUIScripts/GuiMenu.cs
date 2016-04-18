@@ -7,9 +7,10 @@ public class GuiMenu : MonoBehaviour {
 	public Color textColor;
 	/////
 	string introLabel = (
+		"Arrow Keys to move in all directions. \n \n" +
 		"A small experiment with sound. \n" + 
 		"The objects are created by the velocity of each frequency band. \n" +
-		"Try to catch them. Move with the arrow keys.");
+		"Shoot them. ");
 	// buttons
 	
 	void Start () {

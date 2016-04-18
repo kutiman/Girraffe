@@ -63,16 +63,18 @@ public class GuiMain : MonoBehaviour {
 		
 		string[] tutorialLines = new string[] {
 	        "You are a small yellow orb.",
-	        "Collect the shiny stuff",
-			"Avoid all the rest."
+	        "Use the ARROW KEYS to move in all directions.",
+			"Collect the yellow squares, or you will fade out.",
+			"Shoot everything else."
 		};
 		
 		GameObject[] objList = new GameObject[tutorialLines.Length];
-		
+		yield return new WaitForSeconds(2);
 		for (var i = 0; i < tutorialLines.Length; i++) {
-			
+			int myFontSize = 30;
 			objList[i] = GameObject.Instantiate(objText) as GameObject;
 			objList[i].GetComponent<TextMesh>().text = tutorialLines[i];
+			objList[i].GetComponent<TextMesh>().fontSize = myFontSize;
 			objList[i].transform.position = new Vector3(0, ancY - (i * pad), 0);
 			objList[i].transform.parent = gameObject.transform;
 			yield return new WaitForSeconds(waitTime);

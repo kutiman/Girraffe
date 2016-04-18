@@ -24,7 +24,7 @@ public class Game : MonoBehaviour {
 	
 	void Start () {
 		Debug.Log(levelStage);
-		if (!tutorialPassed) {
+		if (!tutorialPassed && Application.loadedLevelName == "Level" && levelStage == 0) {
 				StartCoroutine (TutorialTimeline ());
 		} 
 		else if (Application.loadedLevelName == "Level") {
@@ -97,14 +97,12 @@ public class Game : MonoBehaviour {
 		gamePaused = !focusStatus;
 	}
 	IEnumerator TutorialTimeline () {
-		if (Application.loadedLevelName == "Level" && levelStage == 0) {
-			flakesCount = new int[] {0,0,0,0};
-			yield return new WaitForSeconds(3);
-			player = GameObject.Instantiate(playerObject) as GameObject;
-			yield return new WaitForSeconds(6);
-			tutorialPassed = true;
-			CreateLevel(level);
-		}
+		flakesCount = new int[] {0,0,0,0};
+		yield return new WaitForSeconds(4);
+		player = GameObject.Instantiate(playerObject) as GameObject;
+		yield return new WaitForSeconds(10);
+		tutorialPassed = true;
+		CreateLevel(level);
 	}
 }
 

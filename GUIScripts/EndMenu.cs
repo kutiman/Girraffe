@@ -8,13 +8,13 @@ public class EndMenu : MonoBehaviour {
 	public bool levelWon;
 	
 	public string[] loseText = new string[] {
-	                                  "You are dead.",
+	                                  "You faded out.",
 	                                  "Try again?"
 	                                  };
 	
 	public string[] winText = new string[] {
-	                                 "The music is over.",
-	                                 "Congratulations, you are still alive."
+	                                 "You made it!",
+	                                 "Give yourself as many points as you want."
 	                                 };
 	
 	void Start() {
