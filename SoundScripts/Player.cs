@@ -55,7 +55,7 @@ public class Player : MonoBehaviour {
 			Shoot(multiplier);
 		}
 		UpdateScale();
-		GetHungry();
+		if (Game.levelStage == 1) GetHungry();
 		
 		// Debug//////
 		if (Input.GetKeyDown(KeyCode.Space)) {
@@ -121,7 +121,7 @@ public class Player : MonoBehaviour {
 		
 		for (var i = 0; i < pieces; i++) {
 			GameObject obj = GameObject.Instantiate(shard, transform.position, Quaternion.identity) as GameObject;
-			obj.GetComponent<SpriteRenderer>().color = gameObject.renderer.material.color;
+			obj.GetComponent<SpriteRenderer>().color = gameObject.GetComponent<Renderer>().material.color;
 			if (trash) {
 				obj.transform.parent = trash;
 			}

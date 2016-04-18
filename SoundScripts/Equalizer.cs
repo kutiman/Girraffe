@@ -8,13 +8,12 @@ public class Equalizer : MonoBehaviour {
 	public int bands; // amount of samples to be calculated in the spectrum
 	public float[] rawSpectrum; // raw spectrum data from the audio source
 	public float[] curedSpectrum; // the spectrum returned
-	public float decay; // the decline rate for the machine
+	public float decay = 0.1f; // the decline rate for the machine
 	public FFTWindow fftWindowType; // the type of distrubution of something??? dont really know
 
 	void Start() {
 
 		bands = 64;
-		decay = 0.1f;
 		fftWindowType = FFTWindow.BlackmanHarris;
 		rawSpectrum = new float[bands];
 		curedSpectrum = new float[bands];

@@ -15,7 +15,7 @@ public class GuiMain : MonoBehaviour {
 	
 	void Start () {
 		if (Game.levelStage == 0 && !Game.tutorialPassed){
-			ShowTutorial();
+			StartCoroutine (ShowTutorial());
 		}
 		levelStage = 1;
 	}
@@ -56,20 +56,18 @@ public class GuiMain : MonoBehaviour {
 		GameObject.FindWithTag("GameController").GetComponent<Game>().Restart();
 	}
 	
-	void ShowTutorial () {
-//		float waitTime = 2f;
+	IEnumerator ShowTutorial () {
+		float waitTime = 3f;
 		float ancY = 2f;
 		float pad  = Game.WorldSize.y / 6f;
 		
 		string[] tutorialLines = new string[] {
 	        "You are a small yellow orb.",
-	        "Collect the snowflakes made by the music.",
-			"Avoid the red ones."
+	        "Collect the shiny stuff",
+			"Avoid all the rest."
 		};
 		
 		GameObject[] objList = new GameObject[tutorialLines.Length];
-		
-		//yield return new WaitForSeconds(waitTime);
 		
 		for (var i = 0; i < tutorialLines.Length; i++) {
 			
@@ -77,7 +75,7 @@ public class GuiMain : MonoBehaviour {
 			objList[i].GetComponent<TextMesh>().text = tutorialLines[i];
 			objList[i].transform.position = new Vector3(0, ancY - (i * pad), 0);
 			objList[i].transform.parent = gameObject.transform;
-			//yield return new WaitForSeconds(waitTime);
+			yield return new WaitForSeconds(waitTime);
 		}
 		
 		Game.tutorialPassed = true;

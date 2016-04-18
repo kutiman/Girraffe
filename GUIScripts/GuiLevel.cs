@@ -29,7 +29,7 @@ public class GuiLevel : MonoBehaviour {
 		}
 		
 		float ancY = h - (h * 2f * 0.4f);
-		float nRows = 4f;
+		float nRows = 3f;
 		if (nRows > levelsAmount) {nRows = levelsAmount;}
 		
 		for (int i = 0; i < levelsAmount; i++) {

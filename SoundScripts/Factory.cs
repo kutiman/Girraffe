@@ -19,7 +19,7 @@ public class Factory : MonoBehaviour {
 	public float tolerance = 0.3f; // minimum  level for an item to be created
 	public float itemSpeed = 0.2f; // speed modifier for all items
 	public float itemScale = 1.2f; // scale modifier for the items
-	public float waitTime = 0.5f;
+	[Range (0.5f, 3f)] public float waitTime = 0.5f;
 
 	private float itemSize; // size of the item created
 	

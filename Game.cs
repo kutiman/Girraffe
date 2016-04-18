@@ -15,23 +15,21 @@ public class Game : MonoBehaviour {
 	public GameObject playerObject;
 	public GameObject soundManager;
 	public GameObject soundEffectsManager;
-	public GameObject cam;
 	public GameObject gameOverMenu;
 	private GameObject endMenu;
-	public static int levelStage = 1;
+	public static int levelStage = 0;
 	public static bool musicPlaying;
 	
 	public bool gamePaused = false;
 	
 	void Start () {
-		if (Application.loadedLevelName == "Level") {
-			flakesCount = new int[] {0,0,0,0};
-				/*
-				yield return new WaitForSeconds(4);
-				player = GameObject.Instantiate(Resources.Load("Prefabs/SoundPrefabs/objOrb")) as GameObject;
-				yield return new WaitForSeconds(9);
-				CreateLevel(level);
-				*/
+		Debug.Log(levelStage);
+		if (!tutorialPassed) {
+				StartCoroutine (TutorialTimeline ());
+		} 
+		else if (Application.loadedLevelName == "Level") {
+			levelStage = 1;
+			Debug.Log("I'm here now");
 			player = GameObject.Instantiate(playerObject) as GameObject;
 			CreateLevel(level);
 		}
@@ -77,6 +75,7 @@ public class Game : MonoBehaviour {
 	
 	public void Restart() {
 		if (Application.loadedLevelName == "Level") {
+			levelStage = 1;
 			Destroy(player);
 			flakesCount = new int[] {0,0,0,0};
 			CreateLevel(level);
@@ -85,16 +84,28 @@ public class Game : MonoBehaviour {
 	}
 	
 	public void ChooseLevel() {
-		
+		levelStage = 1;
 		GameObject.FindWithTag("tagFader").GetComponent<Fader>().levelToLoad = "ChooseLevel";
 		GameObject.FindWithTag("tagFader").GetComponent<Fader>().sceneEnding = true;
 		
-		levelStage = 1;
-		Destroy(player);
+		
+		//Destroy(player);
 		flakesCount = new int[] {0,0,0,0};
 	}
 	
 	void OnApplicationFocus(bool focusStatus) {
 		gamePaused = !focusStatus;
 	}
+	IEnumerator TutorialTimeline () {
+		if (Application.loadedLevelName == "Level" && levelStage == 0) {
+			flakesCount = new int[] {0,0,0,0};
+			yield return new WaitForSeconds(3);
+			player = GameObject.Instantiate(playerObject) as GameObject;
+			yield return new WaitForSeconds(6);
+			tutorialPassed = true;
+			CreateLevel(level);
+		}
+	}
 }
+
+

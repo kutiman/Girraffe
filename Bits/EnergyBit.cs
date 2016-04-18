@@ -8,7 +8,7 @@ public class EnergyBit : Bit {
 	public override void Start () {
 		base.Start();
 		badBit = false;
-		speed = 0.5f;
+		speed = 0.5f + Random.value;
 
 	}
 	

@@ -19,7 +19,7 @@ public class HealthBar : MonoBehaviour {
 	void Update () {
 		int n = Mathf.CeilToInt(currentEnergy/initialEnergy);
 		tm.text = "X" + n.ToString();
-		if (player) {
+		if (player && Game.levelStage == 1) {
 			currentEnergy = player.GetComponent<Player>().currentEnergy;
 			if (currentEnergy < 0f) {currentEnergy = 0f;}
 			Vector3 oldScale = filler.transform.localScale;
