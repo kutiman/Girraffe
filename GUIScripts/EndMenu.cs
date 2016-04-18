@@ -7,14 +7,14 @@ public class EndMenu : MonoBehaviour {
 	public GameObject buttonObject;
 	public bool levelWon;
 	
-	public string[] loseText = new string[] {
-	                                  "You faded out.",
+	private string[] loseText = new string[] {
+	                                  "You are dead.",
 	                                  "Try again?"
 	                                  };
 	
-	public string[] winText = new string[] {
+	private string[] winText = new string[] {
 	                                 "You made it!",
-	                                 "Give yourself as many points as you want."
+	                                 "You get many points."
 	                                 };
 	
 	void Start() {
@@ -41,39 +41,7 @@ public class EndMenu : MonoBehaviour {
 		GameObject[] buttons = new GameObject[2];
 		
 		buttons[0] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.WorldSize.x * 0.3f, 0), Quaternion.identity) as GameObject;
-		buttons[0].GetComponent<Button>().buttonType = "ChooseLevel";
-		buttons[0].transform.parent = gameObject.transform;
-		
-		buttons[1] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.WorldSize.x * 0.5f, 0), Quaternion.identity) as GameObject;
-		buttons[1].GetComponent<Button>().buttonType = "Restart";
-		buttons[1].transform.parent = gameObject.transform;
-	}
-	
-	public void GameOverMenu() {
-		
-//		float waitTime = 2f;
-		float ancY = 2f;
-		float pad = Game.WorldSize.y / 6f;
-
-		string[] endMenuLines = new string[] {
-		                               "You are dead.",
-		                               "Try again?"
-		                               };
-		
-		GameObject[]objList = new GameObject[endMenuLines.Length];
-		
-		for (var i = 0; i < endMenuLines.Length; i++) {
-			objList[i] = GameObject.Instantiate(objText) as GameObject;
-			objList[i].GetComponent<TextMesh>().text = endMenuLines[i];
-			objList[i].transform.position = new Vector3(0, ancY - (i * pad), 0);
-			objList[i].transform.parent = gameObject.transform;
-			//yield WaitForSeconds(waitTime);
-		}
-		
-		GameObject[] buttons = new GameObject[2];
-		
-		buttons[0] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.WorldSize.x * 0.3f, 0), Quaternion.identity) as GameObject;
-		buttons[0].GetComponent<Button>().buttonType = "ChooseLevel";
+		buttons[0].GetComponent<Button>().buttonType = "Back";
 		buttons[0].transform.parent = gameObject.transform;
 		
 		buttons[1] = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.WorldSize.x * 0.5f, 0), Quaternion.identity) as GameObject;

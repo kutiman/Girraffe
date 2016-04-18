@@ -57,11 +57,11 @@ public class Player : MonoBehaviour {
 		UpdateScale();
 		if (Game.levelStage == 1) GetHungry();
 		
-		// Debug//////
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			currentEnergy += 50;
-		}
-		///////
+//		// Debug//////
+//		if (Input.GetKeyDown(KeyCode.Space)) {
+//			currentEnergy += 50;
+//		}
+//		///////
 	}
 	
 	void Spin (float speed) {

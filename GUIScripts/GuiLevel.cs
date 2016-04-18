@@ -15,6 +15,9 @@ public class GuiLevel : MonoBehaviour {
 	
 	void Start () {
 		CreateLevelButtons();
+		GameObject menuBtn = GameObject.Instantiate(buttonObject, new Vector3(0, -Game.WorldSize.x * 0.5f, 0), Quaternion.identity) as GameObject;
+		menuBtn.GetComponent<Button>().buttonType = "Menu";
+		menuBtn.transform.parent = gameObject.transform;
 	}
 	
 	void CreateLevelButtons () {

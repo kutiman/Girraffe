@@ -58,7 +58,7 @@ public class Game : MonoBehaviour {
 			}
 		}
 		
-		if (Input.GetKey(KeyCode.Q)) Application.Quit();
+		if (Input.GetKey(KeyCode.Q) || (Input.GetKey(KeyCode.Escape) && Application.loadedLevelName == "Menu")) Application.Quit();
 	}
 	
 	public void CreateLevel (int level) {

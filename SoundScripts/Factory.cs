@@ -23,7 +23,10 @@ public class Factory : MonoBehaviour {
 
 	private float itemSize; // size of the item created
 	
-	void Start() {
+	void Start ()
+	{
+		tolerance = Game.level == 0 ? 10f : 13f;
+
 		audioSource = GetComponent<AudioSource>();
 		lastItemTime = new float[bands];
 		lastCuredSpectrum = new float[bands];

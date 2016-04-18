@@ -39,15 +39,15 @@ public class GuiMain : MonoBehaviour {
 				GameObject.FindWithTag("GameController").GetComponent<Game>().ChooseLevel();
 			}
 		}
-		// the slider that controls the frequency tolerance of the factory
-		Vector2 size = new Vector2(Screen.width * 0.02f, Screen.width * 0.2f);
-
-		thumbStyle.fixedHeight = (float) size.y/10f;
-		//thumbStyle.overflow.left = (int) size.y/20f;
-		//thumbStyle.overflow.right = (int) size.y/20f;
-
-		vSliderValue = GUI.VerticalSlider (new Rect (Screen.width * 0.95f, Screen.height/2f - size.y/2f, size.x, size.y), vSliderValue, 1f, 15f, sliderStyle, thumbStyle);
-		GameObject.FindWithTag("tagFactory").GetComponent<Factory>().tolerance = vSliderValue;
+//		// the slider that controls the frequency tolerance of the factory
+//		Vector2 size = new Vector2(Screen.width * 0.02f, Screen.width * 0.2f);
+//
+//		thumbStyle.fixedHeight = (float) size.y/10f;
+//		//thumbStyle.overflow.left = (int) size.y/20f;
+//		//thumbStyle.overflow.right = (int) size.y/20f;
+//
+//		vSliderValue = GUI.VerticalSlider (new Rect (Screen.width * 0.95f, Screen.height/2f - size.y/2f, size.x, size.y), vSliderValue, 1f, 15f, sliderStyle, thumbStyle);
+//		GameObject.FindWithTag("tagFactory").GetComponent<Factory>().tolerance = vSliderValue;
 
 	}
 	

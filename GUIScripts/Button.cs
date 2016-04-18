@@ -5,7 +5,7 @@ public class Button : MonoBehaviour {
 
 	// button state images 
 	public Sprite[] sprites; 	// images of all states of the button
-	public string[] typeOfButtons = new string[] {"Play", "Menu", "Level", "Restart", "ChooseLevel"}; // what type of button is this. a level button will also use a levelNumber.
+	public string[] typeOfButtons = new string[] {"Play", "Menu", "Level", "Restart", "ChooseLevel", "Back", "Menu"}; // what type of button is this. a level button will also use a levelNumber.
 	public string buttonType;
 	public GameObject textObject;
 	public int levelNumber; // which level to load. only used by level buttons
@@ -53,6 +53,16 @@ public class Button : MonoBehaviour {
 			break;
 		case "Restart" :
 			GameObject.FindWithTag("tagFader").GetComponent<Fader>().levelToLoad = "Level";
+			GameObject.FindWithTag("tagFader").GetComponent<Fader>().sceneEnding = true;
+			break;
+		
+		case "Back" :
+			GameObject.FindWithTag("tagFader").GetComponent<Fader>().levelToLoad = "ChooseLevel";
+			GameObject.FindWithTag("tagFader").GetComponent<Fader>().sceneEnding = true;
+			break;
+		
+		case "Menu" :
+			GameObject.FindWithTag("tagFader").GetComponent<Fader>().levelToLoad = "Menu";
 			GameObject.FindWithTag("tagFader").GetComponent<Fader>().sceneEnding = true;
 			break;
 		}
